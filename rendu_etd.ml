@@ -60,6 +60,34 @@ let [@warning "-8"] rec tourner_case (m:int) ((i,j,k):case): case =
     | m -> tourner_case (m - 1) (-k, -i, -j)
 ;;
 
+(*Question 5*)
+let translate ((c1,c2,c3):case) ((v1,v2,v3):vecteur): case =
+  let i = c1 + v1
+  and j = c2 + v2
+  and k = c3 + v3 
+    in i, j, k 
+;;
+
+(*Question 6*)
+let diff_case ((c11,c12,c13):case) ((c21,c22,c23):case): vecteur =
+  let v1 = c11 - c21
+  and v2 = c12 - c22
+  and v3 = c13 - c23 
+    in v1, v2, v3
+;;
+
+(* Question 7 *)
+let sont_cases_voisines (c1:case) (c2:case): bool =
+  let c = diff_case c1 c2 in
+      match c with
+      |  0,  1, -1 
+      |  1,  0, -1 
+      |  0, -1,  1 
+      | -1,  0,  1 
+      |  1, -1,  0
+      | -1,  1,  0 -> true
+      |          _ -> false ;;
+
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
 (* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case (i, j, k) *)
 let transfo x y = (y, (x-y)/2,(-x-y)/2);;
