@@ -1,10 +1,4 @@
 
-(* 
-  i -
-  j / 
-  k \   
-*)
-
 type dimension = int ;; (* restreint aux entiers strictement positifs *)
 
 type case    = int * int * int ;; (* restreint au triplet tels (i, j, k) tels que i + j + k = 0 *)
@@ -87,6 +81,9 @@ let sont_cases_voisines (c1:case) (c2:case): bool =
       |  1, -1,  0
       | -1,  1,  0 -> true
       |          _ -> false ;;
+ 
+(* Question 8 *)
+
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
 (* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case (i, j, k) *)
@@ -143,18 +140,3 @@ affiche conf_vide;;
 (*A essayer apres avoir fait remplir_init
 affiche (remplir_init [Code "Ali";Code "Bob";Code "Jim"] 3);;
 *)
-
-(* let dim : dimension = 3 ;;
-let case_tour_1 : case = (2, -1,-1) ;;
-let case_tour_2 : case = ( 3,-6, 3) ;;
-let case_tour_3 : case = (-3,-3, 6) ;;
-let case_tour_4 : case = (-6, 3, 3) ;;
-let case_tour_5 : case = ( 3, 3,-6) ;;
-let case_tour_6 : case = ( 3,-6, 3) ;;
-
-tourner_case 1 case_tour_1 dim ;;
-tourner_case 1 case_tour_2 dim ;;
-tourner_case 1 case_tour_3 dim ;;
-tourner_case 1 case_tour_4 dim ;;
-tourner_case 1 case_tour_5 dim ;;
-tourner_case 1 case_tour_6 dim ;; *)
