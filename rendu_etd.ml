@@ -78,15 +78,17 @@ let sont_cases_voisines (c1:case) (c2:case): bool =
       |          _ -> false ;;
  
 (* Question 8 *)
-let calcul_pivot (c1:case) (c2:case): case option =
-  None (* TODO *)
+let [@warning "-8"] calcul_pivot (c1:case) (c2:case): case option =
+  let (i,j,k) = translate c1 c2 in 
+    let p = i / 2, j / 2, k / 2 in
+      match c1, c2 with
+      | c1, c2 when sont_cases_voisines c1 p && sont_cases_voisines c2 p -> Some(p)
+      | _ -> None
 ;;
 
 (* Question 9 *)
-let vec_et_dist (c1:case) (c2:case): vecteur * int =
-  let v = (0,0,0)
-  and d = 0
-    in v, d
+let vec_et_dist ((i1,j1,k1):case) ((i2,j2,k2):case): vecteur * int =
+  (0,0,0), 0
 ;;
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
@@ -144,3 +146,4 @@ affiche conf_vide;;
 (*A essayer apres avoir fait remplir_init
 affiche (remplir_init [Code "Ali";Code "Bob";Code "Jim"] 3);;
 *)
+
