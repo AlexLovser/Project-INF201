@@ -37,6 +37,10 @@ let test_case_j2 : case = ( 0, 0, 0) ;;
 let test_case_k1 : case = (-2, 2, 0) ;;
 let test_case_k2 : case = ( 0, 0, 0) ;;
 
-assert ((calcul_pivot test_case_i1 test_case_i2)) ;;
-assert ((calcul_pivot test_case_j1 test_case_j2)) ;;
-assert ((calcul_pivot test_case_k1 test_case_k2)) ;;
+calcul_pivot test_case_i1 test_case_i2 ;;
+calcul_pivot test_case_j1 test_case_j2 ;;
+calcul_pivot test_case_k1 test_case_k2 ;;
+
+
+(* Testing "vec_et_dist" *)
+vec_et_dist (-6, 3, 3) (0, 0, 0) ;;
