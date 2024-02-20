@@ -1,3 +1,10 @@
+
+(* 
+  i -
+  j / 
+  k \   
+*)
+
 type dimension = int ;; (* restreint aux entiers strictement positifs *)
 
 type case    = int * int * int ;; (* restreint au triplet tels (i, j, k) tels que i + j + k = 0 *)
@@ -12,25 +19,89 @@ type case_coloree  = case * couleur ;;
 
 type configuration = case_coloree list * couleur list * dimension ;; (* sans case libre *)
           
-type coup = Du of case * case | Sm of case list;;
+type coup = Du of case * case | Sm of case list ;;
 
 let indice_valide (x:int) (dim:dimension): bool =
-  x >= -2 * dim && x <= 2 * dim;;
+  x >= -2 * dim && x <= 2 * dim
+;;
 
 let est_case ((i,j,k):case): bool =
-  (i + j + k = 0);;
+  (i + j + k = 0)
+;;
 
-let associe (a:'a) (l:('a*'b) list) (defaut:'b):'b = defaut;;
+let associe (a:'a) (l:('a*'b) list) (defaut:'b):'b = 
+  defaut
+;;
 
 (* A MODIFIER en Q2 *)
 let est_dans_losange ((i,j,k):case) (dim:dimension): bool = 
-  j >= -dim && j <= dim && k >= -dim && k <= dim ;;          
+  j >= -dim && j <= dim && k >= -dim && k <= dim 
+;;          
 
 (* A MODIFIER en Q3 *)
-let est_dans_etoile ((i,j,k):case) (dim:dimension): bool =
-  est_dans_losange (i,j,k) dim ||
-  j >= -dim && j <= dim && i >= -dim && i <= dim ||
-  i >= -dim && i <= dim && k >= -dim && k <= dim ;;
+let est_dans_centre ((i,j,k):case) (dim:dimension): bool =
+  1 * -dim <= j && j <= 1 * +dim &&
+  1 * -dim <= i && i <= 1 * +dim &&
+  1 * -dim <= k && k <= 1 * +dim 
+;;
+  
+let est_dant_tour_1 ((i,j,k):case) (dim:dimension): bool =
+  1 * -dim <= j && j <  0 * +dim &&
+  1 * +dim <  i && i <= 2 * +dim &&
+  1 * -dim <= k && k <  0 * +dim 
+;;
+
+let est_dant_tour_2 ((i,j,k):case) (dim:dimension): bool =
+  0 * +dim <= j && j <= 1 * +dim &&
+  0 * +dim <= i && i <= 1 * +dim &&
+  2 * -dim <= k && k <  1 * -dim 
+;;
+
+let est_dant_tour_3 ((i,j,k):case) (dim:dimension): bool =
+  1 * +dim <  j && j <= 6 * +dim &&
+  1 * -dim <= i && i <= 0 * +dim &&
+  1 * -dim <= k && k <= 0 * +dim 
+;;
+
+let est_dant_tour_4 ((i,j,k):case) (dim:dimension): bool =
+  0 * +dim <  j && j <= 1 * +dim &&
+  2 * -dim <= i && i <  1 * -dim &&
+  0 * +dim <  k && k <= 1 * +dim 
+;;
+
+let est_dant_tour_5 ((i,j,k):case) (dim:dimension): bool =
+  1 * -dim <= j && j <  0 * +dim &&
+  1 * -dim <= i && i <  0 * +dim &&
+  1 * +dim <  k && k <= 2 * +dim 
+;;
+
+let est_dant_tour_6 ((i,j,k):case) (dim:dimension): bool =
+  2 * -dim <= j && j <  1 * -dim &&
+  0 * +dim <  i && i <= 1 * +dim &&
+  0 * +dim <  k && k <= 1 * +dim 
+;;
+
+let est_dans_etoile (c:case) (dim:dimension): bool =
+  est_dans_centre c dim ||
+  est_dant_tour_1 c dim ||
+  est_dant_tour_2 c dim ||
+  est_dant_tour_3 c dim ||
+  est_dant_tour_4 c dim ||
+  est_dant_tour_5 c dim ||
+  est_dant_tour_6 c dim 
+;;
+
+(* QUESTION 4 *)
+let [@warning "-8"] tourner_case (m:int) ((i,j,k):case): case =
+  let m_correct = m mod 6 in
+    match m_correct with
+    | 0 -> (i,j,k)
+    | 1 -> (0,0,0)
+    | 2 -> (0,0,0)
+    | 3 -> (0,0,0)
+    | 4 -> (0,0,0)
+    | 5 -> (0,0,0)
+;;
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
 (* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case (i, j, k) *)
@@ -81,6 +152,8 @@ affiche conf_vide;;
 let conf_vide=([],[],1);;
 affiche conf_vide;;
 
+let conf_vide=([],[],3);;
+affiche conf_vide;;
 
 (*A essayer apres avoir fait remplir_init
 affiche (remplir_init [Code "Ali";Code "Bob";Code "Jim"] 3);;
