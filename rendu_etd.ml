@@ -88,19 +88,15 @@ let est_dans_etoile (c:case) (dim:dimension): bool =
   est_dant_tour_3 c dim ||
   est_dant_tour_4 c dim ||
   est_dant_tour_5 c dim ||
-  est_dant_tour_6 c dim 
+  est_dant_tour_6 c dim
 ;;
 
+
 (* QUESTION 4 *)
-let [@warning "-8"] tourner_case (m:int) ((i,j,k):case): case =
-  let m_correct = m mod 6 in
-    match m_correct with
-    | 0 -> (i,j,k)
-    | 1 -> (0,0,0)
-    | 2 -> (0,0,0)
-    | 3 -> (0,0,0)
-    | 4 -> (0,0,0)
-    | 5 -> (0,0,0)
+let [@warning "-8"] rec tourner_case (m:int) ((i,j,k):case): case =
+    match m with
+    | 0 -> (-k,-i,-j)
+    | m -> tourner_case (m - 1) (i,j,k)
 ;;
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
@@ -158,3 +154,18 @@ affiche conf_vide;;
 (*A essayer apres avoir fait remplir_init
 affiche (remplir_init [Code "Ali";Code "Bob";Code "Jim"] 3);;
 *)
+
+(* let dim : dimension = 3 ;;
+let case_tour_1 : case = (2, -1,-1) ;;
+let case_tour_2 : case = ( 3,-6, 3) ;;
+let case_tour_3 : case = (-3,-3, 6) ;;
+let case_tour_4 : case = (-6, 3, 3) ;;
+let case_tour_5 : case = ( 3, 3,-6) ;;
+let case_tour_6 : case = ( 3,-6, 3) ;;
+
+tourner_case 1 case_tour_1 dim ;;
+tourner_case 1 case_tour_2 dim ;;
+tourner_case 1 case_tour_3 dim ;;
+tourner_case 1 case_tour_4 dim ;;
+tourner_case 1 case_tour_5 dim ;;
+tourner_case 1 case_tour_6 dim ;; *)
