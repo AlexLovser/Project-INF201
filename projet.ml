@@ -113,9 +113,8 @@ assert (est_case case_6) ;;                 (* - : unit = () *)
 (* Question 2
   La fonction "est_dans_losange" verifie si la case est dans
   losange Nord-Sud.   
-*)                                                      (* Reponse du systeme *)
-let est_dans_losange (c:case) (dim:dimension): bool =   (* val est_dans_losange : case -> dimension -> bool = <fun> *)
-  let i, j, k = c in
+*)                                                           (* Reponse du systeme *)
+let est_dans_losange ((i,j,k):case) (dim:dimension): bool =  (* val est_dans_losange : case -> dimension -> bool = <fun> *)
   j >= -dim && j <= dim && k >= -dim && k <= dim ;;
 
 
@@ -123,32 +122,10 @@ let est_dans_losange (c:case) (dim:dimension): bool =   (* val est_dans_losange 
   La fonction "est_dans_etoile" verifie si la case est dans
   l'etoile.
 *)
-let est_dans_centre ((i,j,k):case) (dim:dimension): bool =
-  abs i <= dim && abs j <= dim && abs k <= dim ;;
-
-let est_dans_triangle_1 ((i,j,k):case) (dim:dimension): bool =
-   dim <= i && i <= dim*2 && 
-  -dim <= j && j <= 0     && 
-  -dim <= k && k <= 0     ;;
-
-let est_dans_triangle_2 ((i,j,k):case) (dim:dimension): bool =
-  true ;;
-
-let est_dans_triangle_3 ((i,j,k):case) (dim:dimension): bool =
-  true ;;
-
-let est_dans_triangle_4 ((i,j,k):case) (dim:dimension): bool =
-  true ;;
-
-let est_dans_triangle_5 ((i,j,k):case) (dim:dimension): bool =
-  true ;;
-
-let est_dans_triangle_6 ((i,j,k):case) (dim:dimension): bool =
-  true ;;
-
-let est_dans_etoile (c:case) (dim:dimension): bool =
-  (est_dans_centre c dim) || 
-  (est_dans_triangle_1 c dim) ;;
+let est_dans_etoile ((i,j,k):case) (dim:dimension): bool =
+  est_dans_losange (i,j,k) dim ||
+  j >= -dim && j <= dim && i >= -dim && i <= dim ||
+  i >= -dim && i <= dim && k >= -dim && k <= dim ;;
 
 
 (* Question 4 

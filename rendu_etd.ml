@@ -23,42 +23,14 @@ let est_case ((i,j,k):case): bool =
 let associe (a:'a) (l:('a*'b) list) (defaut:'b):'b = defaut;;
 
 (* A MODIFIER en Q2 *)
-let est_dans_losange ((i,j,k):case) (dim:dimension): bool =
-  true ;;           
+let est_dans_losange ((i,j,k):case) (dim:dimension): bool = 
+  j >= -dim && j <= dim && k >= -dim && k <= dim ;;          
 
 (* A MODIFIER en Q3 *)
-let est_dans_centre ((i,j,k):case) (dim:dimension): bool =
-  abs i <= dim && abs j <= dim && abs k <= dim ;;
-
-let est_dans_triangle_1 ((i,j,k):case) (dim:dimension): bool =
-  -dim <= j && j <= 0     &&
-   dim <= i && i <= dim*2 && 
-  -dim <= k && k <= 0     ;;
-
-let est_dans_triangle_2 ((i,j,k):case) (dim:dimension): bool =
-       0 <= j && j <=  dim &&
-       0 <= i && i <=  dim &&  
-  -dim*2 <= k && k <= -dim ;;
-
-let est_dans_triangle_3 ((i,j,k):case) (dim:dimension): bool = 
-   dim <= j && j <= dim*2 &&
-  -dim <= i && i <= 0     && 
-  -dim <= k && k <= 0     ;;
-
-let est_dans_triangle_4 ((i,j,k):case) (dim:dimension): bool = 
-       0 <= j && j <=  dim*1 &&
-  -dim*2 <= i && i <= -dim*1 && 
-       0 <= k && k <=  dim*1 ;;
-
-
-let est_dans_etoile (c:case) (dim:dimension): bool =
-  est_dans_centre c dim ||
-  est_dans_triangle_1 c dim ||
-  est_dans_triangle_2 c dim ||
-  est_dans_triangle_3 c dim ||
-  est_dans_triangle_4 c dim
-;;
-
+let est_dans_etoile ((i,j,k):case) (dim:dimension): bool =
+  est_dans_losange (i,j,k) dim ||
+  j >= -dim && j <= dim && i >= -dim && i <= dim ||
+  i >= -dim && i <= dim && k >= -dim && k <= dim ;;
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
 (* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case (i, j, k) *)
