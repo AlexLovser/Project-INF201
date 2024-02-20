@@ -35,68 +35,29 @@ let associe (a:'a) (l:('a*'b) list) (defaut:'b):'b =
 
 (* A MODIFIER en Q2 *)
 let est_dans_losange ((i,j,k):case) (dim:dimension): bool = 
-  j >= -dim && j <= dim && k >= -dim && k <= dim 
+  -dim <= j && j <= dim && -dim <= k && k <= dim 
 ;;          
 
+let est_dans_losange_2 ((i,j,k):case) (dim:dimension): bool = 
+  -dim <= i && i <= dim && -dim <= k && k <= dim 
+;;   
+
+let est_dans_losange_3 ((i,j,k):case) (dim:dimension): bool = 
+  -dim <= i && i <= dim && -dim <= j && j <= dim 
+;;   
+
 (* A MODIFIER en Q3 *)
-let est_dans_centre ((i,j,k):case) (dim:dimension): bool =
-  1 * -dim <= j && j <= 1 * +dim &&
-  1 * -dim <= i && i <= 1 * +dim &&
-  1 * -dim <= k && k <= 1 * +dim 
-;;
-  
-let est_dant_tour_1 ((i,j,k):case) (dim:dimension): bool =
-  1 * -dim <= j && j <  0 * +dim &&
-  1 * +dim <  i && i <= 2 * +dim &&
-  1 * -dim <= k && k <  0 * +dim 
-;;
-
-let est_dant_tour_2 ((i,j,k):case) (dim:dimension): bool =
-  0 * +dim <= j && j <= 1 * +dim &&
-  0 * +dim <= i && i <= 1 * +dim &&
-  2 * -dim <= k && k <  1 * -dim 
-;;
-
-let est_dant_tour_3 ((i,j,k):case) (dim:dimension): bool =
-  1 * +dim <  j && j <= 6 * +dim &&
-  1 * -dim <= i && i <= 0 * +dim &&
-  1 * -dim <= k && k <= 0 * +dim 
-;;
-
-let est_dant_tour_4 ((i,j,k):case) (dim:dimension): bool =
-  0 * +dim <  j && j <= 1 * +dim &&
-  2 * -dim <= i && i <  1 * -dim &&
-  0 * +dim <  k && k <= 1 * +dim 
-;;
-
-let est_dant_tour_5 ((i,j,k):case) (dim:dimension): bool =
-  1 * -dim <= j && j <  0 * +dim &&
-  1 * -dim <= i && i <  0 * +dim &&
-  1 * +dim <  k && k <= 2 * +dim 
-;;
-
-let est_dant_tour_6 ((i,j,k):case) (dim:dimension): bool =
-  2 * -dim <= j && j <  1 * -dim &&
-  0 * +dim <  i && i <= 1 * +dim &&
-  0 * +dim <  k && k <= 1 * +dim 
-;;
-
 let est_dans_etoile (c:case) (dim:dimension): bool =
-  est_dans_centre c dim ||
-  est_dant_tour_1 c dim ||
-  est_dant_tour_2 c dim ||
-  est_dant_tour_3 c dim ||
-  est_dant_tour_4 c dim ||
-  est_dant_tour_5 c dim ||
-  est_dant_tour_6 c dim
+  est_dans_losange c dim ||
+  est_dans_losange_2 c dim ||
+  est_dans_losange_3 c dim
 ;;
-
 
 (* QUESTION 4 *)
 let [@warning "-8"] rec tourner_case (m:int) ((i,j,k):case): case =
     match m with
     | 0 -> (-k,-i,-j)
-    | m -> tourner_case (m - 1) (i,j,k)
+    | m -> tourner_case (m - 1) (-k, -i, -j)
 ;;
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
