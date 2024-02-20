@@ -84,7 +84,14 @@ let sont_cases_voisines (c1:case) (c2:case): bool =
       |          _ -> false ;;
  
 (* Question 8 *)
+let calcul_pivot (c1:case) (c2:case): case option =
+  None (* TODO *)
+;;
 
+(* Question 9 *)
+let vec_et_dist (c1:case) (c2:case): vecteur * int =
+  (0,0,0), 0 (* TODO *)
+;;
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
 (* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case (i, j, k) *)

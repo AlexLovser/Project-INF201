@@ -6,6 +6,10 @@ let case_identique ((c11,c12,c13):case) ((c21,c22,c23):case): bool =
   c11 == c21 && c12 == c22 && c13 == c23 
 ;;
 
+let case_different (c1:case) (c2:case): bool =
+  not case_identique c1 c2 
+;;
+
 (* Testing "tourner_case" *)
 let test_case_0 : case = ( 2, -1, -1) ;;
 let test_case_1 : case = ( 1, -2,  1) ;;
