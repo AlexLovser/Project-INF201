@@ -49,8 +49,9 @@ let est_dans_etoile (c:case) (dim:dimension): bool =
 
 (* QUESTION 4 *)
 let [@warning "-8"] rec tourner_case (m:int) ((i,j,k):case): case =
-    match m with
-    | 0 -> (-k,-i,-j)
+  let mm = m mod 6 in
+    match mm with
+    | 0 -> i, j, k
     | m -> tourner_case (m - 1) (-k, -i, -j)
 ;;
 
