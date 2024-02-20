@@ -95,11 +95,11 @@ let min3 (a:int) (b:int) (c:int): int =
   min2 a (min2 b c)
 ;;
 
-let [@warning "-8"] vec_et_dist ((i1,j1,k1):case) ((i2,j2,k2):case): vecteur * int =
-  let i = abs (i1 - i2)
-  and j = abs (j1 - j2)
-  and k = abs (k1 - k2) in 
-    let d = min3 i j k in 
+let vec_et_dist ((i1,j1,k1):case) ((i2,j2,k2):case): vecteur * int =
+  let d_i = abs (i1 - i2)
+  and d_j = abs (j1 - j2)
+  and d_k = abs (k1 - k2) in 
+    let d = min3 d_i d_j d_k in 
       (i1 / d, j1 / d, k1 / d), d
 ;;
 
