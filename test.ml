@@ -42,4 +42,8 @@ calcul_pivot (-2, 0, 2) ( 0, 0, 0) ;;
 calcul_pivot (-2, 2, 0) ( 0, 0, 0) ;;
 
 (* Testing "vec_et_dist" *)
-vec_et_dist ( 0, 6,-6) ( 0,-6, 6) ;;
+let v, d = vec_et_dist ( 0, 2,-2) ( 0, 0, 0) ;;
+translate (mult_case_entier v d) (0, 2,-2) ;;
+
+let v, d = vec_et_dist ( 0, 6,-6) ( 0,-6, 6) ;;
+translate (mult_case_entier v d) (0, 6,-6) ;;

@@ -87,20 +87,27 @@ let calcul_pivot (c1:case) (c2:case): case option =
 ;;
 
 (* Question 9 *)
-let dist_entre_cases (c1:case) (c2:case): int * int * int =
-  let (i1,j1,k1) = c1
-  and (i2,j2,k2) = c2
-    in abs(i1 - i2), abs(j1 - j2), abs(k1 - k2) 
+let max2 (a:int) (b:int): int =
+  if a > b then a else b 
+;;
+
+
+(* La fonction renvoie la distances entres les cases alignees *)
+let dist_entre_case (c1:case) (c2:case): int =
+  let i1, j1, k1 = c1
+  and i2, j2, k2 = c2
+    in let di = abs (i1 - i2)
+       and dj = abs (j1 - j2)
+       and dk = abs (k1 - k2)
+         in max2 di (max2 dj dk)
 ;;
 
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
-  let di, dj, dk = dist_entre_cases c1 c2
-    in let v = diff_case c1 c2
-      in match v with
-         | i, j, k when di != 0 -> (i/di, j/di, k/di), di
-         | i, j, k when dj != 0 -> (i/dj, j/dj, k/dj), dj
-         | i, j, k when dk != 0 -> (i/dk, j/dk, k/dk), dk
-         | _ -> (0,0,0), 0
+  let d = dist_entre_case c1 c2
+    in let i, j, k = diff_case c1 c2
+    in let v = i / d * (-1), j / d * (-1), k / d * (-1)
+         in v, d  
+;;
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
 (* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case (i, j, k) *)
