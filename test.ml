@@ -10,6 +10,15 @@ let case_different (c1:case) (c2:case): bool =
   not (case_identique c1 c2)
 ;;
 
+let mult_case_entier ((i,j,k):case) (n:int): case =
+  i * n, j * n, k * n
+;;
+
+Random.self_init () ;;
+let random_int (a:int) (b:int): int = (* a >= 0 and b >= 0 *)
+  a + Random.int (b - a + 1)
+;;
+
 
 (* Testing "tourner_case" *)
 let test_case_0 : case = ( 2, -1, -1) ;;
@@ -28,27 +37,9 @@ assert (case_identique (tourner_case 6 test_case_0) test_case_0) ;;
 
 
 (* Testing "calcul_pivot" *)
-let test_case_i1 : case = ( 0,-1, 1) ;;
-let test_case_i2 : case = ( 0, 1,-1) ;;
-
-let test_case_j1 : case = (-2, 0, 2) ;;
-let test_case_j2 : case = ( 0, 0, 0) ;;
-
-let test_case_k1 : case = (-2, 2, 0) ;;
-let test_case_k2 : case = ( 0, 0, 0) ;;
-
-calcul_pivot test_case_i1 test_case_i2 ;;
-calcul_pivot test_case_j1 test_case_j2 ;;
-calcul_pivot test_case_k1 test_case_k2 ;;
-
+calcul_pivot ( 0,-1, 1) ( 0, 1,-1) ;;
+calcul_pivot (-2, 0, 2) ( 0, 0, 0) ;;
+calcul_pivot (-2, 2, 0) ( 0, 0, 0) ;;
 
 (* Testing "vec_et_dist" *)
-vec_et_dist (-6, 3, 3) (0, 0, 0) ;;
-vec_et_dist ( 3,-6, 3) (0, 0, 0) ;;
-vec_et_dist ( 3, 3,-6) (0, 0, 0) ;;
-vec_et_dist (-6, 3, 3) ( 6,-3,-3) ;;
-vec_et_dist ( 3,-6, 3) (-3, 6,-3) ;;
-vec_et_dist ( 3, 3,-6) (-3,-3, 6) ;;
-vec_et_dist ( 0,-2, 2) (2, -2, 0) ;;
-vec_et_dist ( 0, 2,-2) (2, -2, 0) ;;
-vec_et_dist (-2, 0, 2) (2, -2, 0) ;;
+vec_et_dist ( 0, 6,-6) ( 0,-6, 6) ;;
