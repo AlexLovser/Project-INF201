@@ -19,20 +19,42 @@ let indice_valide (x:int) (dim:dimension): bool =
   x >= -2 * dim && x <= 2 * dim
 ;;
 
+(* Question 1 *)
+
 let est_case ((i,j,k):case): bool =
   (i + j + k = 0)
 ;;
+
+let dim : dimension = 3 ;;
+
+(* i < -dim *)
+assert (est_case (-2 * dim, +1 * dim, +1 * dim)) ;; 
+
+(* i > dim *)
+assert (est_case (+2 * dim, -1 * dim, -1 * dim)) ;; 
+
+(* j < -dim*)
+assert (est_case (+1 * dim, -2 * dim, +1 * dim)) ;; 
+
+(* (i,j,k) = (2dim, -dim, -dim) *)
+assert (est_case (+2 * dim, -1 * dim, -1 * dim)) ;; 
+
+(* (i,j,k) = (-dim - 1, 1, dim) *)
+assert (est_case (-dim - 1, 1, dim)) ;;  
+
+(* i >= -dim && j >= -dim && k >= -dim *)
+assert (est_case (-dim, -dim, 2*dim)) ;; 
 
 let associe (a:'a) (l:('a*'b) list) (defaut:'b):'b = 
   defaut
 ;;
 
-(* A MODIFIER en Q2 *)
+(* Question 2 *)
 let est_dans_losange ((i,j,k):case) (dim:dimension): bool = 
   -dim <= j && j <= dim && -dim <= k && k <= dim 
 ;;          
 
-(* A MODIFIER en Q3 *)
+(* Question 3 *)
 let est_dans_losange_2 ((i,j,k):case) (dim:dimension): bool = 
   -dim <= i && i <= dim && -dim <= k && k <= dim 
 ;;   
@@ -47,7 +69,7 @@ let est_dans_etoile (c:case) (dim:dimension): bool =
   est_dans_losange_3 c dim
 ;;
 
-(* QUESTION 4 *)
+(* Question 5 *)
 let rec tourner_case (m:int) ((i,j,k):case): case =
   let mm = m mod 6 in
     match mm with
@@ -55,12 +77,12 @@ let rec tourner_case (m:int) ((i,j,k):case): case =
     | m -> tourner_case (m - 1) (-k, -i, -j)
 ;;
 
-(*Question 5*)
+(* Question 5 *)
 let translate ((c1,c2,c3):case) ((v1,v2,v3):vecteur): case =
   c1 + v1, c2 + v2, c3 + v3 
 ;;
 
-(*Question 6*)
+(* Question 6 *)
 let diff_case ((c11,c12,c13):case) ((c21,c22,c23):case): vecteur =
   c11 - c21, c12 - c22, c13 - c23 
 ;;
@@ -93,7 +115,7 @@ let max2 (a:int) (b:int): int =
 
 
 (* La fonction renvoie la distances entres les cases alignees *)
-let dist_entre_case (c1:case) (c2:case): int =
+let dist_entre_case_alignees (c1:case) (c2:case): int =
   let i1, j1, k1 = c1
   and i2, j2, k2 = c2
     in let di = abs (i1 - i2)
@@ -103,7 +125,7 @@ let dist_entre_case (c1:case) (c2:case): int =
 ;;
 
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
-  let d = dist_entre_case c1 c2
+  let d = dist_entre_case_alignees c1 c2
     in let i, j, k = diff_case c1 c2
     in let v = i / d * (-1), j / d * (-1), k / d * (-1)
          in v, d  

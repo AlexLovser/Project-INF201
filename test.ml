@@ -1,23 +1,27 @@
-#use "rendu_etd.ml" ;;
+#use "src/utils/utils.ml" ;;
 Sys.command "clear" ;;
 
-(* Functions for testing  *)
-let case_identique ((c11,c12,c13):case) ((c21,c22,c23):case): bool =
-  c11 == c21 && c12 == c22 && c13 == c23 
-;;
+(* Question 1 *)
 
-let case_different (c1:case) (c2:case): bool =
-  not (case_identique c1 c2)
-;;
+let dim : dimension = 3 ;;
 
-let mult_case_entier ((i,j,k):case) (n:int): case =
-  i * n, j * n, k * n
-;;
+(* i < -dim *)
+assert (est_case (-2 * dim, +1 * dim, +1 * dim)) ;; 
 
-Random.self_init () ;;
-let random_int (a:int) (b:int): int = (* a >= 0 and b >= 0 *)
-  a + Random.int (b - a + 1)
-;;
+(* i > dim *)
+assert (est_case (+2 * dim, -1 * dim, -1 * dim)) ;; 
+
+(* j < -dim*)
+assert (est_case (+1 * dim, -2 * dim, +1 * dim)) ;; 
+
+(* (i,j,k) = (2dim, -dim, -dim) *)
+assert (est_case (+2 * dim, -1 * dim, -1 * dim)) ;; 
+
+(* (i,j,k) = (-dim - 1, 1, dim) *)
+assert (est_case (-dim - 1, 1, dim)) ;;  
+
+(* i >= -dim && j >= -dim && k >= -dim *)
+assert (est_case (-dim, -dim, 2*dim)) ;; 
 
 
 (* Testing "tourner_case" *)
