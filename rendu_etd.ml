@@ -87,21 +87,29 @@ let calcul_pivot (c1:case) (c2:case): case option =
 ;;
 
 (* Question 9 *)
-let min2 (a:int) (b:int): int =
-  if a < b then a else b
+(* fonction pour question 9 *)
+let [@warning "-8"] ordre_croissante (a:int) (b:int) (c:int): int * int * int =
+  match a, b, c with
+  | a, b, c when a <= b && b <= c && a <= c -> a, b, c
+  | a, b, c when a <= c && c <= b && a <= b -> a, c, b
+  | a, b, c when b <= a && a <= c && b <= c -> b, a, c
+  | a, b, c when b <= c && c <= a && b <= a -> b, c, a
+  | a, b, c when c <= a && a <= b && c <= b -> c, a, b
+  | a, b, c when c <= b && b <= a && c <= a -> c, b, a
 ;;
 
-let min3 (a:int) (b:int) (c:int): int =
-  min2 a (min2 b c)
-;;
-
+(* Question 9 *)
 let vec_et_dist ((i1,j1,k1):case) ((i2,j2,k2):case): vecteur * int =
-  let d_i = abs (i1 - i2)
-  and d_j = abs (j1 - j2)
-  and d_k = abs (k1 - k2) in 
-    let d = min3 d_i d_j d_k in 
-      (i1 / d, j1 / d, k1 / d), d
-;;
+  let di = abs(i1 - i2)
+  and dj = abs(j1 - j2)
+  and dk = abs(k1 - k2)
+    in let (d1,d2,d3) = (ordre_croissante di dj dk)
+       and ( i, j, k) = (diff_case (i1,j1,k1) (i2,j2,k2))
+         in match i, j, k with
+            | i, j, k when d1 != 0 && est_case (i/d1, j/d1, k/d1) -> (i/d1, j/d1, k/d1), d1
+            | i, j, k when d2 != 0 && est_case (i/d2, j/d2, k/d2) -> (i/d2, j/d2, k/d2), d2
+            | i, j, k when d3 != 0 && est_case (i/d3, j/d3, k/d3) -> (i/d3, j/d3, k/d3), d3
+            | _ -> (i1,j1,k1), 1
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
 (* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case (i, j, k) *)

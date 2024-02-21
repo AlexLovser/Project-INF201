@@ -44,3 +44,11 @@ calcul_pivot test_case_k1 test_case_k2 ;;
 
 (* Testing "vec_et_dist" *)
 vec_et_dist (-6, 3, 3) (0, 0, 0) ;;
+vec_et_dist ( 3,-6, 3) (0, 0, 0) ;;
+vec_et_dist ( 3, 3,-6) (0, 0, 0) ;;
+vec_et_dist (-6, 3, 3) ( 6,-3,-3) ;;
+vec_et_dist ( 3,-6, 3) (-3, 6,-3) ;;
+vec_et_dist ( 3, 3,-6) (-3,-3, 6) ;;
+vec_et_dist ( 0,-2, 2) (2, -2, 0) ;;
+vec_et_dist ( 0, 2,-2) (2, -2, 0) ;;
+vec_et_dist (-2, 0, 2) (2, -2, 0) ;;
