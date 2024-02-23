@@ -6,7 +6,8 @@
    Daniel Caille       <daniel.caille@etu.univ-grenoble-alpes.fr>             |
    Thomas Crelerot     <thomas.crelerot@etu.univ-grenoble-alpes.fr>          /  
   ----------------------------------------------------------------------------------------- *)
-
+  
+(* https://github.com/AlexLovser/Project-INF201 *)
 
 (** 
   La [dimension] d'un plateau, noté [dim] par la suite, est un paramètre qui
