@@ -1,3 +1,13 @@
+(* -------------------------------------------------------------------------------------------
+   inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1-Q9.ml : cr Q1 Q9 projet
+   Akram Bendouha      <akram.bendouha@etu.univ-grenoble-alpes.fr            \
+   Aleksandr Tabolskii <aleksandr.tabolskii@etu.univ-grenoble-alpes.fr>       |
+   Yassin El Kortbi    <elkortby@etu.univ-grenoble-alpes.fr>                   > Groupe ima4_K
+   Daniel Caille       <daniel.caille@etu.univ-grenoble-alpes.fr>             |
+   Thomas Crelerot     <thomas.crelerot@etu.univ-grenoble-alpes.fr>          /  
+  ----------------------------------------------------------------------------------------- *)
+
+
 (** 
   La [dimension] d'un plateau, noté [dim] par la suite, est un paramètre qui
   encode la taille du plateau. Le plateau a [4 * dim + 1] lignes horizontales
