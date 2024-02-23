@@ -1,3 +1,6 @@
 #!/bin/sh
 
-echo "#use \"$1\" ;;" | ocaml
+for FILE in $*
+do
+    echo "#use \"$FILE\" ;;" | ocaml
+done

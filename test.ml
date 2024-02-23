@@ -1,9 +1,20 @@
-#use "src/utils/utils.ml" ;;
+#use "rendu_etd.ml" ;;
 Sys.command "clear" ;;
 
-(* Question 1 *)
-
 let dim : dimension = 3 ;;
+
+(**
+  Vérifie si les coordonnées des cases [c1] et [c2] sont égals.
+*)
+let case_identique (c1:case) (c2:case): bool =
+  let i1, j1, k1 = c1
+  and i2, j2, k2 = c2 in
+    i1 == i2 && j1 == j2 && k1 == k2 
+;;
+
+let mult_case_entier ((i,j,k):case) (n:int): case =
+  i * n, j * n, k * n
+;;
 
 (* i < -dim *)
 assert (est_case (-2 * dim, +1 * dim, +1 * dim)) ;; 
