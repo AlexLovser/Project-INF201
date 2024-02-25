@@ -1,11 +1,13 @@
-(* -------------------------------------------------------------------------------------------
-   inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1-Q9.ml : cr Q1 Q9 projet
-   Akram Bendouha      <akram.bendouha@etu.univ-grenoble-alpes.fr            \
-   Aleksandr Tabolskii <aleksandr.tabolskii@etu.univ-grenoble-alpes.fr>       |
-   Yassin El Kortbi    <elkortby@etu.univ-grenoble-alpes.fr>                   > Groupe ima4_K
-   Daniel Caille       <daniel.caille@etu.univ-grenoble-alpes.fr>             |
-   Thomas Crelerot     <thomas.crelerot@etu.univ-grenoble-alpes.fr>          /  
-  ----------------------------------------------------------------------------------------- *)
+(* ---------------------------------------------------------------------
+   inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1-Q9.ml : 
+   cr Q1 Q9 projet: Groupe ima4_K
+
+   Akram Bendouha      <akram.bendouha@etu.univ-grenoble-alpes.fr 
+   Aleksandr Tabolskii <aleksandr.tabolskii@etu.univ-grenoble-alpes.fr>  
+   Yassin El Kortbi    <elkortby@etu.univ-grenoble-alpes.fr> 
+   Daniel Caille       <daniel.caille@etu.univ-grenoble-alpes.fr> 
+   Thomas Crelerot     <thomas.crelerot@etu.univ-grenoble-alpes.fr>
+  ----------------------------------------------------------------------*)
 
 (* https://github.com/AlexLovser/Project-INF201 *)
 
@@ -155,8 +157,8 @@ let est_dans_etoile (c:case) (dim:dimension): bool =
   La case [c] est la case après avoir fait tourner le plateau de [m] sixième de
   tour dans le sens anti-horaire. Au debut on calcule [m mod 6],
   car chaque foit quand on tourne le sixieme foit on renvien a la position
-  initiale, puis on effectue une transformation de case [c] avec les coordonnées
-  [(i, j, k)] vers [(-k, -i, -j)] récursivement [m] fois.
+  initiale, puis on effectue une transformation de case [c] avec les 
+  coordonnées [(i, j, k)] vers [(-k, -i, -j)] récursivement [m] fois.
 *)
 let rec tourner_case (m:int) (c:case): case =
   let i, j, k = c
@@ -212,8 +214,8 @@ let dist_entre_cases (c1:case) (c2:case): int =
 
 (** Question 7
 
-  Supposons que [c1] et [c2] sont des cases alignées, alors il sont voisines si et
-  seulement si la distance [d] entre les deux est égale à 1.
+  Supposons que [c1] et [c2] sont des cases alignées, alors il sont voisines si 
+  et seulement si la distance [d] entre les deux est égale à 1.
 *)
 let sont_cases_voisines (c1:case) (c2:case): bool =
   let d = dist_entre_cases c1 c2 in
@@ -226,8 +228,8 @@ let sont_cases_voisines (c1:case) (c2:case): bool =
 (** Question 8
 
   Supposons que [c1] et [c2] sont des cases alignées, alors il existe une case 
-  [p] tels que c'est un semi-chemin entre les deux, c'est à dire que [p] est une
-  voisines entre les deux cases.
+  [p] tels que c'est un semi-chemin entre les deux, c'est à dire que [p] est 
+  une voisines entre les deux cases.
   @return [Some(p)] s'il existe
   @return [None] s'il n'existe pas
 *)
@@ -241,8 +243,9 @@ let calcul_pivot (c1:case) (c2:case): case option =
 
 
 (**
-  Calcule le modulo entre les coordonnées de la case [c] et du vecteur [v]. Si un
-  des coordonnées du vecteur [v] est nul, alors c'est nul pour cette coordonnée.
+  Calcule le modulo entre les coordonnées de la case [c] et du vecteur [v]. Si 
+  un des coordonnées du vecteur [v] est nul, alors c'est nul pour cette 
+  coordonnée.
 *)
 let mod_case (c:case) (v:vecteur): vecteur =
   let c1, c2, c3 = c
@@ -256,11 +259,11 @@ let mod_case (c:case) (v:vecteur): vecteur =
 
 (** Question 9
 
-  Supposons que [c1] et [c2] sont des cases alignées, alors il existe un vecteur
-  [v] tels qu'il correspond au vecteur de translation d'un déplacement unitaire
-  et que si on applique la distance [d] entre les cases, [d] fois cette translation
-  en [c1] on arrive dans la case [c2]. Si ce vecteur n'existe pas on renvoie
-  un vecteur nul et une distance négatif.
+  Supposons que [c1] et [c2] sont des cases alignées, alors il existe un 
+  vecteur [v] tels qu'il correspond au vecteur de translation d'un déplacement
+  unitaire et que si on applique la distance [d] entre les cases, [d] fois 
+  cette translation en [c1] on arrive dans la case [c2]. Si ce vecteur n'existe 
+  pas on renvoie un vecteur nul et une distance négatif.
 *)
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
   let d = dist_entre_cases c1 c2 in 
@@ -274,7 +277,8 @@ let vec_et_dist (c1:case) (c2:case): vecteur * int =
 
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
-(* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case (i, j, k) *)
+(* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case 
+  (i, j, k) *)
 let transfo x y = (y, (x-y)/2,(-x-y)/2);;
 
 
@@ -295,7 +299,8 @@ let rec affiche_ligne (n:int) (m:int) (config:configuration) : string =
     if m = (4 * dim) + 1 then " " (* fin de ligne *)
     else
       let c = transfo m n in
-      if not ((n+m) mod 2 = 0) || not (est_dans_etoile c dim) then (*ceci est une inter-case (case inutile d'un damier) ou hors de l'etoile*)
+      if not ((n+m) mod 2 = 0) || not (est_dans_etoile c dim) then (*ceci est 
+        une inter-case (case inutile d'un damier) ou hors de l'etoile *)
         "   "^ affiche_ligne n (m + 1) config
       else (*ceci est une case ou bien en dehors du plateau*)
        (couleur2string (associe c lcc Libre)) ^ affiche_ligne n (m + 1) config;;
@@ -317,7 +322,8 @@ let affiche (config:configuration):unit =
 
 let conf_1=([((0,0,0),Jaune)],[Jaune],2);;
 affiche conf_1;;
-let conf_reggae=([((0,-1,1),Vert);((0,0,0),Jaune);((0,1,-1),Rouge)],[Vert;Jaune;Rouge],1);;
+let conf_reggae=([((0,-1,1),Vert);((0,0,0),Jaune);((0,1,-1),Rouge)],
+[Vert;Jaune;Rouge],1);;
 affiche conf_reggae;;
 let conf_vide=([],[],2);;
 affiche conf_vide;;
