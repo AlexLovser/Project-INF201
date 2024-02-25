@@ -1,6 +1,6 @@
 .old
-bin
-lib
-test
+# bin
+# lib
+# test
 _build
 .gitignore
