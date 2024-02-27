@@ -277,7 +277,11 @@ assert (sont_cases_alignee ( 3,-3, 0) (-3, 3, 0) = true) ;;
 
 print_endline "Testing: 'dist_entre_coordonnees'" ;;
 
-
+(* calcul de distances entres les coordonnées de cases *)
+assert (dist_entre_coordonnees ( 1, 1,-2) ( 3, 3,-6) = (2,2, 4)) ;;
+assert (dist_entre_coordonnees ( 0, 0, 0) ( 2, 2,-4) = (2,2, 4)) ;;
+assert (dist_entre_coordonnees (-3,-3, 6) ( 3, 3,-6) = (6,6,12)) ;;
+assert (dist_entre_coordonnees ( 0, 0, 0) ( 0, 0, 0) = (0,0, 0)) ;;
 
 print_endline "Testing: 'max_dist_cases'" ;;
 
