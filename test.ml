@@ -283,17 +283,66 @@ assert (dist_entre_coordonnees ( 0, 0, 0) ( 2, 2,-4) = (2,2, 4)) ;;
 assert (dist_entre_coordonnees (-3,-3, 6) ( 3, 3,-6) = (6,6,12)) ;;
 assert (dist_entre_coordonnees ( 0, 0, 0) ( 0, 0, 0) = (0,0, 0)) ;;
 
+
 print_endline "Testing: 'max_dist_cases'" ;;
+
+assert (max_dist_cases ( 1, 1,-2) ( 3, 3,-6) =  4) ;;
+assert (max_dist_cases ( 0, 0, 0) ( 2, 2,-4) =  4) ;;
+assert (max_dist_cases (-3,-3, 6) ( 3, 3,-6) = 12) ;;
+assert (max_dist_cases ( 0, 0, 0) ( 0, 0, 0) =  0) ;;
 
 
 print_endline "Testing: 'min_dist_cases'" ;;
 
+assert (min_dist_cases ( 1, 1,-2) ( 3, 3,-6) = 2) ;;
+assert (min_dist_cases ( 0, 0, 0) ( 2, 2,-4) = 2) ;;
+assert (min_dist_cases (-3,-3, 6) ( 3, 3,-6) = 6) ;;
+assert (min_dist_cases ( 0, 0, 0) ( 0, 0, 0) = 0) ;;
+
 
 print_endline "Testing: 'compte_cases'" ;;
+
+(* entre c1 et c2: 1 cases *)
+assert (compte_cases ( 0,-1, 1) ( 0, 1,-1) = 1) ;;
+assert (compte_cases ( 1, 0,-1) (-1, 0, 1) = 1) ;;
+assert (compte_cases (-1, 1, 0) ( 1,-1, 0) = 1) ;;
+assert (compte_cases ( 0,-2, 2) ( 2, 0,-2) = 1) ;;
+assert (compte_cases ( 2, 0,-2) (-2, 2, 0) = 1) ;;
+assert (compte_cases (-2, 2, 0) ( 0,-2, 2) = 1) ;;
+
+(* entre c1 et c2: 2 cases *)
+assert (compte_cases ( 2,-3, 1) ( 2, 0,-2) = 2) ;;
+assert (compte_cases ( 2,-2, 0) ( 2, 1,-1) = 2) ;;
+
+(* entre c1 et c2: 3 cases *)
+assert (compte_cases ( 0,-2, 2) ( 0, 2,-2) = 3) ;;
+assert (compte_cases ( 2, 0,-2) (-2, 0, 2) = 3) ;;
+assert (compte_cases (-2, 2, 0) ( 2,-2, 0) = 3) ;;
+assert (compte_cases ( 4,-2,-2) (-4, 2, 2) = 3) ;;
+assert (compte_cases (-2, 4,-2) ( 2,-4, 2) = 3) ;;
+assert (compte_cases (-2,-2, 4) ( 2, 2,-4) = 3) ;;
+
+(* entre c1 et c2: 4 cases *)
+assert (compte_cases ( 3,-3, 0) (-2, 2, 0) = 4) ;;
+assert (compte_cases ( 3,-2,-1) (-2, 1,-1) = 4) ;;
+
+(* entre c1 et c2: 5 cases *)
+assert (compte_cases ( 0,-3, 3) ( 0, 3,-3) = 5) ;;
+assert (compte_cases ( 3, 0,-3) (-3, 0, 3) = 5) ;;
+assert (compte_cases (-3, 3, 0) ( 3,-3, 0) = 5) ;;
+assert (compte_cases ( 6,-3,-3) (-6, 3, 3) = 5) ;;
+assert (compte_cases (-3, 6,-3) ( 3,-6, 3) = 5) ;;
+assert (compte_cases (-3,-3, 6) ( 3, 3,-6) = 5) ;;
 
 
 print_endline "Testing: 'sont_cases_voisines'" ;;
 
+assert (sont_cases_voisines (origine) ( 0,-1, 1) = true) ;;
+assert (sont_cases_voisines (origine) ( 0, 1,-1) = true) ;;
+assert (sont_cases_voisines (origine) (-1, 0, 1) = true) ;;
+assert (sont_cases_voisines (origine) ( 1, 0,-1) = true) ;;
+assert (sont_cases_voisines (origine) (-1, 1, 0) = true) ;;
+assert (sont_cases_voisines (origine) ( 1,-1, 0) = true) ;;
 
 print_endline "Testing: 'calcul_pivot'" ;;
 
