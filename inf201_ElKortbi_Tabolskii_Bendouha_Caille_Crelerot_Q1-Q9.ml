@@ -255,11 +255,13 @@ let calcul_pivot (c1:case) (c2:case): case option =
   vecteur [v] tels qu'il correspond au vecteur de translation d'un déplacement
   unitaire et que si on applique la distance [d] entre les cases, [d] fois 
   cette translation en [c1] on arrive dans la case [c2]. Si ce vecteur n'existe
-  pas on renvoie un vecteur nul et une distance négatif.
+  pas on renvoie un vecteur nuls et une distance négatif.
 *)
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
-  let d = max_dist_cases c1 c2
-  and i, j, k = diff_case c1 c2 in 
+  if c1 = (0,0,0) && c2 = (0,0,0) then (0,0,0), -1 
+  else 
+    let d = max_dist_cases c1 c2
+    and i, j, k = diff_case c1 c2 in 
     let v = i / d * (-1), j / d * (-1), k / d * (-1) in
       if est_case v then v, d else (0, 0, 0), -1 
 ;;
