@@ -122,14 +122,37 @@ assert (est_dans_losange_3 (-3,-3, 6) dim = true) ;;
 
 print_endline "Testing: 'est_dans_etoile'" ;;
 
-assert (est_dans_etoile (0, 0, 0) dim = true) ;;
+(* tour supérieur *)
+assert (est_dans_etoile ( 6,-3,-3) dim = true) ;;
+
+(* tour supérieur droite *)
+assert (est_dans_etoile ( 3, 3,-6) dim = true) ;;
+
+(* tour supérieur gauche *)
+assert (est_dans_etoile ( 3,-6, 3) dim = true) ;;
 
 (* origine/centre du plateau *)
 assert (est_dans_etoile origine dim = true) ;;
 
+(* tour inférieur *)
+assert (est_dans_etoile (-6, 3, 3) dim = true) ;;
+
+(* tour inférieur droite *)
+assert (est_dans_etoile (-3, 6,-3) dim = true) ;;
+
+(* tour inférieur gauche *)
+assert (est_dans_etoile (-3, 6, 3) dim = true) ;;
+
 
 print_endline "Testing: 'tourner_case'" ;;
 
+tourner_case 0 (4, -2, -2) ;;
+tourner_case 1 (4, -2, -2) ;;
+tourner_case 2 (4, -2, -2) ;;
+tourner_case 3 (4, -2, -2) ;;
+tourner_case 4 (4, -2, -2) ;;
+tourner_case 5 (4, -2, -2) ;;
+tourner_case 6 (4, -2, -2) ;;
 
 print_endline "Testing: 'translate'" ;;
 
