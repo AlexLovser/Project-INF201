@@ -314,7 +314,7 @@ assert (compte_cases (-2, 2, 0) ( 0,-2, 2) = 1) ;;
 assert (compte_cases ( 2,-3, 1) ( 2, 0,-2) = 2) ;;
 assert (compte_cases ( 2,-2, 0) ( 2, 1,-1) = 2) ;;
 
-(* entre c1 et c2: 3 cases *)
+(*   c1 et c2: 3 cases *)
 assert (compte_cases ( 0,-2, 2) ( 0, 2,-2) = 3) ;;
 assert (compte_cases ( 2, 0,-2) (-2, 0, 2) = 3) ;;
 assert (compte_cases (-2, 2, 0) ( 2,-2, 0) = 3) ;;
@@ -322,11 +322,11 @@ assert (compte_cases ( 4,-2,-2) (-4, 2, 2) = 3) ;;
 assert (compte_cases (-2, 4,-2) ( 2,-4, 2) = 3) ;;
 assert (compte_cases (-2,-2, 4) ( 2, 2,-4) = 3) ;;
 
-(* entre c1 et c2: 4 cases *)
+(*   c1 et c2: 4 cases *)
 assert (compte_cases ( 3,-3, 0) (-2, 2, 0) = 4) ;;
 assert (compte_cases ( 3,-2,-1) (-2, 1,-1) = 4) ;;
 
-(* entre c1 et c2: 5 cases *)
+(*   c1 et c2: 5 cases *)
 assert (compte_cases ( 0,-3, 3) ( 0, 3,-3) = 5) ;;
 assert (compte_cases ( 3, 0,-3) (-3, 0, 3) = 5) ;;
 assert (compte_cases (-3, 3, 0) ( 3,-3, 0) = 5) ;;
@@ -371,7 +371,7 @@ assert (calcul_pivot ( 4,-2,-2) (-4, 2, 2) = None) ;;
 assert (calcul_pivot (-2, 4,-2) ( 2,-4, 2) = None) ;;
 assert (calcul_pivot (-2,-2, 4) ( 2, 2,-4) = None) ;;
 
-(* entre c1 et c2: 5 cases, n'est pas alignées *)
+(* c1 et c2: 5 cases, n'est pas alignées *)
 assert (calcul_pivot ( 6,-3,-3) (-6, 3, 3) = None) ;;
 assert (calcul_pivot (-3, 6,-3) ( 3,-6, 3) = None) ;;
 assert (calcul_pivot (-3,-3, 6) ( 3, 3,-6) = None) ;;
@@ -379,12 +379,12 @@ assert (calcul_pivot (-3,-3, 6) ( 3, 3,-6) = None) ;;
 
 print_endline "Testing: 'vec_et_dist'" ;;
 
-(* entre c1 et c2 non alignées *)
+(* c1 et c2 non alignées *)
 assert (vec_et_dist (-6, 3, 3) ( 6,-3,-3) = ((origine), -1)) ;;
 assert (vec_et_dist ( 0,-3, 3) (-3, 3, 0) = ((origine), -1)) ;;
 assert (vec_et_dist (origine) (origine) = ((origine), -1)) ;;
 
-(* entre c1 et c2 alignées, c1 vers c2 *)
+(* c1 et c2 alignées, c1 vers c2 *)
 assert (vec_et_dist ( 0,-3, 3) origine = (( 0, 1,-1), 3)) ;;
 assert (vec_et_dist ( 0, 3,-3) origine = (( 0,-1, 1), 3)) ;;
 assert (vec_et_dist (-3, 3, 0) origine = (( 1,-1, 0), 3)) ;;
@@ -392,7 +392,7 @@ assert (vec_et_dist ( 3,-3, 0) origine = ((-1, 1, 0), 3)) ;;
 assert (vec_et_dist (-3, 0, 3) origine = (( 1, 0,-1), 3)) ;;
 assert (vec_et_dist ( 3, 0,-3) origine = ((-1, 0, 1), 3)) ;;
 
-(* entre c1 et c2 alignées, c2 vers c1 *)
+(* c1 et c2 alignées, c2 vers c1 *)
 assert (vec_et_dist origine ( 0,-3, 3) = (( 0,-1, 1), 3)) ;;
 assert (vec_et_dist origine ( 0, 3,-3) = (( 0, 1,-1), 3)) ;;
 assert (vec_et_dist origine (-3, 3, 0) = ((-1, 1, 0), 3)) ;;
