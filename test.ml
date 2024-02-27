@@ -1,20 +1,51 @@
-#use "rendu_etd.ml" ;;
+#use "inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1-Q9.ml" ;;
 Sys.command "clear" ;;
 
-let dim : dimension = 3 ;;
 
-(**
-  Vérifie si les coordonnées des cases [c1] et [c2] sont égals.
-*)
-let case_identique (c1:case) (c2:case): bool =
-  let i1, j1, k1 = c1
-  and i2, j2, k2 = c2 in
-    i1 == i2 && j1 == j2 && k1 == k2 
-;;
+(* Variables définie pour les tests *)
 
-let mult_case_entier ((i,j,k):case) (n:int): case =
-  i * n, j * n, k * n
-;;
+(* dimenstion du plateau *)
+let dim : dimension = 3 ;; 
+
+(* le centre/origine du plateau *)
+let origine : case = (0, 0, 0) ;; 
+
+
+print_endline "Testing: 'indice_valide'" ;;
+(* -2 <= x <= 2 est valide pour dim = 1 *)
+assert (indice_valide (-2) 1 = true) ;;
+assert (indice_valide 2 1 = true) ;;
+
+(* -4 <= x <= 4 est valide pour dim = 2 *)
+assert (indice_valide (-4) 2 = true) ;;
+assert (indice_valide 4 2 = true) ;;
+
+(* -6 <= x <= 6 est valide pour dim = 2 *)
+assert (indice_valide (-6) 3 = true) ;;
+assert (indice_valide 6 3 = true) ;;
+
+(* -3 < x ou x > 3 n'est pas valide pour dim = 1 *)
+assert (indice_valide (-3) 1 = false) ;;
+assert (indice_valide 3 1 = false) ;;
+
+(* -5 < x ou x > 3 n'est pas valide pour dim = 2 *)
+assert (indice_valide (-5) 2 = false) ;;
+assert (indice_valide 5 2 = false) ;;
+
+(* -7 < x ou x > 7 n'est pas valide pour dim = 3 *)
+assert (indice_valide (-7) 3 = false) ;;
+assert (indice_valide 7 3 = false) ;;
+
+(* Donc, -dim * 2 <= x <= dim * 2 est valide pour dim *)
+assert (indice_valide (-dim * 2) dim = true) ;;
+assert (indice_valide ( dim * 2) dim = true) ;;
+
+(* Donc, -dim * 2 < x ou x > dim * 2 n'est pas valide pour dim *)
+assert (indice_valide (-dim * 2 - 1) dim = false) ;;
+assert (indice_valide ( dim * 2 + 1) dim = false) ;;
+
+
+print_endline "Testing: 'est_case'" ;;
 
 (* i < -dim *)
 assert (est_case (-2 * dim, +1 * dim, +1 * dim)) ;; 
@@ -35,30 +66,90 @@ assert (est_case (-dim - 1, 1, dim)) ;;
 assert (est_case (-dim, -dim, 2*dim)) ;; 
 
 
-(* Testing "tourner_case" *)
-let test_case_0 : case = ( 2, -1, -1) ;;
-let test_case_1 : case = ( 1, -2,  1) ;;
-let test_case_2 : case = (-1, -1,  2) ;;
-let test_case_3 : case = (-2,  1,  1) ;;
-let test_case_4 : case = (-1,  2, -1) ;;
-let test_case_5 : case = ( 1,  1, -2) ;;
+print_endline "Testing: 'est_dans_losange'" ;;
 
-assert (case_identique (tourner_case 1 test_case_0) test_case_1) ;;
-assert (case_identique (tourner_case 2 test_case_0) test_case_2) ;;
-assert (case_identique (tourner_case 3 test_case_0) test_case_3) ;;
-assert (case_identique (tourner_case 4 test_case_0) test_case_4) ;;
-assert (case_identique (tourner_case 5 test_case_0) test_case_5) ;;
-assert (case_identique (tourner_case 6 test_case_0) test_case_0) ;;
+(* coin supérieur *)
+assert (est_dans_losange (-6, 3, 3) dim = true) ;; 
+
+(* coin gauche *)
+assert (est_dans_losange ( 0,-3, 3) dim = true) ;; 
+
+(* origine/centre du plateau *)
+assert (est_dans_losange origine dim = true) ;; 
+
+(* coin droite *)
+assert (est_dans_losange ( 0, 3,-3) dim = true) ;;
+
+(* coin inférieur *)
+assert (est_dans_losange ( 6,-3,-3) dim = true) ;;
 
 
-(* Testing "calcul_pivot" *)
-calcul_pivot ( 0,-1, 1) ( 0, 1,-1) ;;
-calcul_pivot (-2, 0, 2) ( 0, 0, 0) ;;
-calcul_pivot (-2, 2, 0) ( 0, 0, 0) ;;
+print_endline "Testing: 'est_dans_losange_2'" ;;
 
-(* Testing "vec_et_dist" *)
-let v, d = vec_et_dist ( 0, 2,-2) ( 0, 0, 0) ;;
-translate (mult_case_entier v d) (0, 2,-2) ;;
+(* coin supérieur gauche *)
+assert (est_dans_losange_2 ( 3,-6, 3) dim = true) ;; 
 
-let v, d = vec_et_dist ( 0, 6,-6) ( 0,-6, 6) ;;
-translate (mult_case_entier v d) (0, 6,-6) ;;
+(* coin supérieur droite *)
+assert (est_dans_losange_2 ( 3, 0,-3) dim = true) ;; 
+
+(* origine/centre du plateau *)
+assert (est_dans_losange_2 origine dim = true) ;; 
+
+(* coin inférieur gauche *)
+assert (est_dans_losange_2 (-3, 0, 3) dim = true) ;; 
+
+(* coin inférieur droite *)
+assert (est_dans_losange_2 (-3, 6,-3) dim = true) ;; 
+
+
+print_endline "Testing: 'est_dans_losange_3'" ;;
+
+(* coin supérieur gauche *)
+assert (est_dans_losange_3 ( 3,-3, 0) dim = true) ;; 
+
+(* coin supérieur droite *)
+assert (est_dans_losange_3 ( 3, 3,-6) dim = true) ;; 
+
+(* origine/centre du plateau *)
+assert (est_dans_losange_3 origine dim = true) ;; 
+
+(* coin inférieur gauche *)
+assert (est_dans_losange_3 (-3, 3, 0) dim = true) ;; 
+
+(* coin inférieur droite *)
+assert (est_dans_losange_3 (-3,-3, 6) dim = true) ;; 
+
+
+print_endline "Testing: 'est_dans_etoile'" ;;
+
+assert (est_dans_etoile (0, 0, 0) dim = true) ;;
+
+(* origine/centre du plateau *)
+assert (est_dans_etoile origine dim = true) ;;
+
+
+print_endline "Testing: 'tourner_case'" ;;
+
+
+print_endline "Testing: 'translate'" ;;
+
+
+print_endline "Testing: 'diff_case'" ;;
+
+
+print_endline "Testing: 'dist_entre_cases'" ;;
+
+
+print_endline "Testing: 'sont_cases_voisines'" ;;
+
+
+print_endline "Testing: 'calcul_pivot'" ;;
+
+
+print_endline "Testing: 'mod_case'" ;;
+
+
+print_endline "Testing: 'vec_et_dist'" ;;
+
+
+print_endline "Testing: END" ;;

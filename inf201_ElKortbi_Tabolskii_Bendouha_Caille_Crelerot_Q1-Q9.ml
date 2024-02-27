@@ -1,13 +1,9 @@
 (* ---------------------------------------------------------------------
-   inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1-Q9.ml : 
-   cr Q1 Q9 projet: Groupe ima4_K
+   inf201_El_Kortbi_Tabolskii_Q1-Q9.ml : cr Q1 Q9 projet: Groupe ima4_C
 
-   Akram Bendouha      <akram.bendouha@etu.univ-grenoble-alpes.fr 
-   Aleksandr Tabolskii <aleksandr.tabolskii@etu.univ-grenoble-alpes.fr>  
    Yassin El Kortbi    <elkortby@etu.univ-grenoble-alpes.fr> 
-   Daniel Caille       <daniel.caille@etu.univ-grenoble-alpes.fr> 
-   Thomas Crelerot     <thomas.crelerot@etu.univ-grenoble-alpes.fr>
-  ----------------------------------------------------------------------*)
+   Aleksandr Tabolskii <aleksandr.tabolskii@etu.univ-grenoble-alpes.fr>  
+  ---------------------------------------------------------------------- *)
 
 (* https://github.com/AlexLovser/Project-INF201 *)
 
@@ -91,11 +87,10 @@ type vecteur = case ;;
   Vérifie si la coordonnée [x] et valide dont la dimension [dim].
 *)
 let indice_valide (x:int) (dim:dimension): bool =
-  x >= -2 * dim && x <= 2 * dim
+  -2 * dim <= x && x <= 2 * dim
 ;;
 
-(** Question 1
-
+(**
   Vérifie si [c] est une case, par [i + j + k = 0].
 *)
 let est_case (c:case): bool =
@@ -103,30 +98,24 @@ let est_case (c:case): bool =
     i + j + k = 0
 ;;
 
-let associe (a:'a) (l:('a*'b) list) (defaut:'b):'b = 
-  defaut
-;;
-
-(** Question 2
-
+(**
   Vérifie si la case [c]  est une case dans le losange North-South d'étoile 
   du plateau de dimension [dim].
 *)
 let est_dans_losange (c:case) (dim:dimension): bool = 
-  let _, j, k = c in
+  let i, j, k = c in
     -dim <= j && j <= dim && 
-    -dim <= k && k <= dim 
+    -dim <= k && k <= dim
 ;;     
-
 
 (**
   Vérifie si la case [c] est dans le losange Northwest-Southeast d'étoile 
   du plateau de dimension [dim].
 *)
 let est_dans_losange_2 (c:case) (dim:dimension): bool = 
-  let i, _, k = c in
+  let i, j, k = c in
     -dim <= i && i <= dim && 
-    -dim <= k && k <= dim 
+    -dim <= k && k <= dim
 ;; 
 
 
@@ -135,25 +124,22 @@ let est_dans_losange_2 (c:case) (dim:dimension): bool =
   du plateau de dimension [dim].
 *)
 let est_dans_losange_3 (c:case) (dim:dimension): bool = 
-  let i, j, _ = c in
+  let i, j, k = c in
     -dim <= i && i <= dim && 
-    -dim <= j && j <= dim 
+    -dim <= j && j <= dim
 ;; 
 
 
-(** Question 3
-
+(**
   Vérifie si la case [c] est dans l'étoile du plateau de dimension [dim].
 *)
 let est_dans_etoile (c:case) (dim:dimension): bool =
-  est_dans_losange c dim ||
-  est_dans_losange_2 c dim ||
+  est_dans_losange c dim || 
+  est_dans_losange_2 c dim || 
   est_dans_losange_3 c dim
 ;;
 
-
-(** Question 4
-
+(**
   La case [c] est la case après avoir fait tourner le plateau de [m] sixième de
   tour dans le sens anti-horaire. Au debut on calcule [m mod 6],
   car chaque foit quand on tourne le sixieme foit on renvien a la position
@@ -169,8 +155,7 @@ let rec tourner_case (m:int) (c:case): case =
 ;;
 
 
-(** Question 5
-
+(**
   Calcule la case obtenue par translation de vecteur [v] à partir de [c], c'est
   à dire [translate v c = (c1 + v1, c2 + v2, c3 + v3)] en notant [(c1, c2, c3) 
   = c] et [(v1, v2, v3) = v]. 
@@ -182,8 +167,7 @@ let translate (c:case) (v:vecteur): case =
 ;;
 
 
-(** Question 6
-
+(**
   Calcule la différence de chacune des coordonnées pour donner un vecteur de
   translation, c'est à dire [diff_case c1 c2 = (i1 + i2, j1 + j2, k1 + k2)] 
   en notant [(i1, j1, k1) = c1] et [(i2, j2, k2) = c2].
@@ -212,9 +196,8 @@ let dist_entre_cases (c1:case) (c2:case): int =
 ;;
 
 
-(** Question 7
-
-  Supposons que [c1] et [c2] sont des cases alignées, alors il sont voisines si 
+(**
+  Supposons que [c1] et [c2] sont des cases alignées, alors il sont voisines si
   et seulement si la distance [d] entre les deux est égale à 1.
 *)
 let sont_cases_voisines (c1:case) (c2:case): bool =
@@ -224,9 +207,8 @@ let sont_cases_voisines (c1:case) (c2:case): bool =
     | _ -> false 
 ;;
 
- 
-(** Question 8
 
+(**
   Supposons que [c1] et [c2] sont des cases alignées, alors il existe une case 
   [p] tels que c'est un semi-chemin entre les deux, c'est à dire que [p] est 
   une voisines entre les deux cases.
@@ -237,7 +219,8 @@ let calcul_pivot (c1:case) (c2:case): case option =
   let (i,j,k) = translate c1 c2 in 
     let p = i / 2, j / 2, k / 2 in
       match c1, c2 with
-      | c1, c2 when sont_cases_voisines c1 p && sont_cases_voisines c2 p -> Some(p)
+      | c1, c2 when sont_cases_voisines c1 p && sont_cases_voisines c2 p -> 
+        Some(p)
       | _ -> None
 ;;
 
@@ -257,12 +240,11 @@ let mod_case (c:case) (v:vecteur): vecteur =
 ;;
 
 
-(** Question 9
-
+(**
   Supposons que [c1] et [c2] sont des cases alignées, alors il existe un 
   vecteur [v] tels qu'il correspond au vecteur de translation d'un déplacement
   unitaire et que si on applique la distance [d] entre les cases, [d] fois 
-  cette translation en [c1] on arrive dans la case [c2]. Si ce vecteur n'existe 
+  cette translation en [c1] on arrive dans la case [c2]. Si ce vecteur n'existe
   pas on renvoie un vecteur nul et une distance négatif.
 *)
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
@@ -277,21 +259,25 @@ let vec_et_dist (c1:case) (c2:case): vecteur * int =
 
 
 (* AFFICHAGE (fonctionne si les fonctions au dessus sont remplies) *)
-(* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case 
+(* transfo transforme des coordonnees cartesiennes (x,y) en coordonnees de case
   (i, j, k) *)
+let associe (a:'a) (l:('a*'b) list) (defaut:'b):'b = 
+    defaut
+;;
+
 let transfo x y = (y, (x-y)/2,(-x-y)/2);;
 
 
 let couleur2string (coul:couleur):string =
   match coul with
-  | Libre -> " . "
-  | Code s -> s  
-  | Vert -> " V "
-  | Jaune -> " J "
-  | Rouge -> " R "
-  | Noir -> " N "
-  | Bleu -> " B "
-  | Marron -> " M ";;
+  | Libre  -> " . "
+  | Vert   -> " V "
+  | Jaune  -> " J "
+  | Rouge  -> " R "
+  | Noir   -> " N "
+  | Bleu   -> " B "
+  | Marron -> " M "
+  | Code s -> s  ;;
 
 
 let rec affiche_ligne (n:int) (m:int) (config:configuration) : string =
@@ -303,7 +289,8 @@ let rec affiche_ligne (n:int) (m:int) (config:configuration) : string =
         une inter-case (case inutile d'un damier) ou hors de l'etoile *)
         "   "^ affiche_ligne n (m + 1) config
       else (*ceci est une case ou bien en dehors du plateau*)
-       (couleur2string (associe c lcc Libre)) ^ affiche_ligne n (m + 1) config;;
+       (couleur2string (associe c lcc Libre)) ^ affiche_ligne n (m + 1) config
+;;
 
 
 let affiche (config:configuration):unit =
@@ -322,8 +309,10 @@ let affiche (config:configuration):unit =
 
 let conf_1=([((0,0,0),Jaune)],[Jaune],2);;
 affiche conf_1;;
-let conf_reggae=([((0,-1,1),Vert);((0,0,0),Jaune);((0,1,-1),Rouge)],
-[Vert;Jaune;Rouge],1);;
+
+let conf_reggae=(
+  [((0,-1,1),Vert);((0,0,0),Jaune);((0,1,-1),Rouge)],[Vert;Jaune;Rouge],1
+  );;
 affiche conf_reggae;;
 let conf_vide=([],[],2);;
 affiche conf_vide;;
@@ -335,47 +324,3 @@ affiche conf_vide;;
   A essayer apres avoir fait remplir_init
   affiche (remplir_init [Code "Ali";Code "Bob";Code "Jim"] 3);;
 *)
-
-(**
-  Vérifie si les coordonnées des cases [c1] et [c2] sont égals.
-*)
-let case_identique (c1:case) (c2:case): bool =
-  let i1, j1, k1 = c1
-  and i2, j2, k2 = c2 in
-    i1 == i2 && j1 == j2 && k1 == k2 
-;;
-
-(**
-  Multiplie la case [c] par un entier [n].
-*)
-let mult_case_entier ((i,j,k):case) (n:int): case =
-  i * n, j * n, k * n
-;;
-
-(* Testing "tourner_case" *)
-let test_case_0 : case = ( 2, -1, -1) ;;
-let test_case_1 : case = ( 1, -2,  1) ;;
-let test_case_2 : case = (-1, -1,  2) ;;
-let test_case_3 : case = (-2,  1,  1) ;;
-let test_case_4 : case = (-1,  2, -1) ;;
-let test_case_5 : case = ( 1,  1, -2) ;;
-
-assert (case_identique (tourner_case 1 test_case_0) test_case_1) ;;
-assert (case_identique (tourner_case 2 test_case_0) test_case_2) ;;
-assert (case_identique (tourner_case 3 test_case_0) test_case_3) ;;
-assert (case_identique (tourner_case 4 test_case_0) test_case_4) ;;
-assert (case_identique (tourner_case 5 test_case_0) test_case_5) ;;
-assert (case_identique (tourner_case 6 test_case_0) test_case_0) ;;
-
-
-(* Testing "calcul_pivot" *)
-calcul_pivot ( 0,-1, 1) ( 0, 1,-1) ;;
-calcul_pivot (-2, 0, 2) ( 0, 0, 0) ;;
-calcul_pivot (-2, 2, 0) ( 0, 0, 0) ;;
-
-(* Testing "vec_et_dist" *)
-let v, d = vec_et_dist ( 0, 2,-2) ( 0, 0, 0) ;;
-translate (mult_case_entier v d) (0, 2,-2) ;;
-
-let v, d = vec_et_dist ( 0, 6,-6) ( 0,-6, 6) ;;
-translate (mult_case_entier v d) (0, 6,-6) ;;
