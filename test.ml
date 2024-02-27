@@ -259,8 +259,24 @@ assert (diff_case origine ( 3, 3,-6) = (-3,-3, 6)) ;;
 
 print_endline "Testing: 'sont_cases_alignee'" ;;
 
+(* les cases alignées de coordonnées i *)
+assert (sont_cases_alignee ( 0,-1, 1) ( 0, 2,-2) = true) ;;
+assert (sont_cases_alignee ( 0, 2,-2) ( 0,-1, 1) = true) ;;
+assert (sont_cases_alignee ( 0,-3, 3) ( 0, 3,-3) = true) ;;
+
+(* les cases alignées de coordonnées j *)
+assert (sont_cases_alignee (-1, 0, 1) ( 2, 0,-2) = true) ;;
+assert (sont_cases_alignee ( 2, 0,-2) (-1, 0, 1) = true) ;;
+assert (sont_cases_alignee (-3, 0, 3) ( 3, 0,-3) = true) ;;
+
+(* les cases alignées de coordonnées k *)
+assert (sont_cases_alignee ( 1,-1, 0) (-2, 2, 0) = true) ;;
+assert (sont_cases_alignee (-2, 2, 0) ( 1,-1, 0) = true) ;;
+assert (sont_cases_alignee ( 3,-3, 0) (-3, 3, 0) = true) ;;
+
 
 print_endline "Testing: 'dist_entre_coordonnees'" ;;
+
 
 
 print_endline "Testing: 'max_dist_cases'" ;;
