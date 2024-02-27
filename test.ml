@@ -48,7 +48,7 @@ let rec randvec (): vecteur =
 (* dimenstion du plateau *)
 let dim : dimension = 3 ;; 
 
-(* le centre/origine du plateau et vecteur nuls *)
+(* l'origine du plateau et vecteur nuls *)
 let origine : case = (0, 0, 0) ;; 
 let v_nuls : vecteur = (0, 0, 0) ;;
 
@@ -124,7 +124,7 @@ assert (est_dans_losange (-6, 3, 3) dim = true) ;;
 (* coin gauche *)
 assert (est_dans_losange ( 0,-3, 3) dim = true) ;; 
 
-(* origine/centre du plateau *)
+(* origine du plateau *)
 assert (est_dans_losange origine dim = true) ;; 
 
 (* coin droite *)
@@ -142,7 +142,7 @@ assert (est_dans_losange_2 ( 3,-6, 3) dim = true) ;;
 (* coin supérieur droite *)
 assert (est_dans_losange_2 ( 3, 0,-3) dim = true) ;; 
 
-(* origine/centre du plateau *)
+(* origine du plateau *)
 assert (est_dans_losange_2 origine dim = true) ;; 
 
 (* coin inférieur gauche *)
@@ -160,7 +160,7 @@ assert (est_dans_losange_3 ( 3,-3, 0) dim = true) ;;
 (* coin supérieur droite *)
 assert (est_dans_losange_3 ( 3, 3,-6) dim = true) ;; 
 
-(* origine/centre du plateau *)
+(* origine du plateau *)
 assert (est_dans_losange_3 origine dim = true) ;; 
 
 (* coin inférieur gauche *)
@@ -181,7 +181,7 @@ assert (est_dans_etoile ( 3, 3,-6) dim = true) ;;
 (* tour supérieur gauche *)
 assert (est_dans_etoile ( 3,-6, 3) dim = true) ;;
 
-(* origine/centre du plateau *)
+(* origine du plateau *)
 assert (est_dans_etoile origine dim = true) ;;
 
 (* tour inférieur *)
@@ -217,20 +217,20 @@ assert (tourner_case 5 ( 4, -2, -2) = ( 2, 2,-4)) ;;
 (* la case du tour supérieur tourne vers luis même *)
 assert (tourner_case 6 ( 4, -2, -2) = ( 4,-2,-2)) ;;
 
-(* la case du origine/centre tourne vers lui même dans tous les cas *)
+(* la case du origine tourne vers lui même dans tous les cas *)
 assert (tourner_case (randint 0 1000) origine = origine) ;;
 
 
 print_endline "Testing: 'translate'" ;;
 
-(* translation d'un vecteur nuls par l'origine/centre est une case 
-   origine/centre *)
+(* translation d'un vecteur nuls par l'origine est une case 
+   origine *)
 assert (translate v_nuls origine = origine) ;;
 
 (* translation d'un vecteur nuls vers une case renvoie la case *)
 assert (translate v_nuls r_case = r_case) ;;
 
-(* translation d'un n'importe quel vecteur vers origine/centre renvoie une case 
+(* translation d'un n'importe quel vecteur vers origine renvoie une case 
   avec les coordonnées du vecteur. *)
 assert (translate r_vec origine = r_vec) ;;
 
@@ -241,6 +241,20 @@ assert (translate (0, -1, 1) ( 0,-4, 4) = ( 0,-5, 5)) ;;
 
 
 print_endline "Testing: 'diff_case'" ;;
+
+(* difference entre deux cases identique renvoie un vecteur nuls *)
+assert (diff_case r_case r_case = v_nuls) ;;
+
+(* difference entre c1 non nuls et l'origine (c2) renvoie le vecteur de
+   translation qui est égal à c1 *)
+assert (diff_case r_case origine = r_case) ;;
+
+(* difference entre c2 non nuls et l'origine (c1) renvoie le vecteur de
+   translation qui est le symetrique de c2 *)
+assert (diff_case origine (-1, 1, 0) = ( 1,-1, 0)) ;;
+assert (diff_case origine (-6, 3, 3) = ( 6,-3,-3)) ;;
+assert (diff_case origine (-3, 6,-3) = ( 3,-6, 3)) ;;
+assert (diff_case origine ( 3, 3,-6) = (-3,-3, 6)) ;;
 
 
 print_endline "Testing: 'dist_entre_cases'" ;;
