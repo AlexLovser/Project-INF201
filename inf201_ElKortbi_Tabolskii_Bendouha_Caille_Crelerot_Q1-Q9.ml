@@ -147,11 +147,12 @@ let est_dans_etoile (c:case) (dim:dimension): bool =
   coordonnées [(i, j, k)] vers [(-k, -i, -j)] récursivement [m] fois.
 *)
 let rec tourner_case (m:int) (c:case): case =
-  let i, j, k = c
-  and m = m mod 6 in
-    match m with
-    | 0 -> i, j, k
-    | m -> tourner_case (m - 1) (-k, -i, -j)
+  if c = (0, 0, 0) then c else
+    let i, j, k = c
+    and m = m mod 6 in 
+      match m with
+      | 0 -> i, j, k
+      | m -> tourner_case (m - 1) (-k, -i, -j)
 ;;
 
 
