@@ -2,7 +2,7 @@
 Sys.command "clear" ;;
 
 
-(* Variables définie pour les tests *)
+(* Variables pour les tests *)
 
 (* dimenstion du plateau *)
 let dim : dimension = 3 ;; 
@@ -10,6 +10,17 @@ let dim : dimension = 3 ;;
 (* le centre/origine du plateau *)
 let origine : case = (0, 0, 0) ;; 
 
+
+(* Fonctions pour les tests *)
+
+(**
+  Renvoie un nombre entier alèatoire dans l'intervalle [a,b].
+*)
+let randint (a:int) (b:int): int =
+  Random.int (b - a + 1) + a
+;;
+
+(* Testing de fonctions *)
 
 print_endline "Testing: 'indice_valide'" ;;
 (* -2 <= x <= 2 est valide pour dim = 1 *)
@@ -146,13 +157,30 @@ assert (est_dans_etoile (-3, 6, 3) dim = true) ;;
 
 print_endline "Testing: 'tourner_case'" ;;
 
-tourner_case 0 (4, -2, -2) ;;
-tourner_case 1 (4, -2, -2) ;;
-tourner_case 2 (4, -2, -2) ;;
-tourner_case 3 (4, -2, -2) ;;
-tourner_case 4 (4, -2, -2) ;;
-tourner_case 5 (4, -2, -2) ;;
-tourner_case 6 (4, -2, -2) ;;
+(* la case ne tourne pas *)
+assert (tourner_case 0 ( 4, -2, -2) = ( 4,-2,-2)) ;;
+
+(* la case du tour supérieur tourne vers le tour supérieur gauche *)
+assert (tourner_case 1 ( 4, -2, -2) = ( 2,-4, 2)) ;;
+
+(* la case du tour supérieur tourne vers le tour inférieur gauche *)
+assert (tourner_case 2 ( 4, -2, -2) = (-2,-2, 4)) ;;
+
+(* la case du tour supérieur tourne vers le tour inférieur *)
+assert (tourner_case 3 ( 4, -2, -2) = (-4, 2, 2)) ;;
+
+(* la case du tour supérieur tourne vers le tour inférieur droite *)
+assert (tourner_case 4 ( 4, -2, -2) = (-2, 4,-2)) ;;
+
+(* la case du tour supérieur tourne vers le tour supérieur droite *)
+assert (tourner_case 5 ( 4, -2, -2) = ( 2, 2,-4)) ;;
+
+(* la case du tour supérieur tourne vers luis même *)
+assert (tourner_case 6 ( 4, -2, -2) = ( 4,-2,-2)) ;;
+
+(* la case du origine/centre tourne vers lui même dans tous les cas *)
+assert (tourner_case (randint 0 1000) origine = origine) ;;
+
 
 print_endline "Testing: 'translate'" ;;
 
