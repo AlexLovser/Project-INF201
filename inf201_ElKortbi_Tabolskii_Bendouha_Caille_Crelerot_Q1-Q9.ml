@@ -93,10 +93,7 @@ let indice_valide (x:int) (dim:dimension): bool =
 (**
   Vérifie si [c] est une case, par [i + j + k = 0].
 *)
-let est_case (c:case): bool =
-  let i, j, k = c in 
-    i + j + k = 0
-;;
+let est_case (c:case): bool = let i, j, k = c in i + j + k = 0 ;;
 
 (**
   Vérifie si la case [c]  est une case dans le losange North-South d'étoile 
@@ -147,9 +144,10 @@ let est_dans_etoile (c:case) (dim:dimension): bool =
   coordonnées [(i, j, k)] vers [(-k, -i, -j)] récursivement [m] fois.
 *)
 let rec tourner_case (m:int) (c:case): case =
-  if c = (0, 0, 0) then c else
+  (* si la case est l'origine pas de sense la tourner *)
+  if c = (0, 0, 0) then c else 
     let i, j, k = c
-    and m = m mod 6 in 
+    and m = m mod 6 in (* pas de sense tourner plusieur fois*)
       match m with
       | 0 -> i, j, k
       | m -> tourner_case (m - 1) (-k, -i, -j)
@@ -157,9 +155,7 @@ let rec tourner_case (m:int) (c:case): case =
 
 
 (**
-  Calcule la case obtenue par translation de vecteur [v] à partir de [c], c'est
-  à dire [translate v c = (c1 + v1, c2 + v2, c3 + v3)] en notant [(c1, c2, c3) 
-  = c] et [(v1, v2, v3) = v]. 
+  Calcule la case par translation de vecteur [v] à partir de [c].
 *)
 let translate (c:case) (v:vecteur): case =
   let c1, c2, c3 = c
@@ -169,75 +165,88 @@ let translate (c:case) (v:vecteur): case =
 
 
 (**
-  Calcule la différence de chacune des coordonnées pour donner un vecteur de
-  translation, c'est à dire [diff_case c1 c2 = (i1 + i2, j1 + j2, k1 + k2)] 
-  en notant [(i1, j1, k1) = c1] et [(i2, j2, k2) = c2].
+  La différence entre les coordonnées des cases [c1] et [c2] est le vecteur de 
+  translation de [c2] vers [c1].
 *)
 let diff_case (c1:case) (c2:case): vecteur =
   let i1, j1, k1 = c1
-  and i2, j2, k2 = c2 in
+  and i2, j2, k2 = c2 in 
     i1 - i2, j1 - j2, k1 - k2
 ;;
 
 
-(** 
-  Supposons que les cases [c1] et [c2] sont alignées, alors entre c'est deux
-  cases un des trois coordonnées [(i, j, k)] est nul, donc on doit au
-  début déterminer la distance entre les coordonnées et puis renvoie
-  le maximum, car a cause de la spécification de [case] si un des coordonnées
-  et nul, alors les deux autres sont symétrique entre des deux. 
+(**
+  Vérifie si les cases [c1] et [c2] sont alignées.
 *)
-let dist_entre_cases (c1:case) (c2:case): int =
+let sont_cases_alignee (c1:case) (c2:case): bool =
+  let i1, j1, k1 = c1
+  and i2, j2, k2 = c2 in
+    match c1, c2 with
+    | _ when i1 = i2 -> true 
+    | _ when j1 = j2 -> true
+    | _ when k1 = k2 -> true
+    | _ -> false
+;;
+
+
+(** 
+  Triplet d'entiers de distances entre les coordonnées [(i1, j1, k1)] et 
+  [(i2, j2, k2)] des cases [c1] et [c2].
+*)
+let dist_entre_coordonnees (c1:case) (c2:case): int * int * int =
   let i1, j1, k1 = c1
   and i2, j2, k2 = c2
-    in let di = abs (i1 - i2) (* distance entre i *)
-       and dj = abs (j1 - j2) (* distance entre j *)
-       and dk = abs (k1 - k2) (* distance entre k *)
-         in max di (max dj dk)
+    in let di = abs (i1 - i2) (* distance entre les coordonnées i *)
+       and dj = abs (j1 - j2) (* distance entre les coordonnées j *)
+       and dk = abs (k1 - k2) (* distance entre les coordonnées k *)
+         in di, dj, dk
 ;;
 
 
 (**
-  Supposons que [c1] et [c2] sont des cases alignées, alors il sont voisines si
-  et seulement si la distance [d] entre les deux est égale à 1.
+  Distance maximale entre les coordonnées des cases [c1] et [c2].
+*)
+let max_dist_cases (c1:case) (c2:case): int =
+    let di, dj, dk = dist_entre_coordonnees c1 c2 in max di (max dj dk) ;;
+;;
+
+
+(**
+  Distance minimale entre les coordonnées des cases [c1] et [c2].
+*)
+let min_dist_cases (c1:case) (c2:case): int =
+  let di, dj, dk = dist_entre_coordonnees c1 c2 in min di (min dj dk) ;;
+;;
+
+
+(**
+  Nombre de cases entres les cases [c1] et [c2].
+*)
+let compte_cases (c1:case) (c2:case): int = 
+  if sont_cases_alignee c1 c2 
+  then max_dist_cases c1 c2 - 1 (* si les cases sont alignées *)
+  else min_dist_cases c1 c2 - 1 (* sinon *)
+;;
+
+
+(**
+  Vérifie si les cases [c1] et [c2] sont voisines, c'est à dire que la distance
+  entre leurs coordonnées et égal à 1 et ils sont alignées.
 *)
 let sont_cases_voisines (c1:case) (c2:case): bool =
-  let d = dist_entre_cases c1 c2 in
-    match d with
-    | d when d == 1 -> true
-    | _ -> false 
+  if sont_cases_alignee c1 c2 then max_dist_cases c1 c2 = 1 else false
 ;;
 
 
 (**
-  Supposons que [c1] et [c2] sont des cases alignées, alors il existe une case 
-  [p] tels que c'est un semi-chemin entre les deux, c'est à dire que [p] est 
-  une voisines entre les deux cases.
-  @return [Some(p)] s'il existe
-  @return [None] s'il n'existe pas
+  Calcule le mi-chemin (pivot) entre les cases [c1] et [c2], c'est à dire que
+  les cases sont alignées et le nombre de cases entres les deux est impair.
 *)
 let calcul_pivot (c1:case) (c2:case): case option =
-  let (i,j,k) = translate c1 c2 in 
-    let p = i / 2, j / 2, k / 2 in
-      match c1, c2 with
-      | c1, c2 when sont_cases_voisines c1 p && sont_cases_voisines c2 p -> 
-        Some(p)
-      | _ -> None
-;;
-
-
-(**
-  Calcule le modulo entre les coordonnées de la case [c] et du vecteur [v]. Si 
-  un des coordonnées du vecteur [v] est nul, alors c'est nul pour cette 
-  coordonnée.
-*)
-let mod_case (c:case) (v:vecteur): vecteur =
-  let c1, c2, c3 = c
-  and v1, v2, v3 = v in
-    let i = if v1 != 0 then c1 mod v1 else 0
-    and j = if v2 != 0 then c2 mod v2 else 0
-    and k = if v3 != 0 then c3 mod v3 else 0 in
-      i, j, k
+  let est_impair = (compte_cases c1 c2) mod 2 = 1 
+  and sont_alignees = sont_cases_alignee c1 c2 in
+    let i, j, k = translate c1 c2 in
+      if est_impair && sont_alignees then Some(i/2, j/2, k/2) else None
 ;;
 
 
@@ -249,13 +258,10 @@ let mod_case (c:case) (v:vecteur): vecteur =
   pas on renvoie un vecteur nul et une distance négatif.
 *)
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
-  let d = dist_entre_cases c1 c2 in 
-  let i, j, k = diff_case c1 c2 in 
-    let v0 = (0, 0, 0)
-    and v = i / d * (-1), j / d * (-1), k / d * (-1) in
-    match v with
-    | v when mod_case c1 v = v0 && mod_case c2 v = v0 -> v, d
-    | _ -> v0, -1
+  let d = max_dist_cases c1 c2
+  and i, j, k = diff_case c1 c2 in 
+    let v = i / d * (-1), j / d * (-1), k / d * (-1) in
+      if est_case v then v, d else (0, 0, 0), -1 
 ;;
 
 

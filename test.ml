@@ -257,7 +257,19 @@ assert (diff_case origine (-3, 6,-3) = ( 3,-6, 3)) ;;
 assert (diff_case origine ( 3, 3,-6) = (-3,-3, 6)) ;;
 
 
-print_endline "Testing: 'dist_entre_cases'" ;;
+print_endline "Testing: 'sont_cases_alignee'" ;;
+
+
+print_endline "Testing: 'dist_entre_coordonnees'" ;;
+
+
+print_endline "Testing: 'max_dist_cases'" ;;
+
+
+print_endline "Testing: 'min_dist_cases'" ;;
+
+
+print_endline "Testing: 'compte_cases'" ;;
 
 
 print_endline "Testing: 'sont_cases_voisines'" ;;
@@ -265,11 +277,39 @@ print_endline "Testing: 'sont_cases_voisines'" ;;
 
 print_endline "Testing: 'calcul_pivot'" ;;
 
+(* entre c1 et c2: 1 cases, alignées *)
+assert (calcul_pivot ( 0,-1, 1) ( 0, 1,-1) = Some (origine)) ;;
+assert (calcul_pivot ( 1, 0,-1) (-1, 0, 1) = Some (origine)) ;;
+assert (calcul_pivot (-1, 1, 0) ( 1,-1, 0) = Some (origine)) ;;
 
-print_endline "Testing: 'mod_case'" ;;
+(* entre c1 et c2: 3 cases, alignées *)
+assert (calcul_pivot ( 0,-2, 2) ( 0, 2,-2) = Some (origine)) ;;
+assert (calcul_pivot ( 2, 0,-2) (-2, 0, 2) = Some (origine)) ;;
+assert (calcul_pivot (-2, 2, 0) ( 2,-2, 0) = Some (origine)) ;;
+
+(* entre c1 et c2: 5 cases, alignées *)
+assert (calcul_pivot ( 0,-3, 3) ( 0, 3,-3) = Some (origine)) ;;
+assert (calcul_pivot ( 3, 0,-3) (-3, 0, 3) = Some (origine)) ;;
+assert (calcul_pivot (-3, 3, 0) ( 3,-3, 0) = Some (origine)) ;;
+
+(* entre c1 et c2: 1 cases, n'est pas alignées *)
+assert (calcul_pivot ( 0,-2, 2) ( 2, 0,-2) = None) ;;
+assert (calcul_pivot ( 2, 0,-2) (-2, 2, 0) = None) ;;
+assert (calcul_pivot (-2, 2, 0) ( 0,-2, 2) = None) ;;
+
+(* entre c1 et c2: 3 cases, n'est pas alignées *)
+assert (calcul_pivot ( 4,-2,-2) (-4, 2, 2) = None) ;;
+assert (calcul_pivot (-2, 4,-2) ( 2,-4, 2) = None) ;;
+assert (calcul_pivot (-2,-2, 4) ( 2, 2,-4) = None) ;;
+
+(* entre c1 et c2: 5 cases, pas alignées *)
+assert (calcul_pivot ( 6,-3,-3) (-6, 3, 3) = None) ;;
+assert (calcul_pivot (-3, 6,-3) ( 3,-6, 3) = None) ;;
+assert (calcul_pivot (-3,-3, 6) ( 3, 3,-6) = None) ;;
 
 
 print_endline "Testing: 'vec_et_dist'" ;;
 
 
 print_endline "Testing: END" ;;
+
