@@ -401,4 +401,3 @@ assert (vec_et_dist origine (-3, 0, 3) = ((-1, 0, 1), 3)) ;;
 assert (vec_et_dist origine ( 3, 0,-3) = (( 1, 0,-1), 3)) ;;
 
 print_endline "Testing: END" ;;
-
