@@ -8,16 +8,15 @@
 (* https://github.com/AlexLovser/Project-INF201 *)
 
 (** 
-  La [dimension] d'un plateau, noté [dim] par la suite, est un paramètre qui
-  encode la taille du plateau. Le plateau a [4 * dim + 1] lignes horizontales
-  que nous numérotons de bas en haut de [-2 * dim] à [2 * dim] et 
-  similairement pour les lignes obliques.
+  Dimension d'un plateau, est un paramètre qui encode la taille du plateau. 
+  Le plateau a [4 * dim + 1] lignes horizontales que nous numérotons de bas en 
+  haut de [-2 * dim] à [2 * dim] et similairement pour les lignes obliques.
 *)
 type dimension = int ;;
 
 
 (** 
-  Une [case] est définie par trois coordonnées [(i, j, k)], la case au centre
+  La case est définie par trois coordonnées [(i, j, k)], la case au centre
   du plateau de jeu a pour coordonnées [(0, 0, 0)]. Les coordonnées
   représentent:
 
@@ -31,27 +30,32 @@ type case = int * int * int ;;
 
 
 (** 
-  Le type [couleur] représente les couleurs des joueurs. Le constructeur
-  [Code] vous permet d'entrer vos propes noms de joueur restreint à trois
-  caractères. La couleur [Libre] est une couleur en plus pour coder
-  l'absence de joueur (dans une case ou pour le gagnant d'une partie).
+  Les couleurs des joueurs. Le constructeur [Code] permet d'entrer les noms de
+  joueur restreint à trois caractères. La couleur [Libre] est une couleur en 
+  plus pour coder l'absence de joueur.
 *)
-type couleur = Vert | Jaune | Rouge | Noir | Bleu | Marron
-               | Libre 
-               | Code of string  
+type couleur = 
+  | Vert 
+  | Jaune 
+  | Rouge 
+  | Noir 
+  | Bleu 
+  | Marron
+  | Libre 
+  | Code of string  
 ;;
 
 
 (**
-  Le fait qu'un pion d'une couleur [col] se situe sur une case [c] est codé
-  par un couple [(c, col)] que l'on appelle une case colorée.
+  Un pion d'une couleur [col] se situe sur une case [c] est codé par un couple 
+  [(c, col)] que l'on appelle une case colorée.
 *)
 type case_coloree  = case * couleur ;;
 
 
 (**
   Le [configuration] du jeu est donnée par un triplet formé d'une liste de
-  cases colorées, une liste de joueurs et une dimension. La liste decases 
+  cases colorées, une liste de joueurs et une dimension. La liste de cases 
   colorées donne l'emplacement des pions et leurs couleurs. On veillera à ce 
   que pour chaque case [c] il y ait au plus un pion sur cette case, c'est-à-dire
   il y a au plus une couleur [col] tel que le couple [(c, col)] est dans la 
@@ -76,7 +80,7 @@ type coup = Du of case * case | Sm of case list ;;
 
 (**
   Le type [vecteur] est synonyme du type [case] comme un vecteur permettant des 
-  translation.
+  translation avec les même proprièt
 *)
 type vecteur = case ;; 
 
