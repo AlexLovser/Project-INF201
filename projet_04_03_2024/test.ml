@@ -61,6 +61,9 @@ let r_vec : vecteur = randvec () ;;
 
 (* Testing de fonctions *)
 
+print_endline "Testing: Begin" ;;
+
+
 print_endline "Testing: 'indice_valide'" ;;
 (* -2 <= x <= 2 est valide pour dim = 1 *)
 assert (indice_valide (-2) 1 = true) ;;
@@ -343,6 +346,7 @@ assert (sont_cases_voisines (origine) (-1, 0, 1) = true) ;;
 assert (sont_cases_voisines (origine) ( 1, 0,-1) = true) ;;
 assert (sont_cases_voisines (origine) (-1, 1, 0) = true) ;;
 assert (sont_cases_voisines (origine) ( 1,-1, 0) = true) ;;
+
 
 print_endline "Testing: 'calcul_pivot'" ;;
 

@@ -8,9 +8,10 @@
 (* https://github.com/AlexLovser/Project-INF201 *)
 
 (** 
-  Dimension d'un plateau, est un paramètre qui encode la taille du plateau. 
-  Le plateau a [4 * dim + 1] lignes horizontales que nous numérotons de bas en 
-  haut de [-2 * dim] à [2 * dim] et similairement pour les lignes obliques.
+  Dimension d'un plateau, noté [dim] par la suite, est un paramètre qui encode la
+  taille du plateau. Le plateau a [4 * dim + 1] lignes horizontales que nous 
+  numérotons de bas en haut de [-2 * dim] à [2 * dim] et similairement pour les
+  lignes obliques.
 *)
 type dimension = int ;;
 
@@ -86,7 +87,7 @@ type vecteur = case ;;
 
 
 (**
-  Vérifie si la coordonnée [x] et valide dont la dimension [dim].
+  Vérifie si la coordonnée [x] et valide dans la dimension [dim].
 *)
 let indice_valide (x:int) (dim:dimension): bool =
   -2 * dim <= x && x <= 2 * dim
@@ -95,14 +96,16 @@ let indice_valide (x:int) (dim:dimension): bool =
 (**
   Vérifie si [c] est une case.
 *)
-let est_case (c:case): bool = let i, j, k = c in i + j + k = 0 ;;
+let est_case (c:case): bool = 
+  let i, j, k = c in i + j + k = 0 
+;;
 
 (**
   Vérifie si [c] est une case dans le losange North-South du plateau de 
   dimension [dim].
 *)
 let est_dans_losange (c:case) (dim:dimension): bool = 
-  let i, j, k = c in
+  let _, j, k = c in
     -dim <= j && j <= dim && 
     -dim <= k && k <= dim
 ;;     
@@ -112,7 +115,7 @@ let est_dans_losange (c:case) (dim:dimension): bool =
   dimension [dim].
 *)
 let est_dans_losange_2 (c:case) (dim:dimension): bool = 
-  let i, j, k = c in
+  let i, _, k = c in
     -dim <= i && i <= dim && 
     -dim <= k && k <= dim
 ;; 
@@ -123,11 +126,10 @@ let est_dans_losange_2 (c:case) (dim:dimension): bool =
   dimension [dim].
 *)
 let est_dans_losange_3 (c:case) (dim:dimension): bool = 
-  let i, j, k = c in
+  let i, j, _ = c in
     -dim <= i && i <= dim && 
     -dim <= j && j <= dim
 ;; 
-
 
 (**
   Vérifie si la case [c] est dans l'étoile de dimension [dim].
@@ -246,42 +248,38 @@ let sont_cases_voisines (c1:case) (c2:case): bool =
 let calcul_pivot (c1:case) (c2:case): case option =
   (* si le nombre de cases entre c1 et c2 est impair *)
   let est_impair = (compte_cases c1 c2) mod 2 = 1 
-  (* si les cases c1 et c2 sont alignées *)
-  and sont_alignees = sont_cases_alignee c1 c2 
   (* les coordonnées du vecteur de translation de c2 vers c1 *)
   and i, j, k = diff_case c1 c2 in 
     (* le vecteur de translation de c2 vers le mi-chemin de c1 *)    
     let v = i/2, j/2, k/2 in
     (* les coordonnées de pivot *)
     let p = translate c2 v in
-      if est_impair && sont_alignees 
-      then Some(p) (* si impair et alignées, pivot existe *)
-      else None    (* sinon, pivot n'existe pas *)
+      if est_impair && sont_cases_alignee c1 c2 
+        then Some(p) (* si impair et alignées, pivot existe *)
+        else None    (* sinon, pivot n'existe pas *)
 ;;
 
 
 (**
-  Renvoie la couple [(v, d)] avec [v] le vecteur de translation d'un déplacement 
+  Renvoie le couple [(v, d)] avec [v] le vecteur de translation d'un déplacement 
   unitaire de cases [c1] vers [c2] et avec [d] la distance entre c'est cases. 
   Si le vecteur unitaire n'existe pas, alors en renvoie [((0,0,0), -1)].
 *)
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
-  (* si les cases c1 et c2 ne sont pas alignées *)
-  let non_alignee = not (sont_cases_alignee c1 c2) in
-  if c1 = c2 || non_alignee then 
-    (0, 0, 0), -1 (* si c1 = c2 ou non alignées renvoie une distance négatif *)
-  else (* sinon *)
+  (* si c1 = c2 ou non alignées renvoie une distance négatif *)
+  if c1 = c2 || not (sont_cases_alignee c1 c2) then (0, 0, 0), -1 
+  else (* sinon ... *)
     (* la distance entres les cases *)
     let d = max_dist_cases c1 c2
     (* les coordonnées du vecteur de translation de c2 vers c1 *)
     and i, j, k = diff_case c1 c2 in 
-      (* les coordonnées du vecteur de translation unitaire de c2 vers c1 *)
-      let i, j, k = i/d, j/d, k/d in
-      (* le vecteur du translation unitaire de c1 vers c2 *)
-      let v = i * (-1), j * (-1), k * (-1) in
-        if est_case v 
-          then v, d (* si le vecteur à les propriétes d'une cases *)
-          else (0, 0, 0), -1 (* sinon *)
+    (* les coordonnées du vecteur de translation unitaire de c2 vers c1 *)
+    let i, j, k = i/d, j/d, k/d in
+    (* le vecteur de translation unitaire de c1 vers c2 *)
+    let v = i * (-1), j * (-1), k * (-1) in 
+      if est_case v 
+        then v, d (* si c'est un vecteur *)
+        else (0, 0, 0), -1 (* sinon *)
 ;;
 
 
