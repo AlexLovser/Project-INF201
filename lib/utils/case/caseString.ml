@@ -9,7 +9,7 @@ let string_of_case (c:case): string =
 
 
 (**
-
+  Renvoie une liste de type char avec les caractères de [s].
 *)
 let rec char_list_of_string (s:string): char list = 
   match s with

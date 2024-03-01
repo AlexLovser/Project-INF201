@@ -1,2 +1,3 @@
 (library
- (name constants))
+ (name constants)
+ (libraries types))
