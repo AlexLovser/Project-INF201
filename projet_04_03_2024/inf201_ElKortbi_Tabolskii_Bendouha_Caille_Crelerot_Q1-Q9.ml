@@ -144,14 +144,16 @@ let est_dans_etoile (c:case) (dim:dimension): bool =
   La case [c] est la case après avoir fait tourner le plateau de [m] sixième de
   tour dans le sens anti-horaire.
 *)
-let rec tourner_case (m:int) (c:case): case =
-  (* si la case est l'origine pas de sense la tourner *)
-  if c = (0, 0, 0) then c else 
-    let i, j, k = c
-    and m = m mod 6 in (* pas de sense tourner plusieur fois *)
+let tourner_case (m:int) (c:case): case =
+  (* réduction de nombre de fait pour tourner *)
+  let m = m mod 6 in 
+  (* équation récursive *)
+  let rec tourner_case_rec (m:int) (c:case): case =
+    let i, j, k = c in
       match m with
       | 0 -> i, j, k
-      | m -> tourner_case (m - 1) (-k, -i, -j)
+      | m -> tourner_case_rec (m - 1) (-k, -i, -j) 
+    in tourner_case_rec m c
 ;;
 
 
@@ -183,6 +185,7 @@ let sont_cases_alignee (c1:case) (c2:case): bool =
   let i1, j1, k1 = c1     
   and i2, j2, k2 = c2 in 
     match () with (* comparasion entre chaque de coordonnées *)
+    | _ when c1 = c2 -> false (* les doivent être de différentes valeurs *)
     | _ when i1 = i2 -> true (* s'ils sont alignées sur i, donc vrai *)
     | _ when j1 = j2 -> true (* s'ils sont alignées sur j, donc vrai *)
     | _ when k1 = k2 -> true (* s'ils sont alignées sur k, donc vrai *)
@@ -193,7 +196,7 @@ let sont_cases_alignee (c1:case) (c2:case): bool =
 (** 
   Un triplet de distances entre les coordonnées des cases [c1] et [c2].
 *)
-let dist_entre_coordonnees (c1:case) (c2:case): int * int * int =
+let dist_coords (c1:case) (c2:case): int * int * int =
   let i1, j1, k1 = c1
   and i2, j2, k2 = c2 in 
     let di = abs (i1 - i2) (* distance entre les coordonnées i *)
@@ -207,7 +210,7 @@ let dist_entre_coordonnees (c1:case) (c2:case): int * int * int =
   Distance maximale entre les coordonnées des cases [c1] et [c2].
 *)
 let max_dist_cases (c1:case) (c2:case): int =
-  let di, dj, dk = dist_entre_coordonnees c1 c2 in max di (max dj dk) 
+  let di, dj, dk = dist_coords c1 c2 in max di (max dj dk) 
 ;;
 
 
@@ -216,7 +219,7 @@ let max_dist_cases (c1:case) (c2:case): int =
   Distance minimale entre les coordonnées des cases [c1] et [c2].
 *)
 let min_dist_cases (c1:case) (c2:case): int =
-  let di, dj, dk = dist_entre_coordonnees c1 c2 in min di (min dj dk)
+  let di, dj, dk = dist_coords c1 c2 in min di (min dj dk)
 ;;
 
 
@@ -226,10 +229,13 @@ let min_dist_cases (c1:case) (c2:case): int =
   minimale.
 *)
 let compte_cases (c1:case) (c2:case): int = 
-  if sont_cases_alignee c1 c2 then 
-    max_dist_cases c1 c2 - 1 (* si les cases sont alignées *)
-  else 
-    min_dist_cases c1 c2 - 1 (* sinon *)
+  match () with
+  (* si les cases sont égal *)
+  | _ when c1 = c2 -> 0
+  (* si les cases sont alignées *)
+  | _ when sont_cases_alignee c1 c2 -> max_dist_cases c1 c2 - 1
+  (* sinon ... *)
+  | _ -> min_dist_cases c1 c2 - 1  
 ;;
 
 

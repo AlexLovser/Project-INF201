@@ -278,13 +278,13 @@ assert (sont_cases_alignee (-2, 2, 0) ( 1,-1, 0) = true) ;;
 assert (sont_cases_alignee ( 3,-3, 0) (-3, 3, 0) = true) ;;
 
 
-print_endline "Testing: 'dist_entre_coordonnees'" ;;
+print_endline "Testing: 'dist_coords'" ;;
 
 (* calcul de distances entres les coordonnées de cases *)
-assert (dist_entre_coordonnees ( 1, 1,-2) ( 3, 3,-6) = (2,2, 4)) ;;
-assert (dist_entre_coordonnees ( 0, 0, 0) ( 2, 2,-4) = (2,2, 4)) ;;
-assert (dist_entre_coordonnees (-3,-3, 6) ( 3, 3,-6) = (6,6,12)) ;;
-assert (dist_entre_coordonnees ( 0, 0, 0) ( 0, 0, 0) = (0,0, 0)) ;;
+assert (dist_coords ( 1, 1,-2) ( 3, 3,-6) = (2,2, 4)) ;;
+assert (dist_coords ( 0, 0, 0) ( 2, 2,-4) = (2,2, 4)) ;;
+assert (dist_coords (-3,-3, 6) ( 3, 3,-6) = (6,6,12)) ;;
+assert (dist_coords ( 0, 0, 0) ( 0, 0, 0) = (0,0, 0)) ;;
 
 
 print_endline "Testing: 'max_dist_cases'" ;;
@@ -304,6 +304,10 @@ assert (min_dist_cases ( 0, 0, 0) ( 0, 0, 0) = 0) ;;
 
 
 print_endline "Testing: 'compte_cases'" ;;
+
+(* entre c1 et c2: 0 cases *)
+assert (compte_cases r_case r_case = 0) ;;
+assert (compte_cases origine origine = 0) ;;
 
 (* entre c1 et c2: 1 cases *)
 assert (compte_cases ( 0,-1, 1) ( 0, 1,-1) = 1) ;;
