@@ -6,4 +6,5 @@ _build
 .gitignore
 .vscode
 random.ml
+test.ml
 .~lock.specification_projet.odt#
