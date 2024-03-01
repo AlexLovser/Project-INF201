@@ -1,2 +1,0 @@
-include CaseMath
-include CaseString
