@@ -366,6 +366,12 @@ affiche conf_vide ;;
   affiche (remplir_init [Code "Ali"; Code "Bob"; Code "Jim"] 3);;
 *)
 
+(*
+  ============================================================================== 
+  | TESTS                                                                      |
+  ==============================================================================  
+*)
+
 
 (* 
   Fonctions pour les tests 
@@ -380,7 +386,8 @@ let randint (a:int) (b:int): int =
 
 
 (**
-  Renvoie un triplet entier aléatoire dans l'intervalle [[a, b] * [a, b] * [a, b]]. 
+  Renvoie un triplet entier aléatoire dans l'intervalle 
+  [[a, b] * [a, b] * [a, b]]. 
 *)
 let randtriplet (a:int) (b:int): int * int * int =
   let x = randint a b
@@ -394,7 +401,8 @@ let randtriplet (a:int) (b:int): int * int * int =
 *)
 let rec randcase (dim:dimension): case =
   let c = randtriplet (-dim * 2) (dim * 2) in
-  if est_case c && est_dans_etoile c dim && c != (0,0,0) then c else randcase dim
+  if c != (0,0,0) && est_case c && est_dans_etoile c dim then c 
+  else randcase dim
 ;;
 
 (**
@@ -402,7 +410,8 @@ let rec randcase (dim:dimension): case =
 *)
 let rec randvec (): vecteur =
   let v = randtriplet (-1) 1 in
-  if est_case v && v != (0,0,0) then v else randvec ()
+  if est_case v && v != (0,0,0) then v 
+  else randvec ()
 ;;
 
 
