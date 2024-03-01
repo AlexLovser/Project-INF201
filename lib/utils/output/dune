@@ -1,0 +1,3 @@
+(library
+ (name output)
+ (libraries types case))

@@ -1,0 +1,3 @@
+(library
+ (name case)
+ (libraries types math stringUtils))
