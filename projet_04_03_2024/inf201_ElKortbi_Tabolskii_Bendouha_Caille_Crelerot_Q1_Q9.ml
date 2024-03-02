@@ -577,6 +577,15 @@ assert (indice_valide ( dim * 2 + 1) dim = false) ;;
 
 print_endline "Testing: 'est_case'" ;;
 
+(* (i,j,k) = (0,0,0) => 0 + 0 + 0 = 0 *)
+assert (est_case centre = true) ;;
+
+(* (i,j,k) = (-2,1,1) => -2 + 1 + 1 = 0 *)
+assert (est_case ((-2), 1, 1) = true) ;;
+
+(* (i,j,k) = (-2,1,0) => -2 + 1 + 0 <> 0 *)
+assert (est_case ((-2), 1, 0) = false) ;;
+
 (* i < -dim *)
 assert (est_case (-2 * dim, +1 * dim, +1 * dim)) ;; 
 
@@ -828,6 +837,11 @@ assert (sont_cases_voisines (centre) ( 1, 0,-1) = true) ;;
 assert (sont_cases_voisines (centre) (-1, 1, 0) = true) ;;
 assert (sont_cases_voisines (centre) ( 1,-1, 0) = true) ;;
 
+assert (sont_cases_voisines ( 1, 0,-1) centre = true) ;;
+assert (sont_cases_voisines ( 1, 0,-1) ( 1, 1,-2) = true) ;;
+assert (sont_cases_voisines ( 1, 0,-1) ( 2, 0,-2) = true) ;;
+assert (sont_cases_voisines ( 1, 0,-1) ( 2,-1,-1) = true) ;;
+assert (sont_cases_voisines ( 1, 0,-1) ( 0, 1,-1) = true) ;;
 
 print_endline "Testing: 'calcul_pivot'" ;;
 
