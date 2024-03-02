@@ -10,6 +10,7 @@
 
 (* https://github.com/AlexLovser/Project-INF201 *)
 
+
 (** 
   Dimension d'un plateau, noté [dim] par la suite, est un paramètre qui encode la
   taille du plateau. Le plateau a [4 * dim + 1] lignes horizontales que nous 
@@ -38,15 +39,15 @@ type case = int * int * int ;;
   joueur restreint à trois caractères. La couleur [Libre] est une couleur en 
   plus pour coder l'absence de joueur.
 *)
-type couleur = 
+type [@warning "-27"] couleur = 
   | Vert 
   | Jaune 
   | Rouge 
-  | Noir 
-  | Bleu 
-  | Marron
+  | Noir [@warning "-37"]  
+  | Bleu [@warning "-37"] 
+  | Marron [@warning "-37"] 
   | Libre 
-  | Code of string  
+  | Code of string [@warning "-37"] 
 ;;
 
 
@@ -79,7 +80,10 @@ type configuration = case_coloree list * couleur list * dimension ;;
   - les déplacements unitaires (constructeur [Du])
   - les sauts multiples (constructeur [Sm])
 *)
-type coup = Du of case * case | Sm of case list ;;
+type [@warning "-34"] coup = 
+| Du of case * case [@warning "-37"]  
+| Sm of case list   [@warning "-37"] 
+;;
 
 
 (**
@@ -90,78 +94,85 @@ type vecteur = case ;;
 
 
 (**
-  Vérifie si la coordonnée [x] et valide dans la dimension [dim].
+  [(indice_valide x dim)] vérifie si la coordonnée [x] et valide dans la 
+  dimension [dim].
 *)
 let indice_valide (x:int) (dim:dimension): bool =
   -2 * dim <= x && x <= 2 * dim
 ;;
 
+
 (**
-  Vérifie si [c] est une case.
+  [(est_case c)] vérifie si [c] est une case.
 *)
 let est_case (c:case): bool = 
   let i, j, k = c in i + j + k = 0 
 ;;
 
 (**
-  Vérifie si [c] est une case dans le losange North-South du plateau de 
-  dimension [dim].
+  [(est_dans_losange c dim)] vérifie si la case [c] est dans le losange 
+  North-South du plateau de dimension [dim].
 *)
 let est_dans_losange (c:case) (dim:dimension): bool = 
   let _, j, k = c in
     -dim <= j && j <= dim && 
     -dim <= k && k <= dim
-;;     
+;;    
+
 
 (**
-  Vérifie si la case [c] est dans le losange Northwest-Southeast du plateau de 
-  dimension [dim].
+  [(est_dans_losange_2 c dim)] vérifie si la case [c] est dans le losange 
+  Northwest-Southeast du plateau de dimension [dim].
 *)
 let est_dans_losange_2 (c:case) (dim:dimension): bool = 
   let i, _, k = c in
     -dim <= i && i <= dim && 
     -dim <= k && k <= dim
-;; 
+;;
 
 
 (**
-  Vérifie si la case [c] est dans le losange Northeast-Southwest du plateau de
-  dimension [dim].
+  [(est_dans_losange_3 c dim)] vérifie si la case [c] est dans le losange 
+  Northeast-Southwest du plateau de dimension [dim].
 *)
 let est_dans_losange_3 (c:case) (dim:dimension): bool = 
   let i, j, _ = c in
     -dim <= i && i <= dim && 
     -dim <= j && j <= dim
-;; 
+;;
 
 (**
-  Vérifie si la case [c] est dans l'étoile de dimension [dim].
+  [(est_dans_etoile) c dim] vérifie si la case [c] est dans l'étoile du plateau de 
+  dimension [dim].
 *)
 let est_dans_etoile (c:case) (dim:dimension): bool =
-  est_dans_losange c dim ||    (* l'union de trois losange est un étoile *)
+  (* l'union de trois losange est un étoile *)
+  est_dans_losange c dim || 
   est_dans_losange_2 c dim || 
   est_dans_losange_3 c dim
 ;;
 
+
 (**
-  La case [c] est la case après avoir fait tourner le plateau de [m] sixième de
-  tour dans le sens anti-horaire.
+  [(tourner_case m c)] c'est la case [c] après avoir fait tourner le plateau de 
+  [m] sixième de tour dans le sens anti-horaire.
 *)
 let tourner_case (m:int) (c:case): case =
   (* réduction de nombre de fait pour tourner *)
-  let m = m mod 6 in 
+  let m = m mod 6 in
   (* équation récursive *)
-  let rec tourner_case_rec (m:int) (c:case): case =
+  let rec tourner_case_rec (m:int) (c:case): case = 
     let i, j, k = c in
-      match m with
-      | 0 -> i, j, k
-      | m -> tourner_case_rec (m - 1) (-k, -i, -j) 
-    in tourner_case_rec m c
+    match m with
+    | 0 -> i, j, k
+    | m -> tourner_case_rec (m - 1) (-k, -i, -j) 
+  in tourner_case_rec m c
 ;;
 
 
 (**
-  Calcule la case par translation de vecteur [v] à partir de [c].
+  [(translate c v)] calcule la case par le translation du vecteur [v] à partir 
+  de [c].
 *)
 let translate (c:case) (v:vecteur): case =
   let c1, c2, c3 = c    (* les coordonnées de la case c *)
@@ -171,21 +182,21 @@ let translate (c:case) (v:vecteur): case =
 
 
 (**
-  La différence entre les des cases [c1] et [c2] est le vecteur de translation 
-  de [c2] vers [c1].
+  [(diff_case c1 c2)] c'est le vecteur de translation de [c2] vers [c1], 
+  calculer par la différence entre les cases [c1] et [c2].
 *)
 let diff_case (c1:case) (c2:case): vecteur =
-  let i1, j1, k1 = c1    
+  let i1, j1, k1 = c1 
   and i2, j2, k2 = c2 in 
     i1 - i2, j1 - j2, k1 - k2 (* la différence entre les coordonnées c1 et c2 *)
 ;;
 
 
 (**
-  Vérifie si les cases [c1] et [c2] sont alignées.
+  [(sont_cases_alignee c1 c2)] vérifie si les cases [c1] et [c2] sont alignées.
 *)
 let sont_cases_alignee (c1:case) (c2:case): bool =
-  let i1, j1, k1 = c1     
+  let i1, j1, k1 = c1 
   and i2, j2, k2 = c2 in 
     match () with (* comparasion entre chaque de coordonnées *)
     | _ when c1 = c2 -> false (* les doivent être de différentes valeurs *)
@@ -197,7 +208,8 @@ let sont_cases_alignee (c1:case) (c2:case): bool =
 
 
 (** 
-  Un triplet de distances entre les coordonnées des cases [c1] et [c2].
+  [(dist_coords c1 c2)] est un triplet de distances entre les coordonnées des 
+  cases [c1] et [c2].
 *)
 let dist_coords (c1:case) (c2:case): int * int * int =
   let i1, j1, k1 = c1
@@ -210,26 +222,30 @@ let dist_coords (c1:case) (c2:case): int * int * int =
 
 
 (**
-  Distance maximale entre les coordonnées des cases [c1] et [c2].
+  [(max_dist_cases c1 c2)] est la distance maximale entre les coordonnées des 
+  cases [c1] et [c2].
 *)
 let max_dist_cases (c1:case) (c2:case): int =
-  let di, dj, dk = dist_coords c1 c2 in max di (max dj dk) 
+  let di, dj, dk = dist_coords c1 c2 in 
+    max di (max dj dk) 
 ;;
 
 
 
 (**
-  Distance minimale entre les coordonnées des cases [c1] et [c2].
+  [(min_dist_cases c1 c2)] est la distance minimale entre les coordonnées des 
+  cases [c1] et [c2].
 *)
 let min_dist_cases (c1:case) (c2:case): int =
-  let di, dj, dk = dist_coords c1 c2 in min di (min dj dk)
+  let di, dj, dk = dist_coords c1 c2 in 
+    min di (min dj dk)
 ;;
 
 
 (**
-  Nombre de cases entres les cases [c1] et [c2]. Pour determiner ce nombre on
-  doit prendre la distance maximale si ils sont alignées, sinon la distance
-  minimale.
+  [(compte_cases c1 c2)] est le nombre de cases entres les cases [c1] et [c2]. 
+  Pour determiner ce nombre on prendent la distance maximale si ils sont 
+  alignées, sinon la distance minimale.
 *)
 let compte_cases (c1:case) (c2:case): int = 
   match () with
@@ -238,57 +254,60 @@ let compte_cases (c1:case) (c2:case): int =
   (* si les cases sont alignées *)
   | _ when sont_cases_alignee c1 c2 -> max_dist_cases c1 c2 - 1
   (* sinon ... *)
-  | _ -> min_dist_cases c1 c2 - 1  
+  | _ -> min_dist_cases c1 c2 - 1 
 ;;
 
 
 (**
-  Vérifie si les cases [c1] et [c2] sont voisines.
+  [(sont_cases_voisines c1 c2)] vérifie si les cases [c1] et [c2] sont voisines.
 *)
 let sont_cases_voisines (c1:case) (c2:case): bool =
   (* si les cases sont alignées et la distances entre eux est 1 *)
-  sont_cases_alignee c1 c2 && max_dist_cases c1 c2 = 1
-;;
+   sont_cases_alignee c1 c2 && max_dist_cases c1 c2 = 1
+ ;;
 
 
 (**
-  Calcul le pivot entre les cases [c1] et [c2] s'il existe, sinon [None].
+  [(calcul_pivot c1 c2)] calcul le pivot entre les cases [c1] et [c2] si ils 
+  sont alignées et le nombre de cases entre les deux est impair, sinon [None].
 *)
 let calcul_pivot (c1:case) (c2:case): case option =
   (* si le nombre de cases entre c1 et c2 est impair *)
   let est_impair = (compte_cases c1 c2) mod 2 = 1 
   (* les coordonnées du vecteur de translation de c2 vers c1 *)
   and i, j, k = diff_case c1 c2 in 
-    (* le vecteur de translation de c2 vers le mi-chemin de c1 *)    
+  (* le vecteur de translation de c2 vers le mi-chemin de c1 *) 
     let v = i/2, j/2, k/2 in
     (* les coordonnées de pivot *)
     let p = translate c2 v in
-      if est_impair && sont_cases_alignee c1 c2 
-        then Some(p) (* si impair et alignées, pivot existe *)
-        else None    (* sinon, pivot n'existe pas *)
+    if est_impair && sont_cases_alignee c1 c2 
+      then Some(p) (* si impair et alignées, pivot existe *)
+      else None    (* sinon, pivot n'existe pas *)
 ;;
 
 
 (**
-  Renvoie le couple [(v, d)] avec [v] le vecteur de translation d'un déplacement 
-  unitaire de cases [c1] vers [c2] et avec [d] la distance entre c'est cases. 
-  Si le vecteur unitaire n'existe pas, alors en renvoie [((0,0,0), -1)].
+  [(vec_et_dist c1 c2)] est le couple [(v, d)] avec [v] le vecteur de 
+  translation d'un déplacement unitaire des cases alignées [c1] vers [c2] et 
+  avec [d] la distance entre c'est cases. Si le vecteur unitaire n'existe pas, 
+  alors en renvoie [((0, 0, 0), 0)].
 *)
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
-  (* si c1 = c2 ou non alignées renvoie une distance négatif *)
-  if c1 = c2 || not (sont_cases_alignee c1 c2) then (0, 0, 0), -1 
+  (* si c1 = c2 ou non alignées renvoie nuls *)
+  if c1 = c2 || not (sont_cases_alignee c1 c2) then (0, 0, 0), 0
   else (* sinon ... *)
     (* la distance entres les cases *)
     let d = max_dist_cases c1 c2
     (* les coordonnées du vecteur de translation de c2 vers c1 *)
     and i, j, k = diff_case c1 c2 in 
-    (* les coordonnées du vecteur de translation unitaire de c2 vers c1 *)
+    (* les coordonnées du vecteur de translation unitaire de *)
+    (* c2 vers c1 *)
     let i, j, k = i/d, j/d, k/d in
     (* le vecteur de translation unitaire de c1 vers c2 *)
-    let v = i * (-1), j * (-1), k * (-1) in 
+    let v = i * (-1), j * (-1), k * (-1) in
       if est_case v 
         then v, d (* si c'est un vecteur *)
-        else (0, 0, 0), -1 (* sinon *)
+        else (0, 0, 0), 0 (*'sinon  *)
 ;;
 
 
@@ -303,7 +322,7 @@ let vec_et_dist (c1:case) (c2:case): vecteur * int =
 let transfo x y = (y, (x - y) / 2,(-x - y) / 2);;
 
 
-let associe (a:'a) (l:('a*'b) list) (defaut:'b): 'b = 
+let [@warning "-27"] associe (a:'a) (l:('a*'b) list) (defaut:'b): 'b = 
   defaut
 ;;
 
@@ -425,8 +444,8 @@ let rec randvec (): vecteur =
 (* dimenstion du plateau *)
 let dim : dimension = 3 ;; 
 
-(* l'origine du plateau et vecteur nuls *)
-let origine : case = (0, 0, 0) ;; 
+(* l'centre du plateau et vecteur nuls *)
+let centre : case = (0, 0, 0) ;; 
 let v_nuls : vecteur = (0, 0, 0) ;;
 
 (* une case alèatoire de taille dim *)
@@ -504,8 +523,8 @@ assert (est_dans_losange (-6, 3, 3) dim = true) ;;
 (* coin gauche *)
 assert (est_dans_losange ( 0,-3, 3) dim = true) ;; 
 
-(* origine du plateau *)
-assert (est_dans_losange origine dim = true) ;; 
+(* centre du plateau *)
+assert (est_dans_losange centre dim = true) ;; 
 
 (* coin droite *)
 assert (est_dans_losange ( 0, 3,-3) dim = true) ;;
@@ -522,8 +541,8 @@ assert (est_dans_losange_2 ( 3,-6, 3) dim = true) ;;
 (* coin supérieur droite *)
 assert (est_dans_losange_2 ( 3, 0,-3) dim = true) ;; 
 
-(* origine du plateau *)
-assert (est_dans_losange_2 origine dim = true) ;; 
+(* centre du plateau *)
+assert (est_dans_losange_2 centre dim = true) ;; 
 
 (* coin inférieur gauche *)
 assert (est_dans_losange_2 (-3, 0, 3) dim = true) ;; 
@@ -540,8 +559,8 @@ assert (est_dans_losange_3 ( 3,-3, 0) dim = true) ;;
 (* coin supérieur droite *)
 assert (est_dans_losange_3 ( 3, 3,-6) dim = true) ;; 
 
-(* origine du plateau *)
-assert (est_dans_losange_3 origine dim = true) ;; 
+(* centre du plateau *)
+assert (est_dans_losange_3 centre dim = true) ;; 
 
 (* coin inférieur gauche *)
 assert (est_dans_losange_3 (-3, 3, 0) dim = true) ;; 
@@ -561,8 +580,8 @@ assert (est_dans_etoile ( 3, 3,-6) dim = true) ;;
 (* tour supérieur gauche *)
 assert (est_dans_etoile ( 3,-6, 3) dim = true) ;;
 
-(* origine du plateau *)
-assert (est_dans_etoile origine dim = true) ;;
+(* centre du plateau *)
+assert (est_dans_etoile centre dim = true) ;;
 
 (* tour inférieur *)
 assert (est_dans_etoile (-6, 3, 3) dim = true) ;;
@@ -597,22 +616,22 @@ assert (tourner_case 5 ( 4, -2, -2) = ( 2, 2,-4)) ;;
 (* la case du tour supérieur tourne vers luis même *)
 assert (tourner_case 6 ( 4, -2, -2) = ( 4,-2,-2)) ;;
 
-(* la case du origine tourne vers lui même dans tous les cas *)
-assert (tourner_case (randint 0 1000) origine = origine) ;;
+(* la case du centre tourne vers lui même dans tous les cas *)
+assert (tourner_case (randint 0 1000) centre = centre) ;;
 
 
 print_endline "Testing: 'translate'" ;;
 
-(* translation d'un vecteur nuls par l'origine est une case 
-   origine *)
-assert (translate v_nuls origine = origine) ;;
+(* translation d'un vecteur nuls par l'centre est une case 
+   centre *)
+assert (translate v_nuls centre = centre) ;;
 
 (* translation d'un vecteur nuls vers une case renvoie la case *)
 assert (translate v_nuls r_case = r_case) ;;
 
-(* translation d'un n'importe quel vecteur vers origine renvoie une case 
+(* translation d'un n'importe quel vecteur vers centre renvoie une case 
   avec les coordonnées du vecteur. *)
-assert (translate r_vec origine = r_vec) ;;
+assert (translate r_vec centre = r_vec) ;;
 
 (* Quelque tests *)
 assert (translate (0, -1, 1) (-3, 2, 1) = (-3, 1, 2)) ;;
@@ -625,16 +644,16 @@ print_endline "Testing: 'diff_case'" ;;
 (* difference entre deux cases identique renvoie un vecteur nuls *)
 assert (diff_case r_case r_case = v_nuls) ;;
 
-(* difference entre c1 non nuls et l'origine (c2) renvoie le vecteur de
+(* difference entre c1 non nuls et l'centre (c2) renvoie le vecteur de
    translation qui est égal à c1 *)
-assert (diff_case r_case origine = r_case) ;;
+assert (diff_case r_case centre = r_case) ;;
 
-(* difference entre c2 non nuls et l'origine (c1) renvoie le vecteur de
+(* difference entre c2 non nuls et l'centre (c1) renvoie le vecteur de
    translation qui est le symetrique de c2 *)
-assert (diff_case origine (-1, 1, 0) = ( 1,-1, 0)) ;;
-assert (diff_case origine (-6, 3, 3) = ( 6,-3,-3)) ;;
-assert (diff_case origine (-3, 6,-3) = ( 3,-6, 3)) ;;
-assert (diff_case origine ( 3, 3,-6) = (-3,-3, 6)) ;;
+assert (diff_case centre (-1, 1, 0) = ( 1,-1, 0)) ;;
+assert (diff_case centre (-6, 3, 3) = ( 6,-3,-3)) ;;
+assert (diff_case centre (-3, 6,-3) = ( 3,-6, 3)) ;;
+assert (diff_case centre ( 3, 3,-6) = (-3,-3, 6)) ;;
 
 
 print_endline "Testing: 'sont_cases_alignee'" ;;
@@ -684,7 +703,7 @@ print_endline "Testing: 'compte_cases'" ;;
 
 (* entre c1 et c2: 0 cases *)
 assert (compte_cases r_case r_case = 0) ;;
-assert (compte_cases origine origine = 0) ;;
+assert (compte_cases centre centre = 0) ;;
 
 (* entre c1 et c2: 1 cases *)
 assert (compte_cases ( 0,-1, 1) ( 0, 1,-1) = 1) ;;
@@ -721,30 +740,30 @@ assert (compte_cases (-3,-3, 6) ( 3, 3,-6) = 5) ;;
 
 print_endline "Testing: 'sont_cases_voisines'" ;;
 
-assert (sont_cases_voisines (origine) ( 0,-1, 1) = true) ;;
-assert (sont_cases_voisines (origine) ( 0, 1,-1) = true) ;;
-assert (sont_cases_voisines (origine) (-1, 0, 1) = true) ;;
-assert (sont_cases_voisines (origine) ( 1, 0,-1) = true) ;;
-assert (sont_cases_voisines (origine) (-1, 1, 0) = true) ;;
-assert (sont_cases_voisines (origine) ( 1,-1, 0) = true) ;;
+assert (sont_cases_voisines (centre) ( 0,-1, 1) = true) ;;
+assert (sont_cases_voisines (centre) ( 0, 1,-1) = true) ;;
+assert (sont_cases_voisines (centre) (-1, 0, 1) = true) ;;
+assert (sont_cases_voisines (centre) ( 1, 0,-1) = true) ;;
+assert (sont_cases_voisines (centre) (-1, 1, 0) = true) ;;
+assert (sont_cases_voisines (centre) ( 1,-1, 0) = true) ;;
 
 
 print_endline "Testing: 'calcul_pivot'" ;;
 
 (* entre c1 et c2: 1 cases, alignées *)
-assert (calcul_pivot ( 0,-1, 1) ( 0, 1,-1) = Some (origine)) ;;
-assert (calcul_pivot ( 1, 0,-1) (-1, 0, 1) = Some (origine)) ;;
-assert (calcul_pivot (-1, 1, 0) ( 1,-1, 0) = Some (origine)) ;;
+assert (calcul_pivot ( 0,-1, 1) ( 0, 1,-1) = Some (centre)) ;;
+assert (calcul_pivot ( 1, 0,-1) (-1, 0, 1) = Some (centre)) ;;
+assert (calcul_pivot (-1, 1, 0) ( 1,-1, 0) = Some (centre)) ;;
 
 (* entre c1 et c2: 3 cases, alignées *)
-assert (calcul_pivot ( 0,-2, 2) ( 0, 2,-2) = Some (origine)) ;;
-assert (calcul_pivot ( 2, 0,-2) (-2, 0, 2) = Some (origine)) ;;
-assert (calcul_pivot (-2, 2, 0) ( 2,-2, 0) = Some (origine)) ;;
+assert (calcul_pivot ( 0,-2, 2) ( 0, 2,-2) = Some (centre)) ;;
+assert (calcul_pivot ( 2, 0,-2) (-2, 0, 2) = Some (centre)) ;;
+assert (calcul_pivot (-2, 2, 0) ( 2,-2, 0) = Some (centre)) ;;
 
 (* entre c1 et c2: 5 cases, alignées *)
-assert (calcul_pivot ( 0,-3, 3) ( 0, 3,-3) = Some (origine)) ;;
-assert (calcul_pivot ( 3, 0,-3) (-3, 0, 3) = Some (origine)) ;;
-assert (calcul_pivot (-3, 3, 0) ( 3,-3, 0) = Some (origine)) ;;
+assert (calcul_pivot ( 0,-3, 3) ( 0, 3,-3) = Some (centre)) ;;
+assert (calcul_pivot ( 3, 0,-3) (-3, 0, 3) = Some (centre)) ;;
+assert (calcul_pivot (-3, 3, 0) ( 3,-3, 0) = Some (centre)) ;;
 
 (* entre c1 et c2: 1 cases, n'est pas alignées *)
 assert (calcul_pivot ( 0,-2, 2) ( 2, 0,-2) = None) ;;
@@ -765,24 +784,24 @@ assert (calcul_pivot (-3,-3, 6) ( 3, 3,-6) = None) ;;
 print_endline "Testing: 'vec_et_dist'" ;;
 
 (* c1 et c2 non alignées *)
-assert (vec_et_dist (-6, 3, 3) ( 6,-3,-3) = ((origine), -1)) ;;
-assert (vec_et_dist ( 0,-3, 3) (-3, 3, 0) = ((origine), -1)) ;;
-assert (vec_et_dist (origine) (origine) = ((origine), -1)) ;;
+assert (vec_et_dist (-6, 3, 3) ( 6,-3,-3) = ((centre), 0)) ;;
+assert (vec_et_dist ( 0,-3, 3) (-3, 3, 0) = ((centre), 0)) ;;
+assert (vec_et_dist (centre) (centre) = ((centre), 0)) ;;
 
 (* c1 et c2 alignées, c1 vers c2 *)
-assert (vec_et_dist ( 0,-3, 3) origine = (( 0, 1,-1), 3)) ;;
-assert (vec_et_dist ( 0, 3,-3) origine = (( 0,-1, 1), 3)) ;;
-assert (vec_et_dist (-3, 3, 0) origine = (( 1,-1, 0), 3)) ;;
-assert (vec_et_dist ( 3,-3, 0) origine = ((-1, 1, 0), 3)) ;;
-assert (vec_et_dist (-3, 0, 3) origine = (( 1, 0,-1), 3)) ;;
-assert (vec_et_dist ( 3, 0,-3) origine = ((-1, 0, 1), 3)) ;;
+assert (vec_et_dist ( 0,-3, 3) centre = (( 0, 1,-1), 3)) ;;
+assert (vec_et_dist ( 0, 3,-3) centre = (( 0,-1, 1), 3)) ;;
+assert (vec_et_dist (-3, 3, 0) centre = (( 1,-1, 0), 3)) ;;
+assert (vec_et_dist ( 3,-3, 0) centre = ((-1, 1, 0), 3)) ;;
+assert (vec_et_dist (-3, 0, 3) centre = (( 1, 0,-1), 3)) ;;
+assert (vec_et_dist ( 3, 0,-3) centre = ((-1, 0, 1), 3)) ;;
 
 (* c1 et c2 alignées, c2 vers c1 *)
-assert (vec_et_dist origine ( 0,-3, 3) = (( 0,-1, 1), 3)) ;;
-assert (vec_et_dist origine ( 0, 3,-3) = (( 0, 1,-1), 3)) ;;
-assert (vec_et_dist origine (-3, 3, 0) = ((-1, 1, 0), 3)) ;;
-assert (vec_et_dist origine ( 3,-3, 0) = (( 1,-1, 0), 3)) ;;
-assert (vec_et_dist origine (-3, 0, 3) = ((-1, 0, 1), 3)) ;;
-assert (vec_et_dist origine ( 3, 0,-3) = (( 1, 0,-1), 3)) ;;
+assert (vec_et_dist centre ( 0,-3, 3) = (( 0,-1, 1), 3)) ;;
+assert (vec_et_dist centre ( 0, 3,-3) = (( 0, 1,-1), 3)) ;;
+assert (vec_et_dist centre (-3, 3, 0) = ((-1, 1, 0), 3)) ;;
+assert (vec_et_dist centre ( 3,-3, 0) = (( 1,-1, 0), 3)) ;;
+assert (vec_et_dist centre (-3, 0, 3) = ((-1, 0, 1), 3)) ;;
+assert (vec_et_dist centre ( 3, 0,-3) = (( 1, 0,-1), 3)) ;;
 
 print_endline "Testing: END" ;;

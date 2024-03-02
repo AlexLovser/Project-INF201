@@ -13,5 +13,8 @@
   tous envoyer dans caseine ... SVP n'oublier pas de lire le PDF quand a écrit !
 *)
 
-(* https://github.com/AlexLovser/Project-INF201 *)
-
+(* 
+    \\              GITHUB DU PROJET             //
+  >> https://github.com/AlexLovser/Project-INF201 <<
+    //                                           \\
+*)

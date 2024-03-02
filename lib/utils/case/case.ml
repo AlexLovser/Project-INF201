@@ -171,34 +171,36 @@ let calcul_pivot (c1:case) (c2:case): case option =
   let est_impair = (compte_cases c1 c2) mod 2 = 1 
   (* les coordonnées du vecteur de translation de c2 vers c1 *)
   and i, j, k = diff_case c1 c2 in 
-    (* le vecteur de translation de c2 vers le mi-chemin de c1 *)    
+  (* le vecteur de translation de c2 vers le mi-chemin de c1 *) 
     let v = i/2, j/2, k/2 in
     (* les coordonnées de pivot *)
     let p = translate c2 v in
-      if est_impair && sont_cases_alignee c1 c2 
-        then Some(p) (* si impair et alignées, pivot existe *)
-        else None    (* sinon, pivot n'existe pas *)
+    if est_impair && sont_cases_alignee c1 c2 
+      then Some(p) (* si impair et alignées, pivot existe *)
+      else None    (* sinon, pivot n'existe pas *)
 ;;
 
 
 (**
-  Renvoie le couple [(v, d)] avec [v] le vecteur de translation d'un déplacement 
-  unitaire de cases [c1] vers [c2] et avec [d] la distance entre c'est cases. 
-  Si le vecteur unitaire n'existe pas, alors en renvoie [((0,0,0), -1)].
+  [(vec_et_dist c1 c2)] est le couple [(v, d)] avec [v] le vecteur de 
+  translation d'un déplacement unitaire des cases alignées [c1] vers [c2] et 
+  avec [d] la distance entre c'est cases. Si le vecteur unitaire n'existe pas, 
+  alors en renvoie [((0, 0, 0), 0)].
 *)
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
-  (* si c1 = c2 ou non alignées renvoie une distance négatif *)
-  if c1 = c2 || not (sont_cases_alignee c1 c2) then (0, 0, 0), -1 
+  (* si c1 = c2 ou non alignées renvoie nuls *)
+  if c1 = c2 || not (sont_cases_alignee c1 c2) then (0, 0, 0), 0
   else (* sinon ... *)
     (* la distance entres les cases *)
     let d = max_dist_cases c1 c2
     (* les coordonnées du vecteur de translation de c2 vers c1 *)
     and i, j, k = diff_case c1 c2 in 
-    (* les coordonnées du vecteur de translation unitaire de c2 vers c1 *)
+    (* les coordonnées du vecteur de translation unitaire de *)
+    (* c2 vers c1 *)
     let i, j, k = i/d, j/d, k/d in
     (* le vecteur de translation unitaire de c1 vers c2 *)
-    let v = i * (-1), j * (-1), k * (-1) in 
+    let v = i * (-1), j * (-1), k * (-1) in
       if est_case v 
         then v, d (* si c'est un vecteur *)
-        else (0, 0, 0), -1 (* sinon *)
+        else (0, 0, 0), 0 (*'sinon  *)
 ;;
