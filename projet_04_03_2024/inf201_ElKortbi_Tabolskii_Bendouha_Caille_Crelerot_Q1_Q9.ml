@@ -8,6 +8,11 @@
    Akram Bendouha      <akram.bendouha@etu.univ-grenoble-alpes.fr 
   --------------------------------------------------------------------------- *)
 
+(* REMARQUE:
+  il y a quelques types/fonctions avec des warning, c'est a cause de dune pour 
+  bien l'executer.
+*)
+
 (* https://github.com/AlexLovser/Project-INF201 *)
 
 
