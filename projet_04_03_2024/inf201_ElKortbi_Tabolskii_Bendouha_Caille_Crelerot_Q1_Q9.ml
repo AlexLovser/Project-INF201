@@ -1,4 +1,4 @@
-(* -----------------------------------------------------------------------------
+(* ----------------------------------------------------------------------------
    inf201_El_Kortbi_Tabolskii_Q1-Q9.ml : cr Q1 Q9 projet: Groupe ima4_C
 
    Yassin El Kortbi    <elkortby@etu.univ-grenoble-alpes.fr> 
@@ -6,7 +6,7 @@
    Daniel Caille       <daniel.caille@etu.univ-grenoble-alpes.fr>
    Thomas Crelerot     <thomas.crelerot@etu.univ-grenoble-alpes.fr>
    Akram Bendouha      <akram.bendouha@etu.univ-grenoble-alpes.fr 
-  --------------------------------------------------------------------------- *)
+  -------------------------------------------------------------------------- *)
 
 (* REMARQUE:
   il y a quelques types/fonctions avec des warning, c'est a cause de dune pour 
@@ -17,8 +17,8 @@
 
 
 (** 
-  Dimension d'un plateau, noté [dim] par la suite, est un paramètre qui encode la
-  taille du plateau. Le plateau a [4 * dim + 1] lignes horizontales que nous 
+  Dimension d'un plateau, noté [dim] par la suite, est un paramètre qui encode 
+  la taille du plateau. Le plateau a [4 * dim + 1] lignes horizontales que nous
   numérotons de bas en haut de [-2 * dim] à [2 * dim] et similairement pour les
   lignes obliques.
 *)
@@ -41,7 +41,7 @@ type case = int * int * int ;;
 
 (** 
   Les couleurs des joueurs. Le constructeur [Code] permet d'entrer les noms de
-  joueur restreint à trois caractères. La couleur [Libre] est une couleur en 
+  joueur restreint à trois caractères. La couleur [Libre] est une couleur en
   plus pour coder l'absence de joueur.
 *)
 type [@warning "-27"] couleur = 
@@ -57,7 +57,7 @@ type [@warning "-27"] couleur =
 
 
 (**
-  Un pion d'une couleur [col] se situe sur une case [c] est codé par un couple 
+  Un pion d'une couleur [col] se situe sur une case [c] est codé par un couple
   [(c, col)] que l'on appelle une case colorée.
 *)
 type case_coloree  = case * couleur ;;
@@ -67,15 +67,16 @@ type case_coloree  = case * couleur ;;
   Le [configuration] du jeu est donnée par un triplet formé d'une liste de
   cases colorées, une liste de joueurs et une dimension. La liste de cases 
   colorées donne l'emplacement des pions et leurs couleurs. On veillera à ce 
-  que pour chaque case [c] il y ait au plus un pion sur cette case, c'est-à-dire
-  il y a au plus une couleur [col] tel que le couple [(c, col)] est dans la 
-  liste; l'absence de pion sur la case [c] sera codé par l'absence de couple 
-  [(c, col)] dans la liste et non pas avec [(c, Libre)]. La liste de joueur 
-  permet de savoir à qui est le tour (tête de liste) et quel sera le tour des 
-  suivants (en suivant l'ordre de la liste). Enfin même si elle ne change pas au
-  cours de la partie la [dimension] est donnée dans la configuration car nous 
-  devons pouvoir accéder facilement à celle-ci et pouvoir en changer si nous 
-  souhaitons faire une partie sur un plateau de taille différente.
+  que pour chaque case [c] il y ait au plus un pion sur cette case, 
+  c'est-à-dire il y a au plus une couleur [col] tel que le couple [(c, col)]
+  est dans la liste; l'absence de pion sur la case [c] sera codé par l'absence
+  de couple [(c, col)] dans la liste et non pas avec [(c, Libre)]. La liste de
+  joueur permet de savoir à qui est le tour (tête de liste) et quel sera le 
+  tour des suivants (en suivant l'ordre de la liste). Enfin même si elle ne 
+  change pas au cours de la partie la [dimension] est donnée dans la 
+  configuration car nous devons pouvoir accéder facilement à celle-ci et 
+  pouvoir en changer si nous souhaitons faire une partie sur un plateau de 
+  taille différente.
 *)
 type configuration = case_coloree list * couleur list * dimension ;;
 
@@ -92,7 +93,7 @@ type [@warning "-34"] coup =
 
 
 (**
-  Le type [vecteur] est synonyme du type [case] comme un vecteur permettant des 
+  Le type [vecteur] est synonyme du type [case] comme un vecteur permettant des
   translation avec les même proprièt
 *)
 type vecteur = case ;; 
@@ -147,8 +148,8 @@ let est_dans_losange_3 (c:case) (dim:dimension): bool =
 ;;
 
 (**
-  [(est_dans_etoile) c dim] vérifie si la case [c] est dans l'étoile du plateau de 
-  dimension [dim].
+  [(est_dans_etoile) c dim] vérifie si la case [c] est dans l'étoile du plateau
+  de dimension [dim].
 *)
 let est_dans_etoile (c:case) (dim:dimension): bool =
   (* l'union de trois losange est un étoile *)
@@ -159,7 +160,7 @@ let est_dans_etoile (c:case) (dim:dimension): bool =
 
 
 (**
-  [(tourner_case m c)] c'est la case [c] après avoir fait tourner le plateau de 
+  [(tourner_case m c)] c'est la case [c] après avoir fait tourner le plateau de
   [m] sixième de tour dans le sens anti-horaire.
 *)
 let tourner_case (m:int) (c:case): case =
@@ -193,7 +194,8 @@ let translate (c:case) (v:vecteur): case =
 let diff_case (c1:case) (c2:case): vecteur =
   let i1, j1, k1 = c1 
   and i2, j2, k2 = c2 in 
-    i1 - i2, j1 - j2, k1 - k2 (* la différence entre les coordonnées c1 et c2 *)
+    (* la différence entre les coordonnées c1 et c2 *)
+    i1 - i2, j1 - j2, k1 - k2 
 ;;
 
 
@@ -264,7 +266,8 @@ let compte_cases (c1:case) (c2:case): int =
 
 
 (**
-  [(sont_cases_voisines c1 c2)] vérifie si les cases [c1] et [c2] sont voisines.
+  [(sont_cases_voisines c1 c2)] vérifie si les cases [c1] et [c2] sont 
+  voisines.
 *)
 let sont_cases_voisines (c1:case) (c2:case): bool =
   (* si les cases sont alignées et la distances entre eux est 1 *)
@@ -316,8 +319,10 @@ let vec_et_dist (c1:case) (c2:case): vecteur * int =
 ;;
 
 
-(* 
-  AFFICHAGE
+(*
+  =============================================================================
+  | AFFICHAGE                                                                 |
+  =============================================================================
 *)
 
 (** 
@@ -349,7 +354,7 @@ let rec affiche_ligne (n:int) (m:int) (config:configuration): string =
     if m = 4 * dim + 1 then " " (* fin de ligne *)
     else
       let c = transfo m n in
-      if not ((n + m) mod 2 = 0) || not (est_dans_etoile c dim) then (*ceci est 
+      if not ((n + m) mod 2 = 0) || not (est_dans_etoile c dim) then (*ceci est
         une inter-case (case inutile d'un damier) ou hors de l'etoile *)
         "   " ^ affiche_ligne n (m + 1) config
       else (*ceci est une case ou bien en dehors du plateau*)
@@ -394,15 +399,11 @@ affiche conf_vide ;;
 *)
 
 (*
-  ============================================================================== 
-  | TESTS                                                                      |
-  ==============================================================================  
+  =============================================================================
+  | TESTS                                                                     |
+  =============================================================================
 *)
 
-
-(* 
-  Fonctions pour les tests 
-*)
 
 (**
   Renvoie un nombre entier alèatoire dans l'intervalle [[a, b]].
@@ -428,23 +429,14 @@ let randtriplet (a:int) (b:int): int * int * int =
 *)
 let rec randcase (dim:dimension): case =
   let c = randtriplet (-dim * 2) (dim * 2) in
-  if c != (0,0,0) && est_case c && est_dans_etoile c dim then c 
+  if c <> (0, 0, 0) && est_case c && est_dans_etoile c dim then c 
   else randcase dim
 ;;
 
 (**
   Renvoie un vecteur alèatoire non nuls de la taille 1.
 *)
-let rec randvec (): vecteur =
-  let v = randtriplet (-1) 1 in
-  if est_case v && v != (0,0,0) then v 
-  else randvec ()
-;;
-
-
-(* 
-  Variables pour les tests 
-*)
+let randvec (): vecteur = randcase 1 ;;
 
 (* dimenstion du plateau *)
 let dim : dimension = 3 ;; 
@@ -463,6 +455,79 @@ let r_vec : vecteur = randvec () ;;
 (* Testing de fonctions *)
 
 print_endline "Testing: Begin" ;;
+
+
+print_endline "Testing: 'randint'" ;;
+
+(* si l'intervale est sigleton n, alors le nombre est n *)
+assert(randint (-1) (-1) = -1) ;;
+assert(randint 0 0 = 0) ;;
+assert(randint 1 1 = 1) ;;
+
+(* le nombre n est entre les bornes n - a et n + b *)
+assert(
+  let a, b = 5, 10 in
+  let n = randint (7 - a) (7 + b) in a - n <= n && n <= n + b
+) ;;
+
+assert(
+  let a, b = -3, 20 in
+  let n = randint (10 - a) (10 + b) in a - n <= n && n <= n + b
+) ;;
+
+assert(
+  let a, b = 0, 0 in 
+  let n = randint (3 - a) (3 + b) in n - a <= n && n <= n + b
+) ;;
+
+
+print_endline "Testing: 'randtriplet'" ;;
+
+(* si l'intervale est un singleton n, alors le triplet est (n, n, n) *)
+assert(randtriplet (-1) (-1) = (-1, -1, -1)) ;;
+assert(randtriplet 0 0 = (0, 0, 0)) ;;
+assert(randtriplet 1 1 = (1, 1, 1)) ;;
+
+(* le nombre n est entre les bornes n - a et n + b dans le triplet *)
+assert(
+  let a, b = 5, 10
+  and n = 7 in
+  let n3 = randtriplet (n - a) (n + b) 
+    in (a - n, a - n, a - n) <= n3 && n3 <= (n + b, n + b, n + b)
+) ;;
+
+assert(
+  let a, b = -10, 20
+  and n = 15 in
+  let n3 = randtriplet (n - a) (n + b) 
+    in (a - n, a - n, a - n) <= n3 && n3 <= (n + b, n + b, n + b)
+) ;;
+
+assert(
+  let a, b = 0, 0
+  and n = 3 in
+  let n3 = randtriplet (n - a) (n + b) 
+    in (a - n, a - n, a - n) <= n3 && n3 <= (n + b, n + b, n + b)
+) ;;
+
+print_endline "Testing: 'randcase'" ;;
+
+(* un case aléatoire est toujour un case *)
+assert(let c = randcase 1 in c <> centre && est_case c) ;;
+assert(let c = randcase 2 in c <> centre && est_case c) ;;
+assert(let c = randcase 3 in c <> centre && est_case c) ;;
+assert(let c = randcase 4 in c <> centre && est_case c) ;;
+assert(let c = randcase 5 in c <> centre && est_case c) ;;
+
+
+print_endline "Testing: 'randvec'" ;;
+
+(* un vecteur aléatoire est toujour un vecteur *)
+assert(let v = randvec () in v <> centre && est_case v) ;;
+assert(let v = randvec () in v <> centre && est_case v) ;;
+assert(let v = randvec () in v <> centre && est_case v) ;;
+assert(let v = randvec () in v <> centre && est_case v) ;;
+assert(let v = randvec () in v <> centre && est_case v) ;;
 
 
 print_endline "Testing: 'indice_valide'" ;;
