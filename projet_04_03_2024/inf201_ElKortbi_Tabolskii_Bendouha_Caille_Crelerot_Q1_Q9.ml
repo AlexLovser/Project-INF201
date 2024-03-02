@@ -15,6 +15,11 @@
 
 (* https://github.com/AlexLovser/Project-INF201 *)
 
+(*
+  =============================================================================
+  | LES TYPES                                                                 |
+  =============================================================================
+*)
 
 (** 
   Dimension d'un plateau, noté [dim] par la suite, est un paramètre qui encode 
@@ -98,6 +103,11 @@ type [@warning "-34"] coup =
 *)
 type vecteur = case ;; 
 
+(*
+  =============================================================================
+  | LES FONCTIONS ET QUESTIONS                                                |
+  =============================================================================
+*)
 
 (**
   [(indice_valide x dim)] vérifie si la coordonnée [x] et valide dans la 
@@ -271,8 +281,8 @@ let compte_cases (c1:case) (c2:case): int =
 *)
 let sont_cases_voisines (c1:case) (c2:case): bool =
   (* si les cases sont alignées et la distances entre eux est 1 *)
-   sont_cases_alignee c1 c2 && max_dist_cases c1 c2 = 1
- ;;
+  sont_cases_alignee c1 c2 && max_dist_cases c1 c2 = 1
+;;
 
 
 (**
@@ -400,7 +410,7 @@ affiche conf_vide ;;
 
 (*
   =============================================================================
-  | TESTS                                                                     |
+  | LES TESTS                                                                 |
   =============================================================================
 *)
 
