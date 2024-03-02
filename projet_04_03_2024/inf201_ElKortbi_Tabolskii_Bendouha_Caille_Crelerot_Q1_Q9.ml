@@ -510,6 +510,7 @@ assert(
     in (a - n, a - n, a - n) <= n3 && n3 <= (n + b, n + b, n + b)
 ) ;;
 
+
 print_endline "Testing: 'randcase'" ;;
 
 (* un case aléatoire est toujour un case *)
