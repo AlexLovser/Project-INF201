@@ -768,8 +768,9 @@ assert (sont_cases_voisines ( 1, 0,-1) ( 0, 1,-1) = true) ;;
 
 
 (**
-  [(calcul_pivot c1 c2)] calcule le pivot entre les cases [c1] et [c2] si elles
-  sont alignees et le nombre de cases entre les deux est impair, sinon pn renvoie [None].
+  [(calcul_pivot c1 c2)] calcule le pivot entre les cases [c1] et [c2] si 
+  elles sont alignees et le nombre de cases entre les deux est impair, sinon 
+  on renvoie [None].
 *)
 let calcul_pivot (c1:case) (c2:case): case option =
   (* si le nombre de cases entre c1 et c2 est impair *)
