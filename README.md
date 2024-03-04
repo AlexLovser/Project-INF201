@@ -1,9 +1,9 @@
 
-# La dame chinoise
+# Les dames chinoises
 
 ![Ocaml](https://img.shields.io/endpoint?url=https://ci.ocamllabs.io/badge/mirage/ocaml-github/master&logo=ocaml)
 
-> **Version**: `0.0.1`
+> **Version**: `0.1.9`
 > 
 > **Package manager**: `Dune` 
 
@@ -48,7 +48,7 @@
 │   │
 │   └───utils
 │       │   dune
-│       │   utils.ml
+│       │   utils.ml 
 │       │
 │       ├───case
 │       │       case.ml
@@ -104,9 +104,7 @@
 > cd projet_04_03_2024 && ./execProjet.sh
 > ```
 
-> On a ecrit une bonne sepcification des fonctions dans:   Yassin El Kortbi    <elkortby@etu.univ-grenoble-alpes.fr> 
-   Aleksandr Tabolskii <aleksandr.tabolskii@etu.univ-grenoble-alpes.fr>  
-> 
+> On a ecrit une bonne sepcification des fonctions dans: 
 > [specification.pdf](/projet_04_03_2024/specification_projet_de_q1_9.pdf)
  ou [specification.odt](/projet_04_03_2024/specification_projet_de_q1_9.odt)
 
