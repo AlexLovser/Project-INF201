@@ -519,8 +519,7 @@ let translate (c:case) (v:vecteur): case =
 ;;
 
 (* 
-  translation d'un vecteur nuls par l'centre est une case 
-  centre 
+  translation d'un vecteur nul par le centre est une case centre 
 *) 
 assert (translate v_nuls centre = centre) ;;
 
@@ -672,7 +671,7 @@ assert (min_dist_cases ( 0, 0, 0) ( 0, 0, 0) = 0) ;;
 
 (**
   [(compte_cases c1 c2)] est le nombre de cases entres les cases [c1] et 
-  [c2]. Pour determiner ce nombre on prendent la distance maximale si ils 
+  [c2]. Pour determiner ce nombre on prend la distance maximale si ils 
   sont alignees, sinon la distance minimale.
 *)
 let compte_cases (c1:case) (c2:case): int = 
@@ -732,7 +731,7 @@ assert (compte_cases (-3,-3, 6) ( 3, 3,-6) = 5) ;;
   voisines.
 *)
 let sont_cases_voisines (c1:case) (c2:case): bool =
-  (* si les cases sont alignees et la distances entre eux est 1 *)
+  (* si les cases sont alignees et la distances entre eux est de 1 *)
   sont_cases_alignee c1 c2 && max_dist_cases c1 c2 = 1
 ;;
 
@@ -757,8 +756,8 @@ assert (sont_cases_voisines ( 1, 0,-1) ( 0, 1,-1) = true) ;;
 
 
 (**
-  [(calcul_pivot c1 c2)] calcul le pivot entre les cases [c1] et [c2] si ils
-  sont alignees et le nombre de cases entre les deux est impair, sinon [None].
+  [(calcul_pivot c1 c2)] calcule le pivot entre les cases [c1] et [c2] si elles
+  sont alignees et le nombre de cases entre les deux est impair, sinon pn renvoie [None].
 *)
 let calcul_pivot (c1:case) (c2:case): case option =
   (* si le nombre de cases entre c1 et c2 est impair *)
@@ -817,7 +816,7 @@ assert (calcul_pivot (-3,-3, 6) ( 3, 3,-6) = None) ;;
   alors en renvoie [((0, 0, 0), 0)].
 *)
 let vec_et_dist (c1:case) (c2:case): vecteur * int =
-  (* si c1 = c2 ou non alignees renvoie nuls *)
+  (* si c1 = c2 ou si ils sont non alignees  alors on renvoie nul *)
   if c1 = c2 || not (sont_cases_alignee c1 c2) then (0, 0, 0), 0
   else (* sinon ... *)
     (* la distance entres les cases *)
