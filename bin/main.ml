@@ -1,5 +1,16 @@
+(****************************************************************************)
+(*                                                                          *)
+(****************************************************************************)
+
+
 include Lib ;;
 
-affiche ([], [], 3) ;;
-print_endline "" ;;
 
+let config : configuration = ([], [], 3) ;;
+affiche config ;;
+
+
+(*
+  A essayer apres avoir fait remplir_init
+  affiche (remplir_init [Code "Ali";Code "Bob";Code "Jim"] 3);;
+*)
