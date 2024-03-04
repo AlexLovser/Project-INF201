@@ -1,6 +1,6 @@
 (* ---------------------------------------------------------------------------
    inf201_El_Kortbi_Tabolskii_Q1-Q9.ml : 
-   cr Q1 Q9 projet: Groupe ima4_C
+   cr Q1 Q9 projet: Groupe ima4
 
    Yassin El Kortbi    <elkortby@etu.univ-grenoble-alpes.fr> 
    Aleksandr Tabolskii <aleksandr.tabolskii@etu.univ-grenoble-alpes.fr>  
