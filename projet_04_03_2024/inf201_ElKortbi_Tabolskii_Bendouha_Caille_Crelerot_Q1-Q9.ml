@@ -15,6 +15,14 @@
 
 (* https://github.com/AlexLovser/Project-INF201 *)
 
+(*   1.Ce sont les cases du camp sud/ camp de départ du plateau qui satisfont la condition i<-dim;;
+     2.Ce sont les cases du camp nord/ camp d'arrivé du plateau qui satisfont la condition i>dim;; 
+     3 .Ce sont les cases du camp du côté supérieur gauche du plateau qui satisfont la condition j<-dim;;
+     4.C'est la case supérieur du plateau qui satisfait la condition (i,j,k) = (2dim,-dim,-dim);;
+     5.C'est la case supérieur gauche du plan sud/ camp de départ du plateau qui satisfait la condition (i,j,k) = (-dim-1,1,dim);;
+     6.Ce sont toutes les cases du plateau sauf celles des camps sud,supérieur gauche et supérieur droit qui satisfont la conditioni≥-dim ∧ j ≥-dim ∧ k ≥-dim
+
+*)
 
 (* ======================================================================== *)
 (* ======================= DEFINITION DE TYPES ============================ *)
