@@ -13,7 +13,10 @@
   bien l'executer.
 *)
 
-(* https://github.com/AlexLovser/Project-INF201 *)
+
+(* SPECIFICATION COMPLET (PDF), PROJET AVEC DUNE ET ETC. 
+    >> https://github.com/AlexLovser/Project-INF201 <<
+*)
 
 
 (* ======================================================================== *)
