@@ -104,12 +104,13 @@
 > cd projet_04_03_2024 && ./execProjet.sh
 > ```
 
-> On a ecrit une bonne sepcification des fonctions dans:
+> On a ecrit une bonne sepcification des fonctions dans:   Yassin El Kortbi    <elkortby@etu.univ-grenoble-alpes.fr> 
+   Aleksandr Tabolskii <aleksandr.tabolskii@etu.univ-grenoble-alpes.fr>  
 > 
 > [specification.pdf](/projet_04_03_2024/specification_projet_de_q1_9.pdf)
  ou [specification.odt](/projet_04_03_2024/specification_projet_de_q1_9.odt)
 
 
-Merci de lire ce ficher, si vous avez des questions:
-- `tabalex2005@gmail.com`
-- `ТВОЯ ПОЧТА ЯСИН`
+Merci de lire ce ficher, si vous avez des questions:   
+- Yassin El Kortbi    `elkortby@etu.univ-grenoble-alpes.fr`
+- Aleksandr Tabolskii `aleksandr.tabolskii@etu.univ-grenoble-alpes.fr`
