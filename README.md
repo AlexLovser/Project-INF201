@@ -101,7 +101,17 @@
 > **Comment l'utiliser?**
 >
 > ```bash
-> cd projet_04_03_2024 && ./execProjet.sh
+> ./ocaml_use_projet
+> ```
+> **ou avec dune**
+> ```bash
+> dune build     # pour construire le projet
+> ```
+> ```bash
+> dune exec main # pour executer le projet
+> ```
+> ```bash
+> dune test      # pour effectuer les tests
 > ```
 
 > On a ecrit une bonne sepcification des fonctions dans: 
