@@ -996,3 +996,25 @@ affiche conf_vide ;;
   A essayer apres avoir fait remplir_init
   affiche (remplir_init [Code "Ali"; Code "Bob"; Code "Jim"] 3);;
 *)
+
+(*Question 10*)
+
+let tourner_liste lst =
+  match lst with
+  |[] -> []
+  |hd::tl -> tl @ [hd]
+
+let rec der_liste lst =
+  match lst with
+  |[] -> failwith "La liste est vide"
+  |[x] -> x
+  |_::tl -> der_liste tl
+
+(*Question 11*)
+
+let rec remplir_segment (i, j, k: case) (m:int): case list =
+  if m <= 0 then []
+  else (i, j, k) :: remplir_segment (i, j + 1, k - 1) (m - 1) ;;  
+
+(*Question 12*)
+
