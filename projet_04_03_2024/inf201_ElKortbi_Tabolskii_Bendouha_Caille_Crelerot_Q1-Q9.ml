@@ -1063,6 +1063,12 @@ let rec tourner_cas_list (lc: case_coloree list): case_coloree list =
   | (cell, color)::q -> ((tourner_case 1 cell), color)::(tourner_cas_list q) 
 ;;
 
+let rec tourner_cas_list_multiple (lc: case_coloree list) (n: int): case_coloree list =
+  match n with
+  | 0 -> lc
+  | _ -> (tourner_cas_list_multiple (tourner_cas_list lc) (n - 1))
+;;
+
 let tourner_config (conf: configuration) : configuration =
   let grid, players, dim = conf in
   tourner_cas_list grid, players, dim
@@ -1092,37 +1098,36 @@ let after_conf: configuration = (after_colored_board, players, 3) ;;
 let _ = assert ((tourner_config before_conf) = after_conf)
 
 
-(* let rec init_remplir_plateau (joueurs: couleur list) (dim: dimension): case_coloree list =
-  
+let rec init_remplir_plateau (joueurs: couleur list) (dim: dimension) (nplayers: int): case_coloree list =
   match joueurs with
   | [] -> []
-  | h::q -> 
-    (
-      tourner_cas_list
+  | h::q -> (
+      tourner_cas_list_multiple
         (
           colorie
-            (
-              remplir_triangle_haut 
-              ((dim + 0), 0, (-dim + 1)) 
-              dim
-            ) 
             h
+            (
+              remplir_triangle_haut (dim, -dim, 0) dim
+            ) 
+            
         )
-    )
-    ::
-    (init_remplir_plateau q)
-;; *)
+        6 / nplayers
+    )::(init_remplir_plateau q)
+;;
 
-(* 
+let rec length (array: 'a list): int = 
+  match array with
+  | [] -> 0
+  | h::q -> 1 + length q
+;;
+
 let remplir_init (joueurs: couleur list) (dim: dimension): configuration =
-  let plat = (init_remplir_plateau joueurs dim) in
+  let nbj = length joueurs in
+  let plat = (init_remplir_plateau joueurs dim nbj) in
   plat, joueurs, dim 
 ;;
 
-let test_init_conf = remplir_init (
-  [(Code "Bla") ; (Code "Xyi") ; (Code "Suk") ;], 3
-) ;; *)
-
-remplir_triangle_haut 
-((dim + 0), 0, (-dim + 1)) 
-dim
+let test_init_conf = (
+  remplir_init 
+  [(Code "Bla") ; (Code "Xyi") ; (Code "Suk") ;]  dimension
+) ;;
