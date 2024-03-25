@@ -1055,8 +1055,6 @@ let _ = assert ((colorie (Code "XUY") board) = [
 ]) ;;
 
 
-
-
 (*Question 15*)
 
 let rec tourner_cas_list (lc: case_coloree list): case_coloree list =
@@ -1092,3 +1090,39 @@ let before_conf: configuration = (before_colored_board, players, 3) ;;
 let after_conf: configuration = (after_colored_board, players, 3) ;;
 
 let _ = assert ((tourner_config before_conf) = after_conf)
+
+
+(* let rec init_remplir_plateau (joueurs: couleur list) (dim: dimension): case_coloree list =
+  
+  match joueurs with
+  | [] -> []
+  | h::q -> 
+    (
+      tourner_cas_list
+        (
+          colorie
+            (
+              remplir_triangle_haut 
+              ((dim + 0), 0, (-dim + 1)) 
+              dim
+            ) 
+            h
+        )
+    )
+    ::
+    (init_remplir_plateau q)
+;; *)
+
+(* 
+let remplir_init (joueurs: couleur list) (dim: dimension): configuration =
+  let plat = (init_remplir_plateau joueurs dim) in
+  plat, joueurs, dim 
+;;
+
+let test_init_conf = remplir_init (
+  [(Code "Bla") ; (Code "Xyi") ; (Code "Suk") ;], 3
+) ;; *)
+
+remplir_triangle_haut 
+((dim + 0), 0, (-dim + 1)) 
+dim
