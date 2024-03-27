@@ -908,11 +908,14 @@ let transfo (x:int) (y:int): int * int * int =
 
 (**
   [(associe c lcc defaut)] vaut [col] si [(c,col)] est dans la liste et 
-  [defaut] sinon. Si plusieurs couple avec [c] existe le premier est utilisé.
+  [defaut] sinon. Si plusieurs couple avec [c]existe le premier est utilisé.
 *)
-let [@warning "-27"] 
+let [@warning "-27"] rec
   associe (c:case) (lcc:case_coloree list) (defaut:couleur): couleur =
-    defaut
+    match lcc with
+    | [] -> defaut
+    | (k, col)::q when k = c -> col
+    | _::q -> associe c q defaut
 ;;
 
 
@@ -1040,19 +1043,19 @@ let board: case list = [(1, 2, 3); (1, 2, 3) ; (1, 2, 3) ; (1, 2, 3)] ;;
 
 (*Question 14*)
 let rec colorie (coul: couleur) (lc: case list) : case_coloree list = 
-  let current_color = match coul with | Code _ -> Libre | _ -> coul in
+  (* let current_color = match coul with | Code _ -> Libre | _ -> coul in *)
   match lc with
   | [] -> []
-  | h::q -> (h, current_color)::(colorie current_color q)
+  | h::q -> (h, coul)::(colorie coul q)
 ;;
 
 (* Tests *)
-let _ = assert ((colorie (Code "XUY") board) = [
+(* let _ = assert ((colorie (Code "XUY") board) = [
   ((1, 2, 3), Libre) ; 
   ((1, 2, 3), Libre) ; 
   ((1, 2, 3), Libre) ; 
   ((1, 2, 3), Libre) 
-]) ;;
+]) ;; *)
 
 
 (*Question 15*)
@@ -1101,18 +1104,16 @@ let _ = assert ((tourner_config before_conf) = after_conf)
 let rec init_remplir_plateau (joueurs: couleur list) (dim: dimension) (nplayers: int): case_coloree list =
   match joueurs with
   | [] -> []
-  | h::q -> (
-      tourner_cas_list_multiple
-        (
-          colorie
-            h
-            (
-              remplir_triangle_haut (dim, -dim, 0) dim
-            ) 
-            
-        )
-        6 / nplayers
-    )::(init_remplir_plateau q)
+  | h::q -> 
+    let triangle = remplir_triangle_haut (0, 0, 0) dim in
+    let colored_triangle = colorie h triangle in
+    let nrotations = 6 / nplayers in
+
+    (* let current = tourner_cas_list_multiple colored_triangle 0 in *) 
+    let current = colored_triangle in
+    let next = init_remplir_plateau q dim nplayers in
+
+    current @ next
 ;;
 
 let rec length (array: 'a list): int = 
@@ -1129,5 +1130,25 @@ let remplir_init (joueurs: couleur list) (dim: dimension): configuration =
 
 let test_init_conf = (
   remplir_init 
-  [(Code "Bla") ; (Code "Xyi") ; (Code "Suk") ;]  dimension
+  [Rouge ]  3
 ) ;;
+
+
+
+affiche(test_init_conf)
+
+(* (i, j, k)
+::(i + 1, j + 1, k + 1)
+::(i + 1, j, k)
+::(i, j + 1, k)
+::(i, j, k + 1)
+::(i + 1, j + 1, k)
+::(i + 1, j, k + 1)
+::(i, j + 1, k + 1)
+::(i - 1, j - 1, k - 1)
+::(i - 1, j, k)
+::(i, j - 1, k)
+::(i, j, k - 1)
+::(i - 1, j - 1, k)
+::(i - 1, j, k - 1)
+::(i, j - 1, k - 1) *)
