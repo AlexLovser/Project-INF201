@@ -1100,27 +1100,32 @@ let after_conf: configuration = (after_colored_board, players, 3) ;;
 
 let _ = assert ((tourner_config before_conf) = after_conf)
 
-
-let rec init_remplir_plateau (joueurs: couleur list) (dim: dimension) (nplayers: int): case_coloree list =
-  match joueurs with
-  | [] -> []
-  | h::q -> 
-    let triangle = remplir_triangle_haut (0, 0, 0) dim in
-    let colored_triangle = colorie h triangle in
-    let nrotations = 6 / nplayers in
-
-    (* let current = tourner_cas_list_multiple colored_triangle 0 in *) 
-    let current = colored_triangle in
-    let next = init_remplir_plateau q dim nplayers in
-
-    current @ next
-;;
-
 let rec length (array: 'a list): int = 
   match array with
   | [] -> 0
   | h::q -> 1 + length q
 ;;
+
+
+let rec init_remplir_plateau (joueurs: couleur list) (dim: dimension) (nplayers: int): case_coloree list =
+  let current_len = length joueurs in
+
+  match joueurs with
+  | [] -> []
+  | h::q -> 
+    (* let triangle = remplir_triangle_haut (dim + 1, -dim, -1) dim in *)
+    let triangle = remplir_triangle_haut (dim + 1, -dim, -1) dim in
+    let colored_triangle = colorie h triangle in
+    let nrotations = 6 / nplayers in
+
+    let current = tourner_cas_list_multiple colored_triangle (nrotations * (nplayers - current_len)) in 
+    (* let current = colored_triangle in *)
+    let next = init_remplir_plateau q dim nplayers in
+
+    current @ next
+;;
+
+
 
 let remplir_init (joueurs: couleur list) (dim: dimension): configuration =
   let nbj = length joueurs in
@@ -1128,9 +1133,15 @@ let remplir_init (joueurs: couleur list) (dim: dimension): configuration =
   plat, joueurs, dim 
 ;;
 
+(* #trace remplir_triangle_haut
+#trace colorie
+#trace tourner_cas_list_multiple
+#trace init_remplir_plateau
+#trace remplir_init *)
+
 let test_init_conf = (
   remplir_init 
-  [Rouge ]  3
+  [Rouge ; Vert; Jaune; Marron; ]  4
 ) ;;
 
 
