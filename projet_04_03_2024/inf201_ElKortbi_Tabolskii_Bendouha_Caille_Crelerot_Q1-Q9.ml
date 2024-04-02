@@ -1035,9 +1035,6 @@ let rec remplir_triangle_haut (i, j, k) m =
   else 
     remplir_segment (i, j, k) m @ remplir_triangle_haut (i + 1, j , k - 1) (m - 1);;
 
-(*En cours de travail pour la question 13, en effet un test avec (-3,4-1) renvoie [(-3, 4, -1); (-3, 5, -2); (-3, 6, -3); (-2, 4, -2); (-2, 5, -3);
-(-3, 5, -2)] au lieu de [(-3, 4, -1); (-3, 5, -2); (-3, 6, -3); (-2, 4, -2); (-2, 5, -3); (-1, 4, -3)]*)
-
 
 let board: case list = [(1, 2, 3); (1, 2, 3) ; (1, 2, 3) ; (1, 2, 3)] ;;
 
