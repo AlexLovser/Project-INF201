@@ -1160,3 +1160,13 @@ affiche(test_init_conf)
 ::(i - 1, j - 1, k)
 ::(i - 1, j, k - 1)
 ::(i, j - 1, k - 1) *)
+
+(*Question 18*)
+let rec supprime_dans_config (conf:case_coloree list)(c:case):case_coloree list=
+   match conf with
+   | [] -> []
+   | (c', _) :: tl when c = c' -> supprime_dans_config tl c
+   | hd :: tl -> hd :: supprime_dans_config tl c;;
+
+(*Question 19*)
+
