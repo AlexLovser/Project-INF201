@@ -65,7 +65,7 @@ type [@warning "-27"] couleur =
 
 
 (**
-  Un pion d'une couleur [col] se situe sur une case [c] est code par un couple
+  Un pion d'une couleur [col] se situe sur une case [c] est code par un cole
   [(c, col)] que l'on appelle une case coloree.
 *)
 type case_coloree  = case * couleur ;;
@@ -1143,7 +1143,7 @@ let test_init_conf = (
 
 
 
-affiche(test_init_conf)
+affiche(test_init_conf);;
 
 (* (i, j, k)
 ::(i + 1, j + 1, k + 1)
@@ -1169,4 +1169,10 @@ let rec supprime_dans_config (conf:case_coloree list)(c:case):case_coloree list=
    | hd :: tl -> hd :: supprime_dans_config tl c;;
 
 (*Question 19*)
-
+let rec trouver_couleur (conf:case_coloree list) (c:case):couleur=
+  match conf with
+  |[]-> Libre
+  |[(c, x)]-> x
+  |(v,x)::tl-> if v=c then x else trouver_couleur tl c;;
+let est_coup_valide (conf:case_coloree list)(Du(c1,c2):coup):bool= if sont_cases_voisines c1 c2= true && associe c1 conf Libre<>Libre && associe c2 conf Libre=Libre then true else false;;
+(*Fonction pas fini, toutes les conditions pour que le coup soit valide n'ont pas été mises*)
