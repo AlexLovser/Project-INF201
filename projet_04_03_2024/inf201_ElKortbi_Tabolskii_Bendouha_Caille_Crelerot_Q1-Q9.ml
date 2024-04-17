@@ -65,7 +65,7 @@ type [@warning "-27"] couleur =
 
 
 (**
-  Un pion d'une couleur [col] se situe sur une case [c] est code par un cole
+  Un pion d'une couleur [col] se situe sur une case [c] est code par un couple
   [(c, col)] que l'on appelle une case coloree.
 *)
 type case_coloree  = case * couleur ;;
@@ -1147,7 +1147,7 @@ let test_init_conf = (
 
 
 
-affiche(test_init_conf);;
+affiche(test_init_conf)
 
 (* (i, j, k)
 ::(i + 1, j + 1, k + 1)
@@ -1166,21 +1166,10 @@ affiche(test_init_conf);;
 ::(i, j - 1, k - 1) *)
 
 (*Question 18*)
-let rec supprime_dans_config ((cc_list,c_list,dim):configuration)(c:case):configuration=
-  let rec supprime_dans_config1 (conf:case_coloree list)(c:case):case_coloree list=
-    match conf with
-    | [] -> []
-    | (c', _) :: tl when c = c' -> tl
-    | hd :: tl -> hd :: supprime_dans_config1 tl c in
-  (supprime_dans_config1 cc_list c,c_list,dim);;
+let rec supprime_dans_config (conf:case_coloree list)(c:case):case_coloree list=
+   match conf with
+   | [] -> []
+   | (c', _) :: tl when c = c' -> supprime_dans_config tl c
+   | hd :: tl -> hd :: supprime_dans_config tl c;;
 
 (*Question 19*)
-let rec trouver_couleur (conf:case_coloree list) (c:case):couleur=
-  match conf with
-  |[]-> Libre
-  |[(c, x)]-> x
-  |(v,x)::tl-> if v=c then x else trouver_couleur tl c;;
-let est_coup_valide ((cc_list,c_list,dim):configuration)(Du(c1,c2):coup):bool= if sont_cases_voisines c1 c2= true && associe c1 cc_list Libre<>Libre && associe c2 cc_list Libre=Libre && est_dans_losange c2 dim = true then true else false;;
-(*Fonction pas fini, il manque la condition où on v"rifie que c'est bien le tor du pion en c1*)
-
-(*Question 20*)
