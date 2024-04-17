@@ -21,79 +21,29 @@
 ### La stucture du projet:
 ```bash
 @ROOT
-│   .gitignore
-│   dune-project
-│   project_inf201.opam
-│   README.md
-│
-├───.trash
-│       fail.ml
-│       projet.ml
-│
-├───bin
-│       dune
-│       main.ml
-│
-├───lib
-│   │   dune
-│   │   lib.ml
-│   │
-│   ├───constants
-│   │       constants.ml
-│   │       dune
-│   │
-│   ├───types
-│   │       dune
-│   │       types.ml
-│   │
-│   └───utils
-│       │   dune
-│       │   utils.ml 
-│       │
-│       ├───case
-│       │       case.ml
-│       │       caseString.ml
-│       │       dune
-│       │
-│       ├───listes
-│       │       sequences.ml
-│       │
-│       ├───math
-│       │       dune
-│       │       math.ml
-│       │
-│       ├───output
-│       │       dune
-│       │       output.ml
-│       │
-│       └───string
-│               dune
-│               stringUtils.ml
-│
-├───projet_04_03_2024
-│   │   dames_chinoises_etd.pdf
-│   │   execProjet.sh
-│   │   inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1_Q9.ml
-│   │   lien_dans_git.ml
-│   │   specification_projet_de_q1_9.odt
-│   │   specification_projet_de_q1_9.pdf
-│   │
-│   └───gimp
-│           axes_couleur.eps
-│           axes_couleur.xcf
-│           est_case_intersection.png
-│           losange_etoile.png
-│           losange_north-south.png
-│           losange_northeast-southwest.png
-│           losange_northwest-southeast.png
-│           tourner_case.png
-│
-└───test
-        dune
-        test.ml
+├── .trash
+│   └── ...
+├── docs
+│   ├── dames_chinoises_etd.pdf
+│   ├── gimp
+│   │   ├── axes_couleur.eps
+│   │   ├── axes_couleur.xcf
+│   │   ├── est_case_intersection.png
+│   │   ├── losange_etoile.png
+│   │   ├── losange_northeast-southwest.png
+│   │   ├── losange_north-south.png
+│   │   ├── losange_northwest-southeast.png
+│   │   └── tourner_case.png
+│   ├── specification_projet_de_q1_9.odt
+│   └── specification_projet_de_q1_9.pdf
+├── LICENSE
+├── ocaml_use_projet.sh
+├── README.md
+└── src
+    └── inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1-Q9.ml
 ```
 
-> ***Si** vous avez besoin de projet dans un seul ficher on l'ai mis ici:*<br>[/projet_04_03_2024/inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1_Q9.ml](/projet_04_03_2024/inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1_Q9.ml)
+> ***Si** vous avez besoin de projet dans un seul ficher on l'ai mis ici:*<br>[/src/inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1_Q9.ml](/projet_04_03_2024/inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1_Q9.ml)
 
 
 > ***Sinon**, on a bien organise tous dans le dossier*:<br>[/lib/](/lib/)

@@ -1,3 +1,0 @@
-(library
- (name output)
- (libraries types stringUtils case))

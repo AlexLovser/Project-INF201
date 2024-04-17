@@ -1,3 +1,0 @@
-(library
- (name lib)
- (libraries utils types constants))

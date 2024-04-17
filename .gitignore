@@ -1,8 +1,4 @@
 .old
-# bin
-# lib
-# test
 _build
-.gitignore
 .vscode
 .~lock.specification_projet_de_q1_9.odt#
