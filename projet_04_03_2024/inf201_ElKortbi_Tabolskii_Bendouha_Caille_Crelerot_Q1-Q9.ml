@@ -1123,11 +1123,15 @@ let rec init_remplir_plateau (joueurs: couleur list) (dim: dimension) (nplayers:
 ;;
 
 
+let rec tourner_joueurs (n: int) (plat: case_coloree list): case_coloree list =
+  match n with
+  | 0 -> plat
+  | n -> tourner_joueurs (n - 1) (tourner_cas_list plat)
 
 let remplir_init (joueurs: couleur list) (dim: dimension): configuration =
   let nbj = length joueurs in
   let plat = (init_remplir_plateau joueurs dim nbj) in
-  plat, joueurs, dim 
+  tourner_joueurs 3 plat, joueurs, dim 
 ;;
 
 (* #trace remplir_triangle_haut
@@ -1138,7 +1142,7 @@ let remplir_init (joueurs: couleur list) (dim: dimension): configuration =
 
 let test_init_conf = (
   remplir_init 
-  [Rouge ; Vert; Jaune; Marron; ]  4
+  [Rouge;]  3
 ) ;;
 
 
