@@ -1211,6 +1211,16 @@ let [@warning "-8"] appliquer_coup (((case, couleur)::tl, c_list, dim): configur
   ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim)
 (* j'ai fais cette fonciton avec un List.map car on suppose que que le coup est valide*) ;;
 
+(* tests de quelques coup avec la fonction appliquer_coup *)
+let coup1 = appliquer_coup (test_init_conf) (Du(( -4,1,3), ( -3,0,3))) ;;
+let coup2 = appliquer_coup (coup1) (Du(( -3,0,3), ( -2,-1,3))) ;;
+let coup3 = appliquer_coup (coup2) (Du(( -2,-1,3), ( -1,-1,2))) ;;
+let coup4 = appliquer_coup (coup3) (Du(( -4,2,2), ( -3,2,1))) ;;
+affiche coup1 ;;
+affiche coup2 ;;
+affiche coup3 ;;
+affiche coup4 ;;
+
 (*Question 21*) 
 
 let mettre_a_jour_configuration (conf: configuration)(cp: coup) : configuration = 
