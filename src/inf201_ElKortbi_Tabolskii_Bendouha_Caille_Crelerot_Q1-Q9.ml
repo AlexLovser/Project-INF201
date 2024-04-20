@@ -1230,3 +1230,21 @@ let est_saut ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration): bool =
   else if (est_libre_seg (a1,a2,a3) (b1,b2,b3) conf)=true then false (* Si la case entre est libre, ce n'est pas un saut valide *)
   else true ;;
 
+  (*Question 24*) 
+  
+(* il y a un pattern matching exhaustive mais on peut l'ignorer car si la case list est <3 cela renvoie false *)
+
+let [@warning "-8"] rec est_saut_multiple ((a1, a2, a3)::tl : case list) (conf: configuration) : bool =
+  if (List.length ((a1, a2, a3)::tl))<3 then false (* si la liste contient moins de trois éléments alors cela ne peut pas être un saut multiple *)
+  else
+    match (a1, a2, a3)::tl with 
+    |[] | [_] -> true (* Si la liste est vide ou contient une seule case à la fin de la récursive alors c'est un saut multiple valide *)
+    | (a1, a2, a3) ::(b1,b2,b3):: tl ->
+        if est_saut (a1, a2, a3) (b1,b2,b3) conf then
+          est_saut_multiple ((b1,b2,b3)::tl) conf (* si le saut entre c1 et c2 est valide alors on vérifie le reste de la liste *)
+        else
+          false (* Si un des sauts n'est pas valide, le saut multiple n'est pas valide *) ;;
+              
+
+
+
