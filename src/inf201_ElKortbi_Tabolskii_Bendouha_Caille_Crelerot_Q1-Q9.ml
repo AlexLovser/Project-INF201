@@ -1253,6 +1253,12 @@ let est_libre_seg ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration) : 
   in
   est_libre_entre (a1,a2,a3) d ;;
 
+(* tests de la fonction est_libre_seg *) 
+assert ((est_libre_seg(-4,3,1)(3,3,-6)(test_init_conf))=true);; 
+assert ((est_libre_seg(-4,3,1)(3,-4,1)(test_init_conf))=true);; 
+assert ((est_libre_seg(-4,1,3)(3,1,-4)(test_init_conf))=true);; 
+assert ((est_libre_seg(-4,1,3)(3,-6,3)(test_init_conf))=true);; 
+
   
 (*Question 23*) 
   
