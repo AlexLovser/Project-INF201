@@ -1147,7 +1147,7 @@ let test_init_conf = (
 
 
 
-affiche(test_init_conf)
+affiche(test_init_conf) ;;
 
 (* (i, j, k)
 ::(i + 1, j + 1, k + 1)
@@ -1178,4 +1178,13 @@ let rec trouver_couleur(conf: case_coloree list)(c:case):couleur=
    |[]-> Libre
    |[(c, x)]->x
    |(v,x)::tl->if v=c then x else trouver_couleur tl c;;
-let est_coup_valide((cc_list, c_list, dim):configuration)(Du(c1,c2):coup): bool= if sont_cases_voisines c1 c2=true && associe c1 cc_list Libre<>Libre && associe c2 cc_list Libre=Libre && est_dans_losange c2 dim= true && trouver_couleur cc_list c1 =List.hd (c_list) then true else false
+   
+let est_coup_valide((cc_list, c_list, dim):configuration)(Du(c1,c2):coup): bool= 
+  if sont_cases_voisines c1 c2=true && 
+     associe c1 cc_list Libre<>Libre && 
+     associe c2 cc_list Libre=Libre && 
+     est_dans_losange c2 dim= true && 
+     trouver_couleur cc_list c1 =List.hd (c_list) then true 
+  else false ;;
+
+
