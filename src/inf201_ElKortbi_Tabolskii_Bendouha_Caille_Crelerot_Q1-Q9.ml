@@ -1283,7 +1283,6 @@ assert ((est_saut(-5,3,2)(centre)(test_init_conf))=false);;
 (*Question 24*) 
   
 (* il y a un pattern matching exhaustive mais on peut l'ignorer car si la case list est <3 cela renvoie false *) 
-
 let rec est_saut_multiple (cl : case list) (conf: configuration) : bool =
   if List.length cl < 3 then
     false (* si la liste contient moins de trois éléments, ce n'est pas un saut multiple *)
@@ -1292,8 +1291,8 @@ let rec est_saut_multiple (cl : case list) (conf: configuration) : bool =
       match cl with
       | [] | [_] -> true (* si la liste est vide ou contient une seule case à la fin de la récursive alors c'est un saut multiple valide *) 
       | (a1, a2, a3) :: (b1, b2, b3) :: tl -> 
-          let conf_suivante = appliquer_coup conf (Du((a1, a2, a3),(b1, b2, b3))) in
-          if est_saut (a1, a2, a3) (b1, b2, b3) conf_suivante then 
+          if est_saut (a1, a2, a3) (b1, b2, b3) conf then 
+            let conf_suivante = appliquer_coup conf (Du((a1, a2, a3),(b1, b2, b3))) in
             est_saut_multiple_rec ((b1, b2, b3) :: tl) conf_suivante (* mettre à jour la configuration *)
           else
             false (* si un des sauts n'est pas valide alors le saut multiple n'est pas valide *)
@@ -1301,10 +1300,10 @@ let rec est_saut_multiple (cl : case list) (conf: configuration) : bool =
     est_saut_multiple_rec cl conf
 ;;
 
+
 (* tests de la fonction est_saut_multiple *)
 
 assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,-2,2)](coup5))=true);; 
-
-
+assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,0,0)](coup5))=false );; 
 
 
