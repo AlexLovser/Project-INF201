@@ -1228,6 +1228,17 @@ let mettre_a_jour_configuration (conf: configuration)(cp: coup) : configuration 
     appliquer_coup conf cp   
   else
     failwith  " Ce coup n’est pas valide, le joueur doit rejouer" ;;
+    
+(* tests de quelques coup avec la fonction mettre_a_jour_configuration *)
+let conf1 = mettre_a_jour_configuration (test_init_conf) (Du(( -4,1,3), ( -3,0,3))) ;;
+let conf2 = mettre_a_jour_configuration (conf1) (Du(( -3,0,3), ( -2,-1,3))) ;;
+let conf3 = mettre_a_jour_configuration (conf2) (Du(( -2,-1,3), ( -1,-1,2))) ;; 
+(* let conf4 = mettre_a_jour_configuration (conf3) (Du(( -4,2,2), ( 0,0,0)));; j'ai mis ce test est en commentaire car il n'est pas possible, donc il renvoie failwith ce qui bloc la suite de l'éxécution*) 
+ 
+affiche conf1 ;;
+affiche conf2 ;;
+affiche conf3 ;;
+
 
 (*Question 22*) 
 let est_libre_seg ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration) : bool =
