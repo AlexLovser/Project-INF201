@@ -1173,18 +1173,29 @@ let rec supprime_dans_config (conf:case_coloree list)(c:case):case_coloree list=
    | hd :: tl -> hd :: supprime_dans_config tl c;;
 
 (*Question 19*)
-let rec trouver_couleur(conf: case_coloree list)(c:case):couleur=
-   match conf with
-   |[]-> Libre
-   |[(c, x)]->x
-   |(v,x)::tl->if v=c then x else trouver_couleur tl c;;
-   
-let est_coup_valide((cc_list, c_list, dim):configuration)(Du(c1,c2):coup): bool= 
+let rec trouver_couleur(conf: case_coloree list)(c:case):couleur= 
+  match conf with
+  |[]-> Libre
+  |[(c, x)]->x
+  |(v,x)::tl->if v=c then x else trouver_couleur tl c;;
+let [@warning "-8"] est_coup_valide((cc_list, c_list, dim):configuration)(Du(c1,c2):coup): bool= 
   if sont_cases_voisines c1 c2=true && 
      associe c1 cc_list Libre<>Libre && 
      associe c2 cc_list Libre=Libre && 
      est_dans_losange c2 dim= true && 
      trouver_couleur cc_list c1 =List.hd (c_list) then true 
-  else false ;;
+  else false;;
 
+(*Question 20*) 
+let [@warning "-8"] appliquer_coup (((case, couleur)::tl, c_list, dim): configuration) (Du(c1, c2): coup) : configuration = 
+  ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim)
+(* j'ai fais cette fonciton avec un List.map car on suppose que que le coup est valide*) ;;
 
+(*Question 21*) 
+let mettre_a_jour_configuration (conf: configuration)(cp: coup) : configuration = 
+  if est_coup_valide conf cp then 
+    appliquer_coup conf cp   
+  else
+    failwith  " Ce coup n’est pas valide, le joueur doit rejouer" ;;
+
+  
