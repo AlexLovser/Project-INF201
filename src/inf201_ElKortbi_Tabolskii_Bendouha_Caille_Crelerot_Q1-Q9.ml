@@ -1222,3 +1222,11 @@ let est_libre_seg ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration) : 
   est_libre_entre (a1,a2,a3) d ;;
 
   
+(*Question 23*) 
+  
+let est_saut ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration): bool =
+  let ((i, j, k), d) = vec_et_dist (a1,a2,a3) (b1,b2,b3) in
+  if d <> 2 then false (* si la distance n'est pas égale à 2, ce n'est pas un saut valide *)
+  else if (est_libre_seg (a1,a2,a3) (b1,b2,b3) conf)=true then false (* Si la case entre est libre, ce n'est pas un saut valide *)
+  else true ;;
+
