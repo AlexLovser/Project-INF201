@@ -1173,9 +1173,13 @@ let quelle_couleur (c:case)((cc_list, c_list, dim):configuration):couleur= assoc
 
 (* tests de la fonction quelle_couleur *) 
 assert ((quelle_couleur ( 1,5,3) (test_init_conf)) = Libre);; 
-assert ((quelle_couleur ( 0,0,0) (test_init_conf)) = Libre);;
+assert ((quelle_couleur centre (test_init_conf)) = Libre);;
 assert ((quelle_couleur ( -4,1,3) (test_init_conf)) = Rouge);;
 assert ((quelle_couleur ( -6,3,3) (test_init_conf)) = Rouge);;
+assert ((quelle_couleur ( 0,-1,1) (conf_reggae)) = Vert);;
+assert ((quelle_couleur  centre (conf_reggae)) = Jaune);; 
+assert ((quelle_couleur ( 0,1,-1) (conf_reggae)) = Rouge);;
+
 
 (*Question 18*)
 
