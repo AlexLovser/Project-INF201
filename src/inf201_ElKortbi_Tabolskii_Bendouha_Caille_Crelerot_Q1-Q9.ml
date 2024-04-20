@@ -1216,10 +1216,12 @@ let coup1 = appliquer_coup (test_init_conf) (Du(( -4,1,3), ( -3,0,3))) ;;
 let coup2 = appliquer_coup (coup1) (Du(( -3,0,3), ( -2,-1,3))) ;;
 let coup3 = appliquer_coup (coup2) (Du(( -2,-1,3), ( -1,-1,2))) ;;
 let coup4 = appliquer_coup (coup3) (Du(( -4,2,2), ( -3,2,1))) ;;
+let coup5 = appliquer_coup (coup4) (Du(( -5,3,2), ( -4,2,2))) ;;
 affiche coup1 ;;
 affiche coup2 ;;
 affiche coup3 ;;
 affiche coup4 ;;
+affiche coup5 ;;
 
 (*Question 21*) 
 
