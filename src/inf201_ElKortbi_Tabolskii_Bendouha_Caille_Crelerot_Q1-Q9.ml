@@ -1258,6 +1258,8 @@ assert ((est_libre_seg(-4,3,1)(3,3,-6)(test_init_conf))=true);;
 assert ((est_libre_seg(-4,3,1)(3,-4,1)(test_init_conf))=true);; 
 assert ((est_libre_seg(-4,1,3)(3,1,-4)(test_init_conf))=true);; 
 assert ((est_libre_seg(-4,1,3)(3,-6,3)(test_init_conf))=true);; 
+assert ((est_libre_seg(-5,2,3)(3,-6,3)(test_init_conf))=false);; 
+assert ((est_libre_seg(-5,3,2)(3,3,-6)(test_init_conf))=false);; 
 
   
 (*Question 23*) 
