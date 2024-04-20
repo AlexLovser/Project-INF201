@@ -1186,6 +1186,7 @@ let rec trouver_couleur(conf: case_coloree list)(c:case):couleur=
   |[]-> Libre
   |[(c, x)]->x
   |(v,x)::tl->if v=c then x else trouver_couleur tl c;;
+  
 let [@warning "-8"] est_coup_valide((cc_list, c_list, dim):configuration)(Du(c1,c2):coup): bool= 
   if sont_cases_voisines c1 c2=true && 
      associe c1 cc_list Libre<>Libre && 
