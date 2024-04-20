@@ -1277,22 +1277,32 @@ assert ((est_saut(-5,3,2)(-3,1,2)(test_init_conf))=true);;
 assert ((est_saut(-5,3,2)(-3,3,0)(test_init_conf))=true);; 
 assert ((est_saut(-5,3,2)(3,1,-4)(test_init_conf))=false);; 
 assert ((est_saut(-5,3,2)(centre)(test_init_conf))=false);; 
-
-  (*Question 24*) 
   
-(* il y a un pattern matching exhaustive mais on peut l'ignorer car si la case list est <3 cela renvoie false *)
+(*Question 24*) 
+  
+(* il y a un pattern matching exhaustive mais on peut l'ignorer car si la case list est <3 cela renvoie false *) 
 
-let [@warning "-8"] rec est_saut_multiple ((a1, a2, a3)::tl : case list) (conf: configuration) : bool =
-  if (List.length ((a1, a2, a3)::tl))<3 then false (* si la liste contient moins de trois éléments alors cela ne peut pas être un saut multiple *)
+let rec est_saut_multiple (cl : case list) (conf: configuration) : bool =
+  if List.length cl < 3 then
+    false (* si la liste contient moins de trois éléments, ce n'est pas un saut multiple *)
   else
-    match (a1, a2, a3)::tl with 
-    |[] | [_] -> true (* Si la liste est vide ou contient une seule case à la fin de la récursive alors c'est un saut multiple valide *)
-    | (a1, a2, a3) ::(b1,b2,b3):: tl ->
-        if est_saut (a1, a2, a3) (b1,b2,b3) conf then
-          est_saut_multiple ((b1,b2,b3)::tl) conf (* si le saut entre c1 et c2 est valide alors on vérifie le reste de la liste *)
-        else
-          false (* Si un des sauts n'est pas valide, le saut multiple n'est pas valide *) ;;
-              
+    let rec est_saut_multiple_rec (cl : case list) (conf: configuration) : bool =
+      match cl with
+      | [] | [_] -> true (* si la liste est vide ou contient une seule case à la fin de la récursive alors c'est un saut multiple valide *) 
+      | (a1, a2, a3) :: (b1, b2, b3) :: tl -> 
+          let conf_suivante = appliquer_coup conf (Du((a1, a2, a3),(b1, b2, b3))) in
+          if est_saut (a1, a2, a3) (b1, b2, b3) conf_suivante then 
+            est_saut_multiple_rec ((b1, b2, b3) :: tl) conf_suivante (* mettre à jour la configuration *)
+          else
+            false (* si un des sauts n'est pas valide alors le saut multiple n'est pas valide *)
+    in
+    est_saut_multiple_rec cl conf
+;;
+
+(* tests de la fonction est_saut_multiple *)
+
+assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,-2,2)](coup5))=true);; 
+
 
 
 
