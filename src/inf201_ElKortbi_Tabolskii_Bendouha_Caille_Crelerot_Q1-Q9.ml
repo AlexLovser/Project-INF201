@@ -1210,7 +1210,7 @@ let mettre_a_jour_configuration (conf: configuration)(cp: coup) : configuration 
 
 (*Question 22*) 
 let est_libre_seg ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration) : bool =
-  let ((i, j, k), d) = vec_et_dist (a1,a2,a3) (b1,b2,b3) in 
+  let ((i, j, k), d) = vec_et_dist (a1,a2,a3) (b1,b2,b3) in (* pas besoin de condition au début pour voir si c1 et c2 sont alignées car ils sont supposées l'être*)
   let rec est_libre_entre c d =
     if d <= 0 then true (* si la distance=0 alors toutes les cases ont été tester *)
     else
