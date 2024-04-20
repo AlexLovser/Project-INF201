@@ -1171,6 +1171,12 @@ affiche(test_init_conf) ;;
 
 let quelle_couleur (c:case)((cc_list, c_list, dim):configuration):couleur= associe c cc_list Libre ;;
 
+(* tests de la fonction quelle_couleur *) 
+assert ((quelle_couleur ( 1,5,3) (test_init_conf)) = Libre);; 
+assert ((quelle_couleur ( 0,0,0) (test_init_conf)) = Libre);;
+assert ((quelle_couleur ( -4,1,3) (test_init_conf)) = Rouge);;
+assert ((quelle_couleur ( -6,3,3) (test_init_conf)) = Rouge);;
+
 (*Question 18*)
 
 let rec supprime_dans_config (conf:case_coloree list)(c:case):case_coloree list=
