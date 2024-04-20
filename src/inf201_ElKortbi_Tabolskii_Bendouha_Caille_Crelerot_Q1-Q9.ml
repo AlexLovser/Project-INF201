@@ -1165,7 +1165,14 @@ affiche(test_init_conf) ;;
 ::(i - 1, j, k - 1)
 ::(i, j - 1, k - 1) *)
 
+(*Question 17*)
+
+(* fonction associe se trouve avant la Question 10 *)
+
+let quelle_couleur (c:case)((cc_list, c_list, dim):configuration):couleur= associe c cc_list Libre ;;
+
 (*Question 18*)
+
 let rec supprime_dans_config (conf:case_coloree list)(c:case):case_coloree list=
    match conf with
    | [] -> []
@@ -1173,6 +1180,7 @@ let rec supprime_dans_config (conf:case_coloree list)(c:case):case_coloree list=
    | hd :: tl -> hd :: supprime_dans_config tl c;;
 
 (*Question 19*)
+
 let rec trouver_couleur(conf: case_coloree list)(c:case):couleur= 
   match conf with
   |[]-> Libre
@@ -1187,15 +1195,30 @@ let [@warning "-8"] est_coup_valide((cc_list, c_list, dim):configuration)(Du(c1,
   else false;;
 
 (*Question 20*) 
+
 let [@warning "-8"] appliquer_coup (((case, couleur)::tl, c_list, dim): configuration) (Du(c1, c2): coup) : configuration = 
   ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim)
 (* j'ai fais cette fonciton avec un List.map car on suppose que que le coup est valide*) ;;
 
 (*Question 21*) 
+
 let mettre_a_jour_configuration (conf: configuration)(cp: coup) : configuration = 
   if est_coup_valide conf cp then 
     appliquer_coup conf cp   
   else
     failwith  " Ce coup n’est pas valide, le joueur doit rejouer" ;;
+
+(*Question 22*) 
+let est_libre_seg ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration) : bool =
+  let ((i, j, k), d) = vec_et_dist (a1,a2,a3) (b1,b2,b3) in 
+  let rec est_libre_entre c d =
+    if d <= 0 then true (* si la distance=0 alors toutes les cases ont été tester *)
+    else
+      let c_suivante:case = (a1+(i*d),a2+(j*d),a3+(k*d)) in 
+      match quelle_couleur c_suivante conf with
+      | Libre -> est_libre_entre c_suivante (d - 1) (*si la case suivante est libre alors on continue la récursion *)
+      | _ -> false (* si une case entre c1 et c2 n'est pas libre alors on retourne false *) 
+  in
+  est_libre_entre (a1,a2,a3) d ;;
 
   
