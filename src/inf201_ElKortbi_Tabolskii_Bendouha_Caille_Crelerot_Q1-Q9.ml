@@ -1103,7 +1103,7 @@ let rec length (array: 'a list): int =
   | h::q -> 1 + length q
 ;;
 
-
+(*Question 16*)
 let rec init_remplir_plateau (joueurs: couleur list) (dim: dimension) (nplayers: int): case_coloree list =
   let current_len = length joueurs in
 
