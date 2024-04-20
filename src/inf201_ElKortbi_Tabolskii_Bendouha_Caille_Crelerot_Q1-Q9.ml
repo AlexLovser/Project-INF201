@@ -1268,6 +1268,14 @@ let est_saut ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration): bool =
   else if (est_libre_seg (a1,a2,a3) (b1,b2,b3) conf)=true then false (* Si la case entre est libre, ce n'est pas un saut valide *)
   else true ;;
 
+(* tests de la fonction est_saut *) 
+assert ((est_saut(-5,2,3)( -3,0,3)(test_init_conf))=true);; 
+assert ((est_saut(-5,2,3)(-3,2,1)(test_init_conf))=true);; 
+assert ((est_saut(-5,3,2)(-3,1,2)(test_init_conf))=true);; 
+assert ((est_saut(-5,3,2)(-3,3,0)(test_init_conf))=true);; 
+assert ((est_saut(-5,3,2)(3,1,-4)(test_init_conf))=false);; 
+assert ((est_saut(-5,3,2)(centre)(test_init_conf))=false);; 
+
   (*Question 24*) 
   
 (* il y a un pattern matching exhaustive mais on peut l'ignorer car si la case list est <3 cela renvoie false *)
