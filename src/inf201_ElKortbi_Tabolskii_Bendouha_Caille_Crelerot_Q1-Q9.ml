@@ -1322,6 +1322,6 @@ assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(-2,1,1)](coup4))=true);;
 (* tests sur des cas où le saut multiples n'est pas possible *)
 assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,0,0)](coup5))=false );; 
 assert ((est_saut_multiple[(-4,3,1);(-4,1,3);(3,1,-4)](coup5))=false);;
-assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(3,-6,3)](coup4))=false);
+assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(3,-6,3)](coup4))=false);;
 
 
