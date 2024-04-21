@@ -1300,10 +1300,12 @@ let rec est_saut_multiple (cl : case list) (conf: configuration) : bool =
     est_saut_multiple_rec cl conf
 ;;
 
-
 (* tests de la fonction est_saut_multiple *)
 
 assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,-2,2)](coup5))=true);; 
+assert ((est_saut_multiple[(-4,3,1);(-4,1,3);(-2,1,1)](coup5))=true);; 
 assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,0,0)](coup5))=false );; 
+assert ((est_saut_multiple[(-4,3,1);(-4,1,3);(3,1,-4)](coup5))=false);;
+
 
 
