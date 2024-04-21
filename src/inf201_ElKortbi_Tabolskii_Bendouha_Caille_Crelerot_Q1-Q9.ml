@@ -1263,14 +1263,12 @@ let est_libre_seg ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration) : 
 (* tests de la fonction est_libre_seg *) 
 
 (* tests sur des cas où les cases alignées entre c1 et c2 sont libres *)
-
 assert ((est_libre_seg(-4,3,1)(3,3,-6)(test_init_conf))=true);; 
 assert ((est_libre_seg(-4,3,1)(3,-4,1)(test_init_conf))=true);; 
 assert ((est_libre_seg(-4,1,3)(3,1,-4)(test_init_conf))=true);; 
 assert ((est_libre_seg(-4,1,3)(3,-6,3)(test_init_conf))=true);; 
 
 (* tests sur des cas où les cases alignées entre c1 et c2 ne sont pas libres *)
-
 assert ((est_libre_seg(-5,2,3)(3,-6,3)(test_init_conf))=false);; 
 assert ((est_libre_seg(-5,3,2)(3,3,-6)(test_init_conf))=false);; 
 
@@ -1286,49 +1284,44 @@ let est_saut ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration): bool =
 (* tests de la fonction est_saut *) 
 
 (* tests sur des cas où le saut est possible *)
-
 assert ((est_saut(-5,2,3)( -3,0,3)(test_init_conf))=true);; 
 assert ((est_saut(-5,2,3)(-3,2,1)(test_init_conf))=true);; 
 assert ((est_saut(-5,3,2)(-3,1,2)(test_init_conf))=true);; 
 assert ((est_saut(-5,3,2)(-3,3,0)(test_init_conf))=true);; 
 
 (* tests sur des cas où le saut n'est pas possible *)
-
 assert ((est_saut(-5,3,2)(3,1,-4)(test_init_conf))=false);; 
 assert ((est_saut(-5,3,2)(centre)(test_init_conf))=false);; 
   
 (*Question 24*) 
   
 (* il y a un pattern matching exhaustive mais on peut l'ignorer car si la case list est <3 cela renvoie false *) 
-let rec est_saut_multiple (cl : case list) (conf: configuration) : bool =
-  if List.length cl < 3 then
-    false (* si la liste contient moins de trois éléments, ce n'est pas un saut multiple *)
-  else
-    let rec est_saut_multiple_rec (cl : case list) (conf: configuration) : bool =
-      match cl with
-      | [] | [_] -> true (* si la liste est vide ou contient une seule case à la fin de la récursive alors c'est un saut multiple valide *) 
-      | (a1, a2, a3) :: (b1, b2, b3) :: tl -> 
-          if est_saut (a1, a2, a3) (b1, b2, b3) conf then 
-            let conf_suivante = appliquer_coup conf (Du((a1, a2, a3),(b1, b2, b3))) in
-            est_saut_multiple_rec ((b1, b2, b3) :: tl) conf_suivante (* mettre à jour la configuration *)
-          else
-            false (* si un des sauts n'est pas valide alors le saut multiple n'est pas valide *)
-    in
-    est_saut_multiple_rec cl conf
+
+let rec est_saut_multiple (cl : case list) (conf: configuration) : bool = 
+  let rec est_saut_multiple_rec (cl : case list) (conf: configuration) : bool =
+    match cl with
+    | [] | [_] -> true (* si la liste est vide ou contient une seule case à la fin de la récursive alors c'est un saut multiple valide *) 
+    | (a1, a2, a3) :: (b1, b2, b3) :: tl -> 
+        if est_saut (a1, a2, a3) (b1, b2, b3) conf then 
+          let conf_suivante = appliquer_coup conf (Du((a1, a2, a3),(b1, b2, b3))) in
+          est_saut_multiple_rec ((b1, b2, b3) :: tl) conf_suivante (* mettre à jour la configuration *)
+        else
+          false (* si un des sauts n'est pas valide alors le saut multiple n'est pas valide *)
+  in
+  est_saut_multiple_rec cl conf
 ;;
 
 (* tests de la fonction est_saut_multiple *)
 
 (* tests sur des cas où le saut multiples est possible *)
+assert ((est_saut_multiple[(-4,2,2);(-2,0,2)](coup5))=true);; (* tous les sauts font partie des saut multiple même un saut simple*)
 assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,-2,2)](coup5))=true);; 
 assert ((est_saut_multiple[(-4,3,1);(-4,1,3);(-2,1,1)](coup5))=true);; 
-assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(-2,1,1)](coup4))=true);;
+assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(-2,1,1)](coup4))=true);; 
 
 (* tests sur des cas où le saut multiples n'est pas possible *)
 assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,0,0)](coup5))=false );; 
 assert ((est_saut_multiple[(-4,3,1);(-4,1,3);(3,1,-4)](coup5))=false);;
-assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(3,-6,3)](coup4))=false);;
-assert ((est_saut_multiple[(-4,2,2);(-2,0,2)](coup5))=false);; (* cela renvoie bien false car il y a que 2 terme dans la case list
-
+assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(3,-6,3)](coup4))=false);
 
 
