@@ -1172,6 +1172,9 @@ affiche(test_init_conf) ;;
 let quelle_couleur (c:case)((cc_list, c_list, dim):configuration):couleur= associe c cc_list Libre ;;
 
 (* tests de la fonction quelle_couleur *) 
+
+(* tests sur les configurations "test_init_conf" et "conf_reggae" *)
+
 assert ((quelle_couleur ( 1,5,3) (test_init_conf)) = Libre);; 
 assert ((quelle_couleur centre (test_init_conf)) = Libre);;
 assert ((quelle_couleur ( -4,1,3) (test_init_conf)) = Rouge);;
@@ -1212,6 +1215,7 @@ let [@warning "-8"] appliquer_coup (((case, couleur)::tl, c_list, dim): configur
 (* j'ai fais cette fonciton avec un List.map car on suppose que que le coup est valide*) ;;
 
 (* tests de quelques coup avec la fonction appliquer_coup *)
+
 let coup1 = appliquer_coup (test_init_conf) (Du(( -4,1,3), ( -3,0,3))) ;;
 let coup2 = appliquer_coup (coup1) (Du(( -3,0,3), ( -2,-1,3))) ;;
 let coup3 = appliquer_coup (coup2) (Du(( -2,-1,3), ( -1,-1,2))) ;;
@@ -1232,6 +1236,7 @@ let mettre_a_jour_configuration (conf: configuration)(cp: coup) : configuration 
     failwith  " Ce coup n’est pas valide, le joueur doit rejouer" ;;
     
 (* tests de quelques coup avec la fonction mettre_a_jour_configuration *)
+
 let conf1 = mettre_a_jour_configuration (test_init_conf) (Du(( -4,1,3), ( -3,0,3))) ;;
 let conf2 = mettre_a_jour_configuration (conf1) (Du(( -3,0,3), ( -2,-1,3))) ;;
 let conf3 = mettre_a_jour_configuration (conf2) (Du(( -2,-1,3), ( -1,-1,2))) ;; 
@@ -1256,10 +1261,16 @@ let est_libre_seg ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration) : 
   est_libre_entre (a1,a2,a3) d ;;
 
 (* tests de la fonction est_libre_seg *) 
+
+(* tests sur des cas où les cases alignées entre c1 et c2 sont libres *)
+
 assert ((est_libre_seg(-4,3,1)(3,3,-6)(test_init_conf))=true);; 
 assert ((est_libre_seg(-4,3,1)(3,-4,1)(test_init_conf))=true);; 
 assert ((est_libre_seg(-4,1,3)(3,1,-4)(test_init_conf))=true);; 
 assert ((est_libre_seg(-4,1,3)(3,-6,3)(test_init_conf))=true);; 
+
+(* tests sur des cas où les cases alignées entre c1 et c2 ne sont pas libres *)
+
 assert ((est_libre_seg(-5,2,3)(3,-6,3)(test_init_conf))=false);; 
 assert ((est_libre_seg(-5,3,2)(3,3,-6)(test_init_conf))=false);; 
 
@@ -1273,10 +1284,16 @@ let est_saut ((a1,a2,a3): case) ((b1,b2,b3): case) (conf: configuration): bool =
   else true ;;
 
 (* tests de la fonction est_saut *) 
+
+(* tests sur des cas où le saut est possible *)
+
 assert ((est_saut(-5,2,3)( -3,0,3)(test_init_conf))=true);; 
 assert ((est_saut(-5,2,3)(-3,2,1)(test_init_conf))=true);; 
 assert ((est_saut(-5,3,2)(-3,1,2)(test_init_conf))=true);; 
 assert ((est_saut(-5,3,2)(-3,3,0)(test_init_conf))=true);; 
+
+(* tests sur des cas où le saut n'est pas possible *)
+
 assert ((est_saut(-5,3,2)(3,1,-4)(test_init_conf))=false);; 
 assert ((est_saut(-5,3,2)(centre)(test_init_conf))=false);; 
   
@@ -1302,10 +1319,16 @@ let rec est_saut_multiple (cl : case list) (conf: configuration) : bool =
 
 (* tests de la fonction est_saut_multiple *)
 
+(* tests sur des cas où le saut multiples est possible *)
 assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,-2,2)](coup5))=true);; 
 assert ((est_saut_multiple[(-4,3,1);(-4,1,3);(-2,1,1)](coup5))=true);; 
+assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(-2,1,1)](coup4))=true);;
+
+(* tests sur des cas où le saut multiples n'est pas possible *)
 assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,0,0)](coup5))=false );; 
 assert ((est_saut_multiple[(-4,3,1);(-4,1,3);(3,1,-4)](coup5))=false);;
+assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(3,-6,3)](coup4))=false);;
+assert ((est_saut_multiple[(-4,2,2);(-2,0,2)](coup5))=false);; (* cela renvoie bien false car il y a que 2 terme dans la case list
 
 
 
