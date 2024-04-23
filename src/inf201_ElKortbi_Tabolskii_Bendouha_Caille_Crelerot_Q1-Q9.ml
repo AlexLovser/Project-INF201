@@ -1367,6 +1367,13 @@ assert ((score conf1)=5);;
 assert ((score conf2)=13);;
 assert ((score conf3)=12);;
 
+let score_gagnant dim : int =
+  let total = List.init dim (fun i -> (i + 1) * (2 * dim - i)) in
+  List.fold_left (+) 0 total;;
 
+score_gagnant 1 ;;
+score_gagnant 2 ;;
+score_gagnant 3 ;; 
+score_gagnant 4 ;;
 
 
