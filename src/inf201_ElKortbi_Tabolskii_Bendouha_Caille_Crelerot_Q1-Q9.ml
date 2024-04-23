@@ -1358,7 +1358,7 @@ let [@warning "-8"] rec appliquer_coup (((case, couleur)::tl, c_list, dim): conf
 (*La version actuelle de mettre_a_jour_configuration vue précèdemment fonctionne déjà pour les sauts multiples*)
 
 (*Question 26*)
-let score ((cc_list,c_list,dim):configuration):int= let col= let (case,couleur)= List.hd cc_list in couleur in List.fold_left(fun acc ((i,_,_),x)-> if x=col then acc+i else acc) 0 cc_list;;
+let score ((cc_list,c_list,dim):configuration):int= let col= List.hd c_list in List.fold_left(fun acc ((i,_,_),x)-> if x=col then acc+i else acc) 0 cc_list;;
 
 let conf1=([((1,2,3), Vert);((4,2,3),Vert);((6,8,2),Rouge);((8,2,4),Bleu);((6,8,2),Rouge)],[Rouge;Vert;Bleu],3);;
 let conf2=([((1,2,3), Rouge);((4,2,3),Vert);((6,8,2),Rouge);((8,2,4),Bleu);((6,8,2),Rouge)],[Rouge;Vert;Bleu],3);;
