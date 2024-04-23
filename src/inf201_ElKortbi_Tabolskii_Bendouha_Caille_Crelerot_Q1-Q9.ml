@@ -1376,4 +1376,5 @@ score_gagnant 2 ;;
 score_gagnant 3 ;; 
 score_gagnant 4 ;;
 
-
+(*Question 27*)
+let gagne ((cc_list,c_list,dim):configuration): bool = (score (cc_list,c_list,dim))= (score_gagnant dim) ;;
