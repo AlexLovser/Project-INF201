@@ -1297,7 +1297,7 @@ assert ((est_saut(-5,3,2)(centre)(test_init_conf))=false);;
   
 (* il y a un pattern matching exhaustive mais on peut l'ignorer car si la case list est <3 cela renvoie false *) 
 
-let rec est_saut_multiple (cl : case list) (conf: configuration) : bool = 
+let rec est_saut_multiple (c_list : case list) (conf: configuration) : bool = 
   let rec est_saut_multiple_rec (cl : case list) (conf: configuration) : bool =
     match cl with
     | [] | [_] -> true (* si la liste est vide ou contient une seule case à la fin de la récursive alors c'est un saut multiple valide *) 
@@ -1308,8 +1308,9 @@ let rec est_saut_multiple (cl : case list) (conf: configuration) : bool =
         else
           false (* si un des sauts n'est pas valide alors le saut multiple n'est pas valide *)
   in
-  est_saut_multiple_rec cl conf
+  est_saut_multiple_rec c_list conf
 ;;
+
 
 (* tests de la fonction est_saut_multiple *)
 
