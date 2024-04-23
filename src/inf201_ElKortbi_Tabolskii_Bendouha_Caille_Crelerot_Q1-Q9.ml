@@ -1200,19 +1200,20 @@ let rec trouver_couleur(conf: case_coloree list)(c:case):couleur=
   |[(c, x)]->x
   |(v,x)::tl->if v=c then x else trouver_couleur tl c;;
   
-let [@warning "-8"] est_coup_valide((cc_list, c_list, dim):configuration)(Du(c1,c2):coup): bool= 
+let [@warning "-8"] est_coup_valide1((cc_list, c_list, dim):configuration)(Du(c1,c2):coup): bool= 
   if sont_cases_voisines c1 c2=true && 
      associe c1 cc_list Libre<>Libre && 
      associe c2 cc_list Libre=Libre && 
      est_dans_losange c2 dim= true && 
      trouver_couleur cc_list c1 =List.hd (c_list) then true 
   else false;;
-
+(*Cette fonction ne prend en compte que les coups unitaires, la fonction prenant en compte les coups multuiples est à la question 25*)
 (*Question 20*) 
 
 let [@warning "-8"] appliquer_coup (((case, couleur)::tl, c_list, dim): configuration) (Du(c1, c2): coup) : configuration = 
   ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim)
 (* j'ai fais cette fonciton avec un List.map car on suppose que que le coup est valide*) ;;
+(*Cette fonction ne prend en compte que les coups unitaires, la fonction prenant en compte les coups multuiples est à la question 25*)
 
 (* tests de quelques coup avec la fonction appliquer_coup *)
 
@@ -1353,7 +1354,8 @@ let [@warning "-8"] rec appliquer_coup (((case, couleur)::tl, c_list, dim): conf
   |Sm([c1;c2])-> let cx= Du(c1,c2) in appliquer_coup ((case, couleur)::tl, c_list, dim) cx
   |Sm(hd::t1)->  let c1=hd in
       let c2 = der_liste t1 in ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim);;
-(*La version actuelle de mettre_a_jour_configuration fonctionne déjà pour les sauts multiples*)
+
+(*La version actuelle de mettre_a_jour_configuration vue précèdemment fonctionne déjà pour les sauts multiples*)
 
 (*Question 26*)
 let score ((cc_list,c_list,dim):configuration):int= let col= let (case,couleur)= List.hd cc_list in couleur in List.fold_left(fun acc ((i,_,_),x)-> if x=col then acc+i else acc) 0 cc_list;;
