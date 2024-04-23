@@ -1324,4 +1324,6 @@ assert ((est_saut_multiple[(-4,2,2);(-2,0,2);(0,0,0)](coup5))=false );;
 assert ((est_saut_multiple[(-4,3,1);(-4,1,3);(3,1,-4)](coup5))=false);;
 assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(3,-6,3)](coup4))=false);;
 
+(*Verfier une partie*)
+(*Question 26*)
 
