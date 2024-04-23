@@ -1378,3 +1378,20 @@ score_gagnant 4 ;;
 
 (*Question 27*)
 let gagne ((cc_list,c_list,dim):configuration): bool = (score (cc_list,c_list,dim))= (score_gagnant dim) ;;
+
+let conf4=([((2,-1,-1), Vert);((centre),Jaune)],[Vert;Jaune],1);;
+let conf5=([((4,-2,-2), Vert);((3,-2,-1),Vert);((3,-1,-2),Vert);((0,-1,1),Bleu);((centre),Bleu);((0,1,-1),Bleu)],[Vert;Bleu],2);;
+let conf6=([((-2,1,1), Vert);((centre),Jaune)],[Vert;Jaune],1);;
+let conf7=([((-4,2,2), Vert);((3,-2,-1),Vert);((3,-1,-2),Vert);((0,-1,1),Bleu);((centre),Bleu);((0,1,-1),Bleu)],[Vert;Bleu],2);;
+
+(* tests de la fonction gagne *) 
+
+(* tests sur des cas où le où le protagoniste a gagner *)
+
+assert ((gagne conf4)=true);;
+assert ((gagne conf5)=true);;
+
+(* tests sur des cas où le où le protagoniste n'a pas encore gagner *)
+assert ((gagne conf6)=false);;
+assert ((gagne conf7)=false);;
+  
