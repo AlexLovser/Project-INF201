@@ -1408,4 +1408,26 @@ assert ((gagne conf9)=true);;
 assert ((gagne conf6)=false);;
 assert ((gagne conf7)=false);;
 assert ((gagne conf8)=false);;
+
+(*Question 28*)
+let rec est_partie ((cc_list,c_list,dim):configuration) (l:coup list): couleur= 
+  match l with
+  |[]-> Libre
+  |hd::tl-> if est_coup_valide (cc_list,c_list,dim) hd = false then failwith "coup non valide" 
+      else let conf2= mettre_a_jour_configuration (cc_list,c_list,dim) hd in
+        if gagne conf2 = true then List.hd c_list 
+        else
+          let conf3 = tourner_config1 conf2
+          in est_partie conf3 tl;;
+
+let conf_new=([((-2,1,1), Vert);((2,-1,-1),Jaune)],[Vert;Jaune],1);; 
+let l_c1=[Du((-2,1,1),(-1,0,1));Du((-2,1,1),(-1,0,1));Du((-1,0,1),(0,-1,1));Du((-1,0,1),(0,-1,1));Du((0,-1,1),(1,-1,0));Du((0,-1,1),(1,-1,0));Du((1,-1,0),(2,-1,-1));Du((1,-1,0),(2,-1,-1))];;
+let l_c2=[Du((-2,1,1),(-1,0,1));Du((-2,1,1),(-1,0,1));Du((-1,0,1),(0,-1,1));Du((-1,0,1),(0,-1,1));Du((0,-1,1),(1,-1,0));Du((0,-1,1),(1,-1,0));Du((1,-1,0),(0,0,0));Du((1,-1,0),(2,-1,-1))];;
+
+est_partie conf_new l_c1 ;;
+est_partie conf_new l_c2 ;;
+
+assert ((est_partie conf_new l_c1 )=Vert);;
+assert ((est_partie conf_new l_c2 )=Jaune);;
+
   
