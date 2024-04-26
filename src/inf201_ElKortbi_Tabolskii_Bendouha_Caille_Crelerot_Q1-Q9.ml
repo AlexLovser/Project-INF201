@@ -1381,10 +1381,15 @@ let score_gagnant dim : int =
   let total = List.init dim (fun i -> (i + 1) * (2 * dim - i)) in
   List.fold_left (+) 0 total;;
 
-score_gagnant 1 ;;(* résultat : 2 *)
-score_gagnant 2 ;;(* résultat : 10 *)
-score_gagnant 3 ;;(* résultat : 28 *)
-score_gagnant 4 ;;(* résultat : 60 *)
+score_gagnant 1 ;;
+score_gagnant 2 ;;
+score_gagnant 3 ;;
+score_gagnant 4 ;;
+(* score_gagnant 1 résultat : 2 *)
+(* score_gagnant 2 résultat : 10 *)
+(* score_gagnant 3 résultat : 28 *)
+(* score_gagnant 4 résultat : 60 *)
+
 
 (*Question 27*)
 let gagne ((cc_list,c_list,dim):configuration): bool = (score (cc_list,c_list,dim))= (score_gagnant dim) ;;
