@@ -1074,6 +1074,14 @@ let tourner_config (conf: configuration) : configuration =
   tourner_cas_list grid, players, dim
 ;;
 
+let rec tourner_config1 ((cc_list, c_list, dim):configuration):configuration=
+  let n (c_list:couleur list):int= 6/(List.length c_list) in
+  let rec tourner_cc (cc_list:case_coloree list):case_coloree list=
+    match cc_list with
+    |[]->[]
+    |(cell, color)::q -> ((tourner_case (n c_list) cell), color)::(tourner_cc q) in
+  tourner_cc cc_list, tourner_liste c_list, dim
+  ;;
 
 let before_colored_board = [
   (tourner_case 0 (1, 2, 3), Libre) ; 
