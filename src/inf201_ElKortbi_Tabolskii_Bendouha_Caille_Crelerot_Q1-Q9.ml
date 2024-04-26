@@ -1435,4 +1435,38 @@ est_partie conf_new l_c2 ;;
 assert ((est_partie conf_new l_c1 )=Vert);;
 assert ((est_partie conf_new l_c2 )=Jaune);;
 
+(*Brouillon de la question 29*)
+let rec enlever_repetitions liste =
+  match liste with
+  | [] -> []
+  | x :: xs -> x :: (enlever_repetitions (List.filter (fun y -> y <> x) xs));;
+                    
+let rec coups_possibles ((cc_list,c_list,dim):configuration) ((i,j,k):case):case list= 
+  let rec l2 ((cc_list,c_list,dim):configuration) ((i,j,k):case): case list=
+    match (i,j,k) with
+    |(x,_,_) when x=2*dim->[]
+    |_,_,_->[(i+1,j,k)]@ l2 (cc_list,c_list,dim) (i+1,j,k) in
+  let rec l3 ((cc_list,c_list,dim):configuration) ((i,j,k):case): case list=
+    match (i,j,k) with
+    |(x,_,_) when x=(-2)*dim->[]
+    |_,_,_->[(i-1,j,k)]@ l3 (cc_list,c_list,dim) (i-1,j,k) in
+  let rec l4  ((cc_list,c_list,dim):configuration) ((i,j,k):case): case list=
+    match (i,j,k) with
+    |(_,y,_) when y=2*dim->[]
+    |_,_,_->[(i,j+1,k)]@ l4 (cc_list,c_list,dim) (i,j+1,k) in
+  let rec l5 ((cc_list,c_list,dim):configuration) ((i,j,k):case): case list=
+    match (i,j,k) with
+    |(_,y,_) when y=(-2)*dim->[]
+    |_,_,_->[(i-1,j,k)]@ l5 (cc_list,c_list,dim) (i,j-1,k) in
+  let rec l6  ((cc_list,c_list,dim):configuration) ((i,j,k):case): case list=
+    match (i,j,k) with
+    |(_,_,z) when z=2*dim->[]
+    |_,_,_->[(i,j,k+1)]@ l6 (cc_list,c_list,dim) (i,j,k+1) in
+  let rec l7 ((cc_list,c_list,dim):configuration) ((i,j,k):case): case list=
+    match (i,j,k) with
+    |(_,_,z) when z=(-2)*dim->[]
+    |_,_,_->[(i,j,k-1)]@ l7 (cc_list,c_list,dim) (i,j,k-1) in
+  let l8 =l2 (cc_list,c_list,dim) (i,j,k)@l3 (cc_list,c_list,dim) (i,j,k)@l4 (cc_list,c_list,dim) (i,j,k)@l5 (cc_list,c_list,dim) (i,j,k)@l6 (cc_list,c_list,dim) (i,j,k)@l7 (cc_list,c_list,dim) (i,j,k) in 
+  enlever_repetitions l8;;
+
   
