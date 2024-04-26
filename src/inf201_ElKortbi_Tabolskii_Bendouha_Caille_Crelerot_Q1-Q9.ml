@@ -1228,6 +1228,36 @@ affiche coup3 ;;
 affiche coup4 ;;
 affiche coup5 ;;
 
+
+(*Question 25*)
+
+let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool= 
+  match c with
+  |Du(c1,c2)->if sont_cases_voisines c1 c2=true && 
+                 associe c1 cc_list Libre<>Libre && 
+                 associe c2 cc_list Libre=Libre && 
+                 est_dans_losange c2 dim= true && 
+                 trouver_couleur cc_list c1 =List.hd (c_list) then true else false
+  |Sm([])-> false
+  |Sm([c1])-> false
+  |Sm([c1;c2])-> let cx= Du(c1,c2) in est_coup_valide (cc_list,c_list,dim) cx
+  |Sm(hd::tl)-> let c1=hd in
+      let c2 = List.hd tl in
+      let cd= Du(c1,c2) in
+      let inter:bool= est_coup_valide (cc_list, c_list, dim) cd in
+      let cg= Sm(tl) in
+      if inter=true then est_coup_valide (cc_list, c_list, dim) cg else false;;
+
+let [@warning "-8"] rec appliquer_coup (((case, couleur)::tl, c_list, dim): configuration) (c: coup) : configuration = 
+  match c with
+  |Du(c1,c2)-> ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim)
+  |Sm([])->((case, couleur)::tl, c_list, dim)
+  |Sm([c1;c2])-> let cx= Du(c1,c2) in appliquer_coup ((case, couleur)::tl, c_list, dim) cx
+  |Sm(hd::t1)->  let c1=hd in
+      let c2 = der_liste t1 in ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim);;
+
+(*La version actuelle de mettre_a_jour_configuration vue précèdemment fonctionne déjà pour les sauts multiples*)
+
 (*Question 21*) 
 
 let mettre_a_jour_configuration (conf: configuration)(cp: coup) : configuration = 
@@ -1328,34 +1358,6 @@ assert ((est_saut_multiple[(-6,3,3);(-4,1,3);(3,-6,3)](coup4))=false);;
 
 (*Verfier une partie*)
 
-(*Question 25*)
-
-let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool= 
-  match c with
-  |Du(c1,c2)->if sont_cases_voisines c1 c2=true && 
-                 associe c1 cc_list Libre<>Libre && 
-                 associe c2 cc_list Libre=Libre && 
-                 est_dans_losange c2 dim= true && 
-                 trouver_couleur cc_list c1 =List.hd (c_list) then true else false
-  |Sm([])-> false
-  |Sm([c1])-> false
-  |Sm([c1;c2])-> let cx= Du(c1,c2) in est_coup_valide (cc_list,c_list,dim) cx
-  |Sm(hd::tl)-> let c1=hd in
-      let c2 = List.hd tl in
-      let cd= Du(c1,c2) in
-      let inter:bool= est_coup_valide (cc_list, c_list, dim) cd in
-      let cg= Sm(tl) in
-      if inter=true then est_coup_valide (cc_list, c_list, dim) cg else false;;
-
-let [@warning "-8"] rec appliquer_coup (((case, couleur)::tl, c_list, dim): configuration) (c: coup) : configuration = 
-  match c with
-  |Du(c1,c2)-> ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim)
-  |Sm([])->((case, couleur)::tl, c_list, dim)
-  |Sm([c1;c2])-> let cx= Du(c1,c2) in appliquer_coup ((case, couleur)::tl, c_list, dim) cx
-  |Sm(hd::t1)->  let c1=hd in
-      let c2 = der_liste t1 in ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim);;
-
-(*La version actuelle de mettre_a_jour_configuration vue précèdemment fonctionne déjà pour les sauts multiples*)
 
 (*Question 26*)
 let score ((cc_list,c_list,dim):configuration):int= let col= List.hd c_list in List.fold_left(fun acc ((i,_,_),x)-> if x=col then acc+i else acc) 0 cc_list;;
