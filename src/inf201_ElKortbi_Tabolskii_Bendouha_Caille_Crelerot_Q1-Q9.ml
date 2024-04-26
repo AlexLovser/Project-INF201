@@ -1383,6 +1383,7 @@ let conf4=([((2,-1,-1), Vert);((centre),Jaune)],[Vert;Jaune],1);;
 let conf5=([((4,-2,-2), Vert);((3,-2,-1),Vert);((3,-1,-2),Vert);((0,-1,1),Bleu);((centre),Bleu);((0,1,-1),Bleu)],[Vert;Bleu],2);;
 let conf6=([((-2,1,1), Vert);((centre),Jaune)],[Vert;Jaune],1);;
 let conf7=([((-4,2,2), Vert);((3,-2,-1),Vert);((3,-1,-2),Vert);((0,-1,1),Bleu);((centre),Bleu);((0,1,-1),Bleu)],[Vert;Bleu],2);;
+let conf8=([((3,-1,-1), Vert);((centre),Jaune)],[Vert;Jaune],1);;
 
 (* tests de la fonction gagne *) 
 
@@ -1394,4 +1395,5 @@ assert ((gagne conf5)=true);;
 (* tests sur des cas où le où le protagoniste n'a pas encore gagner *)
 assert ((gagne conf6)=false);;
 assert ((gagne conf7)=false);;
+assert ((gagne conf8)=false);;
   
