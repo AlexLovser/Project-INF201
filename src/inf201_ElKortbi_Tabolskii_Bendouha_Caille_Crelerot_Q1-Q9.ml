@@ -1455,11 +1455,13 @@ let coup_possibles (conf) (c: case): (case * coup) list =
 ;;
 
 let conf_new1=([((0,0,0), Vert);((2,-1,-1),Jaune)],[Vert;Jaune],1);; 
+
+(* tests de la fonction intermediaire adjacents*)
 adjacents (centre);;
 adjacents (-2,1,1);; 
-coup_possibles conf_new (-2,1,1) ;;
-coup_possibles conf_new1 (2,-1,-1) ;;
-adjacents (2,-1,-1);; 
+
+(* tests de la fonction coup_possibles*)
+coup_possibles conf_new (-2,1,1) ;; 
 coup_possibles conf_new1 (0,0,0) ;;
 
 
