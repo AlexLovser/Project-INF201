@@ -1436,6 +1436,7 @@ assert ((est_partie conf_new l_c1 )=Vert);;
 assert ((est_partie conf_new l_c2 )=Jaune);;
 
 (*Question 29*) 
+(* Pour l'instant la fonciton coup_possible vérifie que les coup possible dans le cas de déplacement unitaire *)
 
 let adjacents ((x, y, z):case) : case list  =
   let directions = [(1,-1,0); (1,0,-1); (0,1,-1); (-1,1,0); (-1,0,1); (0,-1,1)] in
