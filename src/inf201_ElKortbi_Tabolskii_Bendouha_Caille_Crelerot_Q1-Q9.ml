@@ -1271,7 +1271,7 @@ let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool=
       if inter=true then est_coup_valide (appliquer_coup (cc_list, c_list, dim) cd) cg else false;;
 
 let coup10=Sm([(-5, 3, 2); (-3, 3, 0)]);;
-est_coup_valide test_init_conf coup10;;
+assert ((est_coup_valide test_init_conf coup10)=true);;
 
 
 assert((appliquer_coup test_init_conf coup1er)=coup2);;
