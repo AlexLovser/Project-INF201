@@ -1454,7 +1454,7 @@ assert ((est_partie conf_new l_c2 )=Jaune);;
 
 (*Question 29*) 
 (* Pour l'instant la fonciton coup_possible vérifie que les coup possible dans le cas 
-  des déplacement unitaire et les sauts simples
+  des déplacement unitaire et les sauts simples*)
 
 let adjacents ((x, y, z):case) : case list  =
   let directions = [(1,-1,0); (1,0,-1); (0,1,-1); (-1,1,0); (-1,0,1); (0,-1,1)] in
@@ -1481,8 +1481,20 @@ let coup_possibles (conf) (c: case): (case * coup) list =
   in
   (l case_v c)@(l1 case_v1 c)
     
-;;*)
+;;
 
+let conf_new1=([((0,0,0), Vert);((2,-1,-1),Jaune)],[Vert;Jaune],1);; 
+
+(* tests *)
+
+coup_possibles conf_new (-2,1,1) ;; 
+coup_possibles conf_new1 (0,0,0) ;;
+affiche conf_new1;;
+coup_possibles test_init_conf (-5,3,2) ;;
+coup_possibles test_init_conf(-5,2,3);;
+coup_possibles coup2 (-5,2,3) ;;
+affiche coup2;;
+(*
 let adjacents ((x, y, z):case) : case list  =
   let directions = [(1,-1,0); (1,0,-1); (0,1,-1); (-1,1,0); (-1,0,1); (0,-1,1)] in
   List.map (fun (dx, dy, dz) -> (x + dx, y + dy, z + dz)) directions ;;
@@ -1540,7 +1552,7 @@ adjacents (0, 0, 1);;
 let cc_list, c_list, dim = conf_new1 ;;
 trouver_les_cases_occupees_autour (0, 0, 1) conf_new1;;
 case_est_occupee  (0, 0, 1) conf_new1;;
-
+*)
 
 
 
