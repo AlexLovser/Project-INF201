@@ -1554,7 +1554,46 @@ trouver_les_cases_occupees_autour (0, 0, 1) conf_new1;;
 case_est_occupee  (0, 0, 1) conf_new1;;
 *)
 
+(*Question 30*)
+let rec que_mes_pions ((cc_list, c_list, dim) : configuration) : case list =
+  match cc_list with
+  | [] -> []
+  | (c, col) :: tl ->
+      if col = List.hd c_list then
+        c :: que_mes_pions (tl, c_list, dim)
+      else
+        que_mes_pions (tl, c_list, dim)
 
+let rec tous_les_coups (liste_case: case list) (config: configuration) : (case * coup) list =
+  match liste_case with
+  | [] -> []
+  | h :: t -> (coup_possibles config h) @ tous_les_coups t config
+
+let score_coup (cp: coup) : int =
+  match cp with
+  | Du(c1, c2) -> let (i, _, _), (i2, _, _) = c1, c2 in  abs(i2 - i)
+  | _ -> 0 (* Gestion d'un cas par défaut *)
+
+let rec heuristique (liste_coup: (case * coup) list) : coup =
+  match liste_coup with
+  | [] -> failwith "Pas de coup valide dans la liste" (* Gestion d'un cas vide *)
+  | [(_, cp)] -> cp (* Si on a un seul coup, on le retourne directement *)
+  | (_, cp) :: reste ->
+      let meilleur_coup = List.fold_left
+          (fun acc (_, x) -> if score_coup acc < score_coup x then acc else x) cp liste_coup
+      in
+      meilleur_coup
+
+let strategie_gloutonne (config: configuration) : coup =
+  let mes_cases = que_mes_pions config in
+  let coup_liste = tous_les_coups mes_cases config in
+  heuristique coup_liste
+let config =  remplir_init [Vert; Rouge] 3
+let mes_pions = que_mes_pions config
+let coup_liste = tous_les_coups mes_pions config
+let meilleur_coup = heuristique coup_liste;;
+strategie_gloutonne config;;
+strategie_gloutonne coup2 ;;
 
 
   
