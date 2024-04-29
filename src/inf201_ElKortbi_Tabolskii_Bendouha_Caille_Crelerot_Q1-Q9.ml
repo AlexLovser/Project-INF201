@@ -1272,9 +1272,14 @@ let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool=
 
 let coup10=Sm([(-5, 3, 2); (-3, 3, 0)]);;
 assert ((est_coup_valide test_init_conf coup10)=true);;
+
 let conf6=appliquer_coup test_init_conf (Sm([(-5, 3, 2); (-3, 3, 0)]));;
 let coup11= Sm([(-3, 3, 0); (-5, 3, 2); (-3, 1, 2)]);;
 assert ((est_coup_valide conf6 coup11)=true);;
+
+let conf7=appliquer_coup test_init_conf (Du((-4, 2, 2), (-3, 2, 1)));;
+let coup12=Sm([(-5, 3, 2); (-3, 3, 0); (-3, 1, 2)]);;
+assert ((est_coup_valide conf7 coup12)=true);;
 
 assert((appliquer_coup test_init_conf coup1er)=coup2);;
 
