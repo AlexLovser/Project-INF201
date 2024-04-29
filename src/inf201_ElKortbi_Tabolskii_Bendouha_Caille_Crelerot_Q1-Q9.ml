@@ -1245,7 +1245,7 @@ let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool=
                  associe c1 cc_list Libre<>Libre && 
                  associe c2 cc_list Libre=Libre && 
                  est_dans_losange c2 dim= true && 
-                 trouver_couleur cc_list c1 =List.hd (c_list) then true else false
+                 trouver_couleur cc_list c1 = List.hd (c_list) then true else false
   |Sm([])-> false
   |Sm([c1])-> false
   |Sm([c1;c2])-> let cx= Du(c1,c2) in est_coup_valide (cc_list,c_list,dim) cx
@@ -1451,27 +1451,61 @@ let adjacents ((x, y, z):case) : case list  =
   let directions = [(1,-1,0); (1,0,-1); (0,1,-1); (-1,1,0); (-1,0,1); (0,-1,1)] in
   List.map (fun (dx, dy, dz) -> (x + dx, y + dy, z + dz)) directions ;;
 
-let coup_possibles (conf) (c: case): (case * coup) list = 
-  let case_v = adjacents c in
-  let rec l (case_v:case list) (c:case) : (case * coup) list = 
-    match case_v with 
-    |[] -> []
-    |hd::tl-> if est_coup_valide (conf) (Du(c,hd)) = false then l tl c
-        else (hd,Du(c,hd))::(l tl c )
-  in 
-  l case_v c
-    
+let coup_possibles_unitaires (conf) (c: case): (case * coup) list = 
+    let case_v = adjacents c in
+    let rec l (case_v:case list) (c:case) : (case * coup) list = 
+      match case_v with 
+      |[] -> []
+      |hd::tl-> if est_coup_valide (conf) (Du(c,hd)) = false then l tl c
+          else (hd,Du(c,hd))::(l tl c )
+    in 
+    l case_v c
+  ;;
+
+
+let case_est_occupee (c: case) (conf: configuration): bool =
+  let cc_list, c_list, dim = conf in
+  (associe c cc_list Libre) <> Libre
 ;;
 
-let conf_new1=([((0,0,0), Vert);((2,-1,-1),Jaune)],[Vert;Jaune],1);; 
+let trouver_les_cases_occupees_autour(c: case) (conf: configuration): case list =
+  let adj = adjacents c in
+  List.filter (fun x -> case_est_occupee x conf) adj
+;;
+
+(* let rec coup_possibles_compliquees (conf) (c: case): (case * coup) list = 
+    let case_v = adjacents c in case_v
+
+    List.map (fun (c: case) -> )
+    
+  ;; *)
+
+
+(* let coup_possibles (conf) (c: case): (case * coup) list = 
+  let unitaires = coup_possibles_unitaires conf c case in
+  let compliquees = coup_possibles_unitaires conf c case in (* TODO *)
+  
+  unitaires @ compliquees
+    
+;; *)
+
+let conf_new1=([((0,0,0), Vert);((2,-1,-1),Jaune)],[Vert;Jaune],3);; 
 
 (* tests de la fonction intermediaire adjacents*)
 adjacents (centre);;
 adjacents (-2,1,1);; 
 
 (* tests de la fonction coup_possibles*)
-coup_possibles conf_new (-2,1,1) ;; 
-coup_possibles conf_new1 (0,0,0) ;;
+(* coup_possibles conf_new (-2,1,1) ;; 
+coup_possibles conf_new1 (0,0,0) ;; *)
+
+affiche conf_new1 ;;
+adjacents (0, 0, 1);;
+let cc_list, c_list, dim = conf_new1 ;;
+trouver_les_cases_occupees_autour (0, 0, 1) conf_new1;;
+case_est_occupee  (0, 0, 1) conf_new1;;
+
+
 
 
 
