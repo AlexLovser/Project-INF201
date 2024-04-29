@@ -1239,30 +1239,6 @@ affiche coup5 ;;
 
 (*Question 25*)
 
-let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool= 
-  match c with
-  |Du(c1,c2)->if sont_cases_voisines c1 c2=true && 
-                 associe c1 cc_list Libre<>Libre && 
-                 associe c2 cc_list Libre=Libre && 
-                 est_dans_losange c2 dim= true && 
-                 associe c1 cc_list Libre=List.hd (c_list) then true else false
-  |Sm([])-> false
-  |Sm([c1])-> false
-  |Sm([c1;c2])-> let cx= Du(c1,c2) in est_coup_valide (cc_list,c_list,dim) cx
-  |Sm(hd::tl)-> let c1=hd in
-      let c2 = List.hd tl in
-      let cd= Du(c1,c2) in
-      let inter:bool= est_coup_valide (cc_list, c_list, dim) cd in
-      let cg= Sm(tl) in
-      if inter=true then est_coup_valide (appliquer_coup1 (cc_list, c_list, dim) cd) cg else false;;
-
-let coup1er= Sm([( -4,1,3);( -3,0,3);( -2,-1,3)]);;
-assert ((est_coup_valide test_init_conf coup1er)=true);;
-let coup2eme= Sm([( -4,2,2);( -3,1,2);(-2,1,2)]);;
-assert ((est_coup_valide test_init_conf coup2eme)=true);;
-let coup3eme= Sm([( -4,2,2);( -3,1,2);(-2,1,2);(-1,1,2)]);;
-assert ((est_coup_valide test_init_conf coup3eme)=true);;
-
 let [@warning "-8"] rec appliquer_coup (((case, couleur)::tl, c_list, dim): configuration) (c: coup) : configuration = 
   match c with
   |Du(c1,c2)-> ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim)
@@ -1270,6 +1246,33 @@ let [@warning "-8"] rec appliquer_coup (((case, couleur)::tl, c_list, dim): conf
   |Sm([c1;c2])-> let cx= Du(c1,c2) in appliquer_coup ((case, couleur)::tl, c_list, dim) cx
   |Sm(hd::t1)->  let c1=hd in
       let c2 = der_liste t1 in ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim);;
+      
+let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool= 
+  match c with
+  |Du(c1,c2)->if sont_cases_voisines c1 c2=true && 
+                 associe c1 cc_list Libre= List.hd (c_list) && 
+                 associe c2 cc_list Libre=Libre && 
+                 est_dans_losange c2 dim= true then true else false
+  |Sm([])-> false
+  |Sm([c1])-> if est_dans_losange c1 dim=true &&
+                 associe c1 cc_list Libre= List.hd (c_list) then true else false
+  |Sm([c1;c2])-> let a,b,c=c1 in
+      let x,y,z=c2 in
+      let case_sautee =((x+a)/2, (y+b)/2, (z+c)/2) in if associe case_sautee cc_list Libre<>Libre && 
+                                                         associe c1 cc_list Libre= List.hd (c_list) &&
+                                                         sont_cases_voisines c1 case_sautee=true &&
+                                                         sont_cases_voisines c2 case_sautee=true &&
+                                                         est_dans_losange c2 dim then true else false 
+  |Sm(hd::tl)-> let c1=hd in
+      let c2 = List.hd tl in
+      let cd= Sm[(c1;c2)] in
+      let inter:bool= est_coup_valide (cc_list, c_list, dim) cd in
+      let cg= Sm(tl) in
+      if inter=true then est_coup_valide (appliquer_coup (cc_list, c_list, dim) cd) cg else false;;
+
+let coup10=Sm([(-5, 3, 2); (-3, 3, 0)]);;
+est_coup_valide test_init_conf coup10;;
+
 
 assert((appliquer_coup test_init_conf coup1er)=coup2);;
 
