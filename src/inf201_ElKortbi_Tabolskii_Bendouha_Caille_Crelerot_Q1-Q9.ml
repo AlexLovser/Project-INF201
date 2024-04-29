@@ -1448,7 +1448,35 @@ assert ((est_partie conf_new l_c1 )=Vert);;
 assert ((est_partie conf_new l_c2 )=Jaune);;
 
 (*Question 29*) 
-(* Pour l'instant la fonciton coup_possible vérifie que les coup possible dans le cas de déplacement unitaire *)
+(* Pour l'instant la fonciton coup_possible vérifie que les coup possible dans le cas 
+  des déplacement unitaire et les sauts simples
+
+let adjacents ((x, y, z):case) : case list  =
+  let directions = [(1,-1,0); (1,0,-1); (0,1,-1); (-1,1,0); (-1,0,1); (0,-1,1)] in
+  List.map (fun (dx, dy, dz) -> (x + dx, y + dy, z + dz)) directions ;;
+
+let adjacents1 ((x, y, z):case) : case list  =
+  let directions1 = [(2,-2,0); (2,0,-2); (0,2,-2); (-2,2,0); (-2,0,2); (0,-2,2)] in
+  List.map (fun (dx, dy, dz) -> (x + dx, y + dy, z + dz)) directions1 ;;
+
+let coup_possibles (conf) (c: case): (case * coup) list = 
+  let case_v = adjacents c in
+  let rec l (case_v:case list) (c:case) : (case * coup) list = 
+    match case_v with 
+    |[] -> []
+    |hd::tl-> if est_coup_valide (conf) (Du(c,hd)) = false then l tl c
+        else (hd,Du(c,hd))::(l tl c )
+  in
+  let case_v1 = adjacents1 c in
+  let rec l1 (case_v1:case list) (c:case) : (case * coup) list = 
+    match case_v1 with 
+    |[] -> []
+    |hd::tl-> if est_coup_valide (conf) (Sm[c;hd]) = false then l1 tl c
+        else (hd,Sm[c;hd])::(l1 tl c )
+  in
+  (l case_v c)@(l1 case_v1 c)
+    
+;;*)
 
 let adjacents ((x, y, z):case) : case list  =
   let directions = [(1,-1,0); (1,0,-1); (0,1,-1); (-1,1,0); (-1,0,1); (0,-1,1)] in
