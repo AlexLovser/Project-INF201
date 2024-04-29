@@ -1213,7 +1213,7 @@ let [@warning "-8"] est_coup_valide1((cc_list, c_list, dim):configuration)(Du(c1
      associe c1 cc_list Libre<>Libre && 
      associe c2 cc_list Libre=Libre && 
      est_dans_losange c2 dim= true && 
-     trouver_couleur cc_list c1 =List.hd (c_list) then true 
+     associe c1 cc_list Libre =List.hd (c_list) then true 
   else false;;
 (*Cette fonction ne prend en compte que les coups unitaires, la fonction prenant en compte les coups multuiples est à la question 25*)
 (*Question 20*) 
@@ -1245,7 +1245,7 @@ let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool=
                  associe c1 cc_list Libre<>Libre && 
                  associe c2 cc_list Libre=Libre && 
                  est_dans_losange c2 dim= true && 
-                 trouver_couleur cc_list c1 = List.hd (c_list) then true else false
+                 associe c1 cc_list Libre=List.hd (c_list) then true else false
   |Sm([])-> false
   |Sm([c1])-> false
   |Sm([c1;c2])-> let cx= Du(c1,c2) in est_coup_valide (cc_list,c_list,dim) cx
