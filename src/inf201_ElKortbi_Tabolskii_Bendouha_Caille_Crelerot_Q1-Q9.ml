@@ -1254,7 +1254,10 @@ let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool=
       let cd= Du(c1,c2) in
       let inter:bool= est_coup_valide (cc_list, c_list, dim) cd in
       let cg= Sm(tl) in
-      if inter=true then est_coup_valide (cc_list, c_list, dim) cg else false;;
+      if inter=true then est_coup_valide (appliquer_coup1 (cc_list, c_list, dim) cd) cg else false;;
+
+let coup1er= Sm([( -4,1,3);( -3,0,3);( -2,-1,3)]);;
+assert ((est_coup_valide test_init_conf coup1er)=true);;
 
 let [@warning "-8"] rec appliquer_coup (((case, couleur)::tl, c_list, dim): configuration) (c: coup) : configuration = 
   match c with
