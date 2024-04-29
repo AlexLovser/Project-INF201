@@ -1265,14 +1265,16 @@ let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool=
                                                          est_dans_losange c2 dim then true else false 
   |Sm(hd::tl)-> let c1=hd in
       let c2 = List.hd tl in
-      let cd= Sm[(c1;c2)] in
+      let cd= Sm([c1;c2]) in
       let inter:bool= est_coup_valide (cc_list, c_list, dim) cd in
       let cg= Sm(tl) in
       if inter=true then est_coup_valide (appliquer_coup (cc_list, c_list, dim) cd) cg else false;;
 
 let coup10=Sm([(-5, 3, 2); (-3, 3, 0)]);;
 assert ((est_coup_valide test_init_conf coup10)=true);;
-
+let conf6=appliquer_coup test_init_conf (Sm([(-5, 3, 2); (-3, 3, 0)]));;
+let coup11= Sm([(-3, 3, 0); (-5, 3, 2); (-3, 1, 2)]);;
+assert ((est_coup_valide conf6 coup11)=true);;
 
 assert((appliquer_coup test_init_conf coup1er)=coup2);;
 
