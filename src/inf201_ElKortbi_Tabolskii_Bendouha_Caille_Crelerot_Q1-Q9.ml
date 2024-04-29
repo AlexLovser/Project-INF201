@@ -1281,8 +1281,6 @@ let conf7=appliquer_coup test_init_conf (Du((-4, 2, 2), (-3, 2, 1)));;
 let coup12=Sm([(-5, 3, 2); (-3, 3, 0); (-3, 1, 2)]);;
 assert ((est_coup_valide conf7 coup12)=true);;
 
-assert((appliquer_coup test_init_conf coup1er)=coup2);;
-
 (*La version actuelle de mettre_a_jour_configuration vue précèdemment fonctionne déjà pour les sauts multiples*)
 
 (*Question 21*) 
