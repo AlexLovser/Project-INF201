@@ -1258,6 +1258,10 @@ let rec est_coup_valide((cc_list, c_list, dim):configuration)(c:coup): bool=
 
 let coup1er= Sm([( -4,1,3);( -3,0,3);( -2,-1,3)]);;
 assert ((est_coup_valide test_init_conf coup1er)=true);;
+let coup2eme= Sm([( -4,2,2);( -3,1,2);(-2,1,2)]);;
+assert ((est_coup_valide test_init_conf coup2eme)=true);;
+let coup3eme= Sm([( -4,2,2);( -3,1,2);(-2,1,2);(-1,1,2)]);;
+assert ((est_coup_valide test_init_conf coup3eme)=true);;
 
 let [@warning "-8"] rec appliquer_coup (((case, couleur)::tl, c_list, dim): configuration) (c: coup) : configuration = 
   match c with
@@ -1266,6 +1270,8 @@ let [@warning "-8"] rec appliquer_coup (((case, couleur)::tl, c_list, dim): conf
   |Sm([c1;c2])-> let cx= Du(c1,c2) in appliquer_coup ((case, couleur)::tl, c_list, dim) cx
   |Sm(hd::t1)->  let c1=hd in
       let c2 = der_liste t1 in ((List.map (fun (case, couleur) -> if case = c1 then (c2, couleur) else (case, couleur)) ((case, couleur)::tl)), c_list, dim);;
+
+assert((appliquer_coup test_init_conf coup1er)=coup2);;
 
 (*La version actuelle de mettre_a_jour_configuration vue précèdemment fonctionne déjà pour les sauts multiples*)
 
