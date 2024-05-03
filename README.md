@@ -11,6 +11,7 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201/main?authorFilter=AlexLovser&style=for-the-badge&link=https://github.com/AlexLovser)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201/main?authorFilter=dfox235&style=for-the-badge&link=https://github.com/dfox235)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201/main?authorFilter=AkrBen&style=for-the-badge&link=https://github.com/AkrBen)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201/main?authorFilter=Crelerot&style=for-the-badge&link=https://github.com/Crelerot)
 
 
 *Ce ficher README est fait pour le decrire en bref les fichiers et vous aider a touver les ceux dont vous aves besoin.*
