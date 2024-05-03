@@ -3,16 +3,14 @@
 
 ![Ocaml](https://img.shields.io/endpoint?url=https://ci.ocamllabs.io/badge/mirage/ocaml-github/master&logo=ocaml)
 
-> **Version**: `0.1.19`
-> 
-> **Package manager**: `Dune` 
+> **Version**: `0.2.0`
 
 
 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201?authorFilter=Elkatra2&style=for-the-badge&link=https://github.com/Elkatra2)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201?authorFilter=AlexLovser&style=for-the-badge&link=https://github.com/AlexLovser)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201?authorFilter=dfox235&style=for-the-badge&link=https://github.com/dfox235)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201?authorFilter=AkrBen&style=for-the-badge&link=https://github.com/AkrBen)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201/main?authorFilter=Elkatra2&style=for-the-badge&link=https://github.com/Elkatra2)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201/main?authorFilter=AlexLovser&style=for-the-badge&link=https://github.com/AlexLovser)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201/main?authorFilter=dfox235&style=for-the-badge&link=https://github.com/dfox235)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/AlexLovser/Project-INF201/main?authorFilter=AkrBen&style=for-the-badge&link=https://github.com/AkrBen)
 
 
 *Ce ficher README est fait pour le decrire en bref les fichiers et vous aider a touver les ceux dont vous aves besoin.*
@@ -21,8 +19,9 @@
 ### La stucture du projet:
 ```bash
 @ROOT
+.
 ├── .trash
-│   └── ...
+│    └── ...
 ├── docs
 │   ├── dames_chinoises_etd.pdf
 │   ├── gimp
@@ -40,6 +39,7 @@
 ├── ocaml_use_projet.sh
 ├── README.md
 └── src
+    ├── inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot.ml
     └── inf201_ElKortbi_Tabolskii_Bendouha_Caille_Crelerot_Q1-Q9.ml
 ```
 
@@ -52,16 +52,6 @@
 >
 > ```bash
 > ./ocaml_use_projet
-> ```
-> **ou avec dune**
-> ```bash
-> dune build     # pour construire le projet
-> ```
-> ```bash
-> dune exec main # pour executer le projet
-> ```
-> ```bash
-> dune test      # pour effectuer les tests
 > ```
 
 > On a ecrit une bonne sepcification des fonctions dans: 
